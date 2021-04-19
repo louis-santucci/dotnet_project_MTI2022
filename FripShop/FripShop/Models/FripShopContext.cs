@@ -157,24 +157,16 @@ namespace FripShop.Models
 
                 entity.Property(e => e.BuyerId).HasColumnName("buyerId");
 
-                entity.Property(e => e.SellerId).HasColumnName("sellerId");
-
                 entity.Property(e => e.TransactionState)
                     .IsRequired()
                     .HasMaxLength(20)
                     .HasColumnName("transactionState");
 
                 entity.HasOne(d => d.Buyer)
-                    .WithMany(p => p.TransactionBuyers)
+                    .WithMany(p => p.Transactions)
                     .HasForeignKey(d => d.BuyerId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_Transaction_Buyer");
-
-                entity.HasOne(d => d.Seller)
-                    .WithMany(p => p.TransactionSellers)
-                    .HasForeignKey(d => d.SellerId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_Transaction_Seller");
             });
 
             modelBuilder.Entity<User>(entity =>

@@ -9,8 +9,7 @@ namespace FripShop.Models
     {
         public User()
         {
-            TransactionBuyers = new HashSet<Transaction>();
-            TransactionSellers = new HashSet<Transaction>();
+            Transactions = new HashSet<Transaction>();
         }
 
         public long Id { get; set; }
@@ -25,7 +24,6 @@ namespace FripShop.Models
         public virtual Article Article { get; set; }
         public virtual Cart Cart { get; set; }
         public virtual Rating Rating { get; set; }
-        public virtual ICollection<Transaction> TransactionBuyers { get; set; }
-        public virtual ICollection<Transaction> TransactionSellers { get; set; }
+        public virtual ICollection<Transaction> Transactions { get; set; }
     }
 }
