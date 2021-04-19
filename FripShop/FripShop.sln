@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.31025.194
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FripShop", "FripShop\FripShop.csproj", "{3B84DA17-0E17-4C4D-9010-13E6802581C3}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnitTestFripShop", "UnitTestFripShop\UnitTestFripShop.csproj", "{318423BF-7584-45C8-8A78-6C86526E5FB7}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{3B84DA17-0E17-4C4D-9010-13E6802581C3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3B84DA17-0E17-4C4D-9010-13E6802581C3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3B84DA17-0E17-4C4D-9010-13E6802581C3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3B84DA17-0E17-4C4D-9010-13E6802581C3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{318423BF-7584-45C8-8A78-6C86526E5FB7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{318423BF-7584-45C8-8A78-6C86526E5FB7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{318423BF-7584-45C8-8A78-6C86526E5FB7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{318423BF-7584-45C8-8A78-6C86526E5FB7}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {D1C9EB70-FBDB-4D98-8D56-082D799F29EB}
+	EndGlobalSection
+EndGlobal
