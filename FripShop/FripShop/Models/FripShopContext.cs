@@ -6,12 +6,12 @@ using Microsoft.EntityFrameworkCore;
 
 namespace FripShop.Models
 {
-    public class BloggingContext : DbContext
+    public class FripShopContext : DbContext
     {
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlServer("Data Source=DESKTOP-4MS830T\\MTI;Initial Catalog=FripShop;Trusted_Connection=True");
+            optionsBuilder.UseSqlServer();
         }
     }
 }
