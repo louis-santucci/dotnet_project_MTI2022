@@ -18,6 +18,7 @@ namespace FripShop.Models
         public string Sex { get; set; }
         public string Brand { get; set; }
         public int Condition { get; set; }
+        public DateTime CreatedAt { get; set; }
 
         public virtual User IdNavigation { get; set; }
         public virtual Cart Cart { get; set; }
