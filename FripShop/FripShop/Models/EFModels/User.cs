@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 #nullable disable
 
-namespace FripShop.Models
+namespace FripShop.Models.EfModels
 {
     public partial class User
     {

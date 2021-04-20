@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Metadata;
 
 #nullable disable
 
-namespace FripShop.Models
+namespace FripShop.Models.EfModels
 {
     public partial class FripShopContext : DbContext
     {
