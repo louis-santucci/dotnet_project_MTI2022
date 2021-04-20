@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
+
 namespace FripShop.DTObjects
 {
     public class User
@@ -14,7 +15,7 @@ namespace FripShop.DTObjects
             Ratings = new HashSet<Rating>();
             Transactions = new HashSet<Transaction>();
         }
-        public User(long id, string userName, string email, string password, string name, string address, string? gender)
+        public User(long id, string userName, string email, string password, string name, string address, string gender)
         {
             this.Id = id;
             this.UserName = userName;
@@ -36,7 +37,7 @@ namespace FripShop.DTObjects
         public string Password { get; set; }
         public string Name { get; set; }
         public string Address { get; set; }
-        public string? Gender { get; set; }
+        public string Gender { get; set; }
         public double Note { get; set; }
 
         public virtual ICollection<Article> Articles { get; set; }
