@@ -11,9 +11,9 @@ namespace FripShop.Models
         public long ArticleId { get; set; }
         public long BuyerId { get; set; }
         public string TransactionState { get; set; }
-        public DateTime CreatedAt { get; set; }
+        public DateTime LastUpdateAt { get; set; }
 
+        public virtual Article Article { get; set; }
         public virtual User Buyer { get; set; }
-        public virtual Article IdNavigation { get; set; }
     }
 }

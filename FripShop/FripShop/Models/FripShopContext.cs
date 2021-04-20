@@ -54,6 +54,10 @@ namespace FripShop.Models
 
                 entity.Property(e => e.Condition).HasColumnName("condition");
 
+                entity.Property(e => e.CreatedAt)
+                    .HasColumnType("datetime")
+                    .HasColumnName("createdAt");
+
                 entity.Property(e => e.Description)
                     .HasMaxLength(200)
                     .HasColumnName("description");
@@ -61,10 +65,6 @@ namespace FripShop.Models
                 entity.Property(e => e.ImageSource)
                     .HasMaxLength(100)
                     .HasColumnName("imageSource");
-
-                entity.Property(e => e.LastUpdateAt)
-                    .HasColumnType("datetime")
-                    .HasColumnName("lastUpdateAt");
 
                 entity.Property(e => e.Name)
                     .IsRequired()
@@ -84,9 +84,9 @@ namespace FripShop.Models
                     .HasMaxLength(20)
                     .HasColumnName("state");
 
-                entity.HasOne(d => d.IdNavigation)
-                    .WithOne(p => p.Article)
-                    .HasForeignKey<Article>(d => d.Id)
+                entity.HasOne(d => d.Seller)
+                    .WithMany(p => p.Articles)
+                    .HasForeignKey(d => d.SellerId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_Article_User");
             });
@@ -105,28 +105,29 @@ namespace FripShop.Models
 
                 entity.Property(e => e.Quantity).HasColumnName("quantity");
 
-                entity.HasOne(d => d.IdNavigation)
-                    .WithOne(p => p.Cart)
-                    .HasForeignKey<Cart>(d => d.Id)
+                entity.HasOne(d => d.Article)
+                    .WithMany(p => p.Carts)
+                    .HasForeignKey(d => d.ArticleId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_Cart_Article");
 
-                entity.HasOne(d => d.Id1)
-                    .WithOne(p => p.Cart)
-                    .HasForeignKey<Cart>(d => d.Id)
+                entity.HasOne(d => d.Buyer)
+                    .WithMany(p => p.Carts)
+                    .HasForeignKey(d => d.BuyerId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_Cart_User");
             });
 
             modelBuilder.Entity<Rating>(entity =>
             {
+                entity.HasKey(e => e.ArticleId)
+                    .HasName("PK_Rating_1");
+
                 entity.ToTable("Rating");
 
-                entity.Property(e => e.Id)
+                entity.Property(e => e.ArticleId)
                     .ValueGeneratedNever()
-                    .HasColumnName("id");
-
-                entity.Property(e => e.ArticleId).HasColumnName("articleId");
+                    .HasColumnName("articleId");
 
                 entity.Property(e => e.Comment)
                     .HasMaxLength(200)
@@ -136,15 +137,15 @@ namespace FripShop.Models
 
                 entity.Property(e => e.SellerId).HasColumnName("sellerId");
 
-                entity.HasOne(d => d.IdNavigation)
+                entity.HasOne(d => d.Article)
                     .WithOne(p => p.Rating)
-                    .HasForeignKey<Rating>(d => d.Id)
+                    .HasForeignKey<Rating>(d => d.ArticleId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_Rating_Article");
 
-                entity.HasOne(d => d.Id1)
-                    .WithOne(p => p.Rating)
-                    .HasForeignKey<Rating>(d => d.Id)
+                entity.HasOne(d => d.Seller)
+                    .WithMany(p => p.Ratings)
+                    .HasForeignKey(d => d.SellerId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_Rating_User");
             });
@@ -161,26 +162,26 @@ namespace FripShop.Models
 
                 entity.Property(e => e.BuyerId).HasColumnName("buyerId");
 
-                entity.Property(e => e.CreatedAt)
+                entity.Property(e => e.LastUpdateAt)
                     .HasColumnType("datetime")
-                    .HasColumnName("createdAt");
+                    .HasColumnName("lastUpdateAt");
 
                 entity.Property(e => e.TransactionState)
                     .IsRequired()
                     .HasMaxLength(20)
                     .HasColumnName("transactionState");
 
+                entity.HasOne(d => d.Article)
+                    .WithMany(p => p.Transactions)
+                    .HasForeignKey(d => d.ArticleId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_Transaction_Article");
+
                 entity.HasOne(d => d.Buyer)
                     .WithMany(p => p.Transactions)
                     .HasForeignKey(d => d.BuyerId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_Transaction_Buyer");
-
-                entity.HasOne(d => d.IdNavigation)
-                    .WithOne(p => p.Transaction)
-                    .HasForeignKey<Transaction>(d => d.Id)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_Transaction_Article");
+                    .HasConstraintName("FK_Transaction_User");
             });
 
             modelBuilder.Entity<User>(entity =>

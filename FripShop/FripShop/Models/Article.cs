@@ -7,6 +7,12 @@ namespace FripShop.Models
 {
     public partial class Article
     {
+        public Article()
+        {
+            Carts = new HashSet<Cart>();
+            Transactions = new HashSet<Transaction>();
+        }
+
         public long Id { get; set; }
         public string ImageSource { get; set; }
         public long SellerId { get; set; }
@@ -18,11 +24,11 @@ namespace FripShop.Models
         public string Sex { get; set; }
         public string Brand { get; set; }
         public int Condition { get; set; }
-        public DateTime LastUpdateAt { get; set; }
+        public DateTime CreatedAt { get; set; }
 
-        public virtual User IdNavigation { get; set; }
-        public virtual Cart Cart { get; set; }
+        public virtual User Seller { get; set; }
         public virtual Rating Rating { get; set; }
-        public virtual Transaction Transaction { get; set; }
+        public virtual ICollection<Cart> Carts { get; set; }
+        public virtual ICollection<Transaction> Transactions { get; set; }
     }
 }

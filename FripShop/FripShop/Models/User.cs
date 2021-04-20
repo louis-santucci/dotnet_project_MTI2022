@@ -9,6 +9,9 @@ namespace FripShop.Models
     {
         public User()
         {
+            Articles = new HashSet<Article>();
+            Carts = new HashSet<Cart>();
+            Ratings = new HashSet<Rating>();
             Transactions = new HashSet<Transaction>();
         }
 
@@ -21,9 +24,9 @@ namespace FripShop.Models
         public string Gender { get; set; }
         public double Note { get; set; }
 
-        public virtual Article Article { get; set; }
-        public virtual Cart Cart { get; set; }
-        public virtual Rating Rating { get; set; }
+        public virtual ICollection<Article> Articles { get; set; }
+        public virtual ICollection<Cart> Carts { get; set; }
+        public virtual ICollection<Rating> Ratings { get; set; }
         public virtual ICollection<Transaction> Transactions { get; set; }
     }
 }
