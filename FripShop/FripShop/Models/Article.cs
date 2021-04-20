@@ -23,5 +23,6 @@ namespace FripShop.Models
         public virtual User IdNavigation { get; set; }
         public virtual Cart Cart { get; set; }
         public virtual Rating Rating { get; set; }
+        public virtual Transaction Transaction { get; set; }
     }
 }

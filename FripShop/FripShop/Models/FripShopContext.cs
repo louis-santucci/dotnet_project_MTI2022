@@ -175,6 +175,12 @@ namespace FripShop.Models
                     .HasForeignKey(d => d.BuyerId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_Transaction_Buyer");
+
+                entity.HasOne(d => d.IdNavigation)
+                    .WithOne(p => p.Transaction)
+                    .HasForeignKey<Transaction>(d => d.Id)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_Transaction_Article");
             });
 
             modelBuilder.Entity<User>(entity =>

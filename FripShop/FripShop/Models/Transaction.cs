@@ -14,5 +14,6 @@ namespace FripShop.Models
         public DateTime CreatedAt { get; set; }
 
         public virtual User Buyer { get; set; }
+        public virtual Article IdNavigation { get; set; }
     }
 }
