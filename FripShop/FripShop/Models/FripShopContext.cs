@@ -54,10 +54,6 @@ namespace FripShop.Models
 
                 entity.Property(e => e.Condition).HasColumnName("condition");
 
-                entity.Property(e => e.CreatedAt)
-                    .HasColumnType("datetime")
-                    .HasColumnName("createdAt");
-
                 entity.Property(e => e.Description)
                     .HasMaxLength(200)
                     .HasColumnName("description");
@@ -65,6 +61,10 @@ namespace FripShop.Models
                 entity.Property(e => e.ImageSource)
                     .HasMaxLength(100)
                     .HasColumnName("imageSource");
+
+                entity.Property(e => e.LastUpdateAt)
+                    .HasColumnType("datetime")
+                    .HasColumnName("lastUpdateAt");
 
                 entity.Property(e => e.Name)
                     .IsRequired()
