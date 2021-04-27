@@ -2,6 +2,7 @@ FripShop/bin/
 FripShop/obj/
 UnitTestFripShop/bin/
 UnitTestFripShop/obj/
-UnitTestFripShop/FripShopDatabase.jfm
-UnitTestFripShop/FripShopDatabase.dbmdl
+*.jfm
+*.dbmdl
+
 .vs/
