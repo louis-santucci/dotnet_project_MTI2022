@@ -54,7 +54,7 @@ namespace FripShop.DataAccess
             }
             catch (Exception ex)
             {
-                _logger.LogError("error on db", ex);
+                _logger.LogError("error on db : ", ex);
                 return null;
             }
 
@@ -80,7 +80,7 @@ namespace FripShop.DataAccess
             }
             catch (Exception ex)
             {
-                _logger.LogError("error on db", ex);
+                _logger.LogError("error on db : ", ex);
 
                 return null;
             }
@@ -105,8 +105,21 @@ namespace FripShop.DataAccess
             }
             catch (Exception ex)
             {
-                _logger.LogError("error on db", ex);
+                _logger.LogError("error on db : ", ex);
                 return false;
+            }
+        }
+
+        public Task<int> Count()
+        {
+            try
+            {
+                return _set.CountAsync();
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError("error on db : ", ex);
+                return null;
             }
         }
     }

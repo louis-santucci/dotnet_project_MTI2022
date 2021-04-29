@@ -11,5 +11,6 @@ namespace FripShop.DataAccess.Interfaces
         Task<ModelEntity> Insert(ModelEntity entity);
         Task<ModelEntity> Update(ModelEntity entity);
         Task<bool> Delete(long idEntity);
+        Task<int> Count();
     }
 }
