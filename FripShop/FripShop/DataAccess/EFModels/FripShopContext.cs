@@ -1,5 +1,6 @@
-﻿using Microsoft.EntityFrameworkCore;
-using FripShop.DataAccess.EFModels;
+﻿using System;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata;
 
 #nullable disable
 
@@ -86,7 +87,7 @@ namespace FripShop.DataAccess.EFModels
                 entity.HasOne(d => d.Seller)
                     .WithMany(p => p.Articles)
                     .HasForeignKey(d => d.SellerId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .OnDelete(DeleteBehavior.ClientCascade)
                     .HasConstraintName("FK_Article_User");
             });
 
@@ -107,13 +108,12 @@ namespace FripShop.DataAccess.EFModels
                 entity.HasOne(d => d.Article)
                     .WithMany(p => p.Carts)
                     .HasForeignKey(d => d.ArticleId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_Cart_Article");
 
                 entity.HasOne(d => d.Buyer)
                     .WithMany(p => p.Carts)
                     .HasForeignKey(d => d.BuyerId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .OnDelete(DeleteBehavior.ClientCascade)
                     .HasConstraintName("FK_Cart_User");
             });
 
@@ -128,28 +128,28 @@ namespace FripShop.DataAccess.EFModels
                     .ValueGeneratedNever()
                     .HasColumnName("articleId");
 
+                entity.Property(e => e.BuyerId).HasColumnName("buyerId");
+
                 entity.Property(e => e.Comment)
                     .HasMaxLength(200)
                     .HasColumnName("comment");
 
                 entity.Property(e => e.Note).HasColumnName("note");
 
-                entity.Property(e => e.SellerId).HasColumnName("sellerId");
-
                 entity.HasOne(d => d.Article)
                     .WithOne(p => p.Rating)
                     .HasForeignKey<Rating>(d => d.ArticleId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .OnDelete(DeleteBehavior.ClientCascade)
                     .HasConstraintName("FK_Rating_Article");
 
-                entity.HasOne(d => d.Seller)
+                entity.HasOne(d => d.Buyer)
                     .WithMany(p => p.Ratings)
-                    .HasForeignKey(d => d.SellerId)
+                    .HasForeignKey(d => d.BuyerId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_Rating_User");
             });
 
-            modelBuilder.Entity<DboTransaction>(entity =>
+            modelBuilder.Entity<Transaction>(entity =>
             {
                 entity.ToTable("Transaction");
 
@@ -183,7 +183,7 @@ namespace FripShop.DataAccess.EFModels
                     .HasConstraintName("FK_Transaction_User");
             });
 
-            modelBuilder.Entity<DboUser>(entity =>
+            modelBuilder.Entity<User>(entity =>
             {
                 entity.ToTable("User");
 

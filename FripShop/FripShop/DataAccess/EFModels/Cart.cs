@@ -1,4 +1,9 @@
-﻿namespace FripShop.DataAccess.EFModels
+﻿using System;
+using System.Collections.Generic;
+
+#nullable disable
+
+namespace FripShop.DataAccess.EFModels
 {
     public partial class Cart
     {
