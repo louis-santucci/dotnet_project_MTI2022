@@ -4,15 +4,15 @@ using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
+using AutoMapper;
 
 namespace FripShop
 {
     public class Startup
     {
+        private string _connectionString;
+
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
@@ -23,6 +23,9 @@ namespace FripShop
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddEntityFrameworkSqlServer()
+                .AddDbContext<DataAccess.EFModels.FripShopContext>(options => options.UseSqlServer(_connectionString));
+            services.AddAutoMapper(typeof(DataAccess.AutoMapperProfiles));
             services.AddControllersWithViews();
         }
 
