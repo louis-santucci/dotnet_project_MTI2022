@@ -1,31 +1,113 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
+using AutoMapper;
+using FripShop.DataAccess.EFModels;
 using FripShop.DataAccess.Interfaces;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 
 namespace FripShop.DataAccess
 {
     public class Repository<DbEntity, ModelEntity> : IRepo<DbEntity, ModelEntity>
+        where DbEntity : class, new()
+        where ModelEntity : class, Dbo.IDbo, new()
     {
-        public Task<IEnumerable<ModelEntity>> Get(string includeString = "")
+
+        private DbSet<DbEntity> _set;
+        protected FripShopContext _context;
+        protected ILogger _logger;
+        protected IMapper _mapper;
+
+        public virtual async Task<IEnumerable<ModelEntity>> Get(string includeString = "")
         {
-            throw new NotImplementedException();
+            try
+            {
+                List<DbEntity> query = null;
+                if (String.IsNullOrEmpty(includeString))
+                {
+                    query = await _set.AsNoTracking().ToListAsync();
+                }
+                else
+                {
+                    query = await _set.Include(includeString).AsNoTracking().ToListAsync();
+                }
+
+                return _mapper.Map<ModelEntity[]>(query);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError("error on db", ex);
+                return null;
+            }
         }
 
-        public Task<ModelEntity> Insert(ModelEntity entity)
+        public virtual async Task<ModelEntity> Insert(ModelEntity entity)
         {
-            throw new NotImplementedException();
+            DbEntity dbEntity = _mapper.Map<DbEntity>(entity);
+            _set.Add(dbEntity);
+            try
+            {
+                await _context.SaveChangesAsync();
+                ModelEntity newEntity = _mapper.Map<ModelEntity>(dbEntity);
+                return newEntity;
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError("error on db", ex);
+                return null;
+            }
+
         }
 
-        public Task<ModelEntity> Update(ModelEntity entity)
+        public virtual async Task<ModelEntity> Update(ModelEntity entity)
         {
-            throw new NotImplementedException();
+            DbEntity dbEntity = _set.Find(entity.Id);
+
+
+            if (dbEntity == null)
+            {
+                return null;
+            }
+            _mapper.Map(entity, dbEntity);
+            if (!_context.ChangeTracker.HasChanges())
+            {
+                return entity;
+            }
+            try
+            {
+                await _context.SaveChangesAsync();
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError("error on db", ex);
+
+                return null;
+            }
+            return _mapper.Map<ModelEntity>(dbEntity);
+
         }
 
-        public Task<bool> Delete(long idEntity)
+        public virtual async Task<bool> Delete(long idEntity)
         {
-            throw new NotImplementedException();
+            DbEntity dbEntity = _set.Find(idEntity);
+
+
+            if (dbEntity == null)
+            {
+                return false;
+            }
+            _set.Remove(dbEntity);
+            try
+            {
+                await _context.SaveChangesAsync();
+                return true;
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError("error on db", ex);
+                return false;
+            }
         }
     }
 }
