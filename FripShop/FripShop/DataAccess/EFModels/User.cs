@@ -8,10 +8,10 @@ namespace FripShop.DataAccess.EFModels
     {
         public DboUser()
         {
-            Articles = new HashSet<Models.EfModels.DboArticle>();
-            Carts = new HashSet<Models.EfModels.DboCart>();
-            Ratings = new HashSet<Models.EfModels.DboRating>();
-            Transactions = new HashSet<Models.EfModels.DboTransaction>();
+            Articles = new HashSet<DboArticle>();
+            Carts = new HashSet<DboCart>();
+            Ratings = new HashSet<DboRating>();
+            Transactions = new HashSet<DboTransaction>();
         }
 
         public long Id { get; set; }
@@ -23,9 +23,9 @@ namespace FripShop.DataAccess.EFModels
         public string Gender { get; set; }
         public double Note { get; set; }
 
-        public virtual ICollection<Models.EfModels.DboArticle> Articles { get; set; }
-        public virtual ICollection<Models.EfModels.DboCart> Carts { get; set; }
-        public virtual ICollection<Models.EfModels.DboRating> Ratings { get; set; }
-        public virtual ICollection<Models.EfModels.DboTransaction> Transactions { get; set; }
+        public virtual ICollection<DboArticle> Articles { get; set; }
+        public virtual ICollection<DboCart> Carts { get; set; }
+        public virtual ICollection<DboRating> Ratings { get; set; }
+        public virtual ICollection<DboTransaction> Transactions { get; set; }
     }
 }

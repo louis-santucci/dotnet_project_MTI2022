@@ -7,7 +7,7 @@
         public long ArticleId { get; set; }
         public int Quantity { get; set; }
 
-        public virtual Models.EfModels.DboArticle Article { get; set; }
+        public virtual DboArticle Article { get; set; }
         public virtual DboUser Buyer { get; set; }
     }
 }

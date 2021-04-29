@@ -10,7 +10,7 @@ namespace FripShop.DataAccess.EFModels
         public int Note { get; set; }
         public string Comment { get; set; }
 
-        public virtual Models.EfModels.DboArticle Article { get; set; }
+        public virtual DboArticle Article { get; set; }
         public virtual DboUser Seller { get; set; }
     }
 }

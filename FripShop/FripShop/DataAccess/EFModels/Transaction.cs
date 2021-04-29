@@ -12,7 +12,7 @@ namespace FripShop.DataAccess.EFModels
         public string TransactionState { get; set; }
         public DateTime LastUpdateAt { get; set; }
 
-        public virtual Models.EfModels.DboArticle Article { get; set; }
+        public virtual DboArticle Article { get; set; }
         public virtual DboUser Buyer { get; set; }
     }
 }
