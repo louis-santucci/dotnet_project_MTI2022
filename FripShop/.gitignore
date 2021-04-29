@@ -4,5 +4,6 @@ UnitTestFripShop/bin/
 UnitTestFripShop/obj/
 *.jfm
 *.dbmdl
-
+*.sqlproj
+*.sqlproj.user
 .vs/
