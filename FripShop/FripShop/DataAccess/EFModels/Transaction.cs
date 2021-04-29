@@ -4,7 +4,7 @@
 
 namespace FripShop.DataAccess.EFModels
 {
-    public partial class DboTransaction
+    public partial class Transaction
     {
         public long Id { get; set; }
         public long ArticleId { get; set; }
@@ -12,7 +12,7 @@ namespace FripShop.DataAccess.EFModels
         public string TransactionState { get; set; }
         public DateTime LastUpdateAt { get; set; }
 
-        public virtual DboArticle Article { get; set; }
-        public virtual DboUser Buyer { get; set; }
+        public virtual Article Article { get; set; }
+        public virtual User Buyer { get; set; }
     }
 }

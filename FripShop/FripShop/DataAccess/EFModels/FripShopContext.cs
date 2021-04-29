@@ -16,11 +16,11 @@ namespace FripShop.DataAccess.EFModels
         {
         }
 
-        public virtual DbSet<DboArticle> Articles { get; set; }
-        public virtual DbSet<DboCart> Carts { get; set; }
-        public virtual DbSet<DboRating> Ratings { get; set; }
-        public virtual DbSet<DboTransaction> Transactions { get; set; }
-        public virtual DbSet<DboUser> Users { get; set; }
+        public virtual DbSet<Article> Articles { get; set; }
+        public virtual DbSet<Cart> Carts { get; set; }
+        public virtual DbSet<Rating> Ratings { get; set; }
+        public virtual DbSet<Transaction> Transactions { get; set; }
+        public virtual DbSet<User> Users { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -35,7 +35,7 @@ namespace FripShop.DataAccess.EFModels
         {
             modelBuilder.HasAnnotation("Relational:Collation", "French_CI_AS");
 
-            modelBuilder.Entity<DboArticle>(entity =>
+            modelBuilder.Entity<Article>(entity =>
             {
                 entity.ToTable("Article");
 
@@ -90,7 +90,7 @@ namespace FripShop.DataAccess.EFModels
                     .HasConstraintName("FK_Article_User");
             });
 
-            modelBuilder.Entity<DboCart>(entity =>
+            modelBuilder.Entity<Cart>(entity =>
             {
                 entity.ToTable("Cart");
 
@@ -117,7 +117,7 @@ namespace FripShop.DataAccess.EFModels
                     .HasConstraintName("FK_Cart_User");
             });
 
-            modelBuilder.Entity<DboRating>(entity =>
+            modelBuilder.Entity<Rating>(entity =>
             {
                 entity.HasKey(e => e.ArticleId)
                     .HasName("PK_Rating_1");
@@ -138,7 +138,7 @@ namespace FripShop.DataAccess.EFModels
 
                 entity.HasOne(d => d.Article)
                     .WithOne(p => p.Rating)
-                    .HasForeignKey<DboRating>(d => d.ArticleId)
+                    .HasForeignKey<Rating>(d => d.ArticleId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_Rating_Article");
 

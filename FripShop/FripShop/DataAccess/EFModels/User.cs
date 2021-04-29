@@ -4,14 +4,14 @@
 
 namespace FripShop.DataAccess.EFModels
 {
-    public partial class DboUser
+    public partial class User
     {
-        public DboUser()
+        public User()
         {
-            Articles = new HashSet<DboArticle>();
-            Carts = new HashSet<DboCart>();
-            Ratings = new HashSet<DboRating>();
-            Transactions = new HashSet<DboTransaction>();
+            Articles = new HashSet<Article>();
+            Carts = new HashSet<Cart>();
+            Ratings = new HashSet<Rating>();
+            Transactions = new HashSet<Transaction>();
         }
 
         public long Id { get; set; }
@@ -23,9 +23,9 @@ namespace FripShop.DataAccess.EFModels
         public string Gender { get; set; }
         public double Note { get; set; }
 
-        public virtual ICollection<DboArticle> Articles { get; set; }
-        public virtual ICollection<DboCart> Carts { get; set; }
-        public virtual ICollection<DboRating> Ratings { get; set; }
-        public virtual ICollection<DboTransaction> Transactions { get; set; }
+        public virtual ICollection<Article> Articles { get; set; }
+        public virtual ICollection<Cart> Carts { get; set; }
+        public virtual ICollection<Rating> Ratings { get; set; }
+        public virtual ICollection<Transaction> Transactions { get; set; }
     }
 }

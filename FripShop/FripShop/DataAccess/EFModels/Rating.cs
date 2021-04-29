@@ -2,7 +2,7 @@
 
 namespace FripShop.DataAccess.EFModels
 {
-    public partial class DboRating
+    public partial class Rating
     {
         public long Id { get; set; }
         public long ArticleId { get; set; }
@@ -10,7 +10,7 @@ namespace FripShop.DataAccess.EFModels
         public int Note { get; set; }
         public string Comment { get; set; }
 
-        public virtual DboArticle Article { get; set; }
-        public virtual DboUser Seller { get; set; }
+        public virtual Article Article { get; set; }
+        public virtual User Seller { get; set; }
     }
 }

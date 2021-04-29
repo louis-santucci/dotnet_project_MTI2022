@@ -3,12 +3,12 @@ using System.Collections.Generic;
 
 namespace FripShop.DataAccess.EFModels
 {
-    public partial class DboArticle
+    public partial class Article
     {
-        public DboArticle()
+        public Article()
         {
-            Carts = new HashSet<DboCart>();
-            Transactions = new HashSet<DboTransaction>();
+            Carts = new HashSet<Cart>();
+            Transactions = new HashSet<Transaction>();
         }
 
         public long Id { get; set; }
@@ -24,9 +24,9 @@ namespace FripShop.DataAccess.EFModels
         public int Condition { get; set; }
         public DateTime CreatedAt { get; set; }
 
-        public virtual DboUser Seller { get; set; }
-        public virtual DboRating Rating { get; set; }
-        public virtual ICollection<DboCart> Carts { get; set; }
-        public virtual ICollection<DboTransaction> Transactions { get; set; }
+        public virtual User Seller { get; set; }
+        public virtual Rating Rating { get; set; }
+        public virtual ICollection<Cart> Carts { get; set; }
+        public virtual ICollection<Transaction> Transactions { get; set; }
     }
 }
