@@ -1,11 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using FripShop.Dbo;
 
 #nullable disable
 
 namespace FripShop.Models.EfModels
 {
-    public partial class Transaction
+    public class DboTransaction : IDbo
     {
         public long Id { get; set; }
         public long ArticleId { get; set; }
@@ -13,7 +14,7 @@ namespace FripShop.Models.EfModels
         public string TransactionState { get; set; }
         public DateTime LastUpdateAt { get; set; }
 
-        public virtual Article Article { get; set; }
-        public virtual User Buyer { get; set; }
+        public virtual DboArticle Article { get; set; }
+        public virtual DboUser Buyer { get; set; }
     }
 }

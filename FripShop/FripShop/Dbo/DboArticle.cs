@@ -1,14 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
+using FripShop.Dbo;
 
 namespace FripShop.Models.EfModels
 {
-    public partial class Article
+    public class DboArticle : IDbo
     {
-        public Article()
+        public DboArticle()
         {
-            Carts = new HashSet<Cart>();
-            Transactions = new HashSet<Transaction>();
+            Carts = new HashSet<DboCart>();
+            Transactions = new HashSet<DboTransaction>();
         }
 
         public long Id { get; set; }
@@ -24,9 +25,9 @@ namespace FripShop.Models.EfModels
         public int Condition { get; set; }
         public DateTime CreatedAt { get; set; }
 
-        public virtual User Seller { get; set; }
-        public virtual Rating Rating { get; set; }
-        public virtual ICollection<Cart> Carts { get; set; }
-        public virtual ICollection<Transaction> Transactions { get; set; }
+        public virtual DboUser Seller { get; set; }
+        public virtual DboRating Rating { get; set; }
+        public virtual ICollection<DboCart> Carts { get; set; }
+        public virtual ICollection<DboTransaction> Transactions { get; set; }
     }
 }

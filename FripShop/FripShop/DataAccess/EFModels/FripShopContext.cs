@@ -17,11 +17,11 @@ namespace FripShop.Models.EfModels
         {
         }
 
-        public virtual DbSet<Article> Articles { get; set; }
-        public virtual DbSet<Cart> Carts { get; set; }
-        public virtual DbSet<Rating> Ratings { get; set; }
-        public virtual DbSet<Transaction> Transactions { get; set; }
-        public virtual DbSet<User> Users { get; set; }
+        public virtual DbSet<DboArticle> Articles { get; set; }
+        public virtual DbSet<DboCart> Carts { get; set; }
+        public virtual DbSet<DboRating> Ratings { get; set; }
+        public virtual DbSet<DboTransaction> Transactions { get; set; }
+        public virtual DbSet<DboUser> Users { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -36,7 +36,7 @@ namespace FripShop.Models.EfModels
         {
             modelBuilder.HasAnnotation("Relational:Collation", "French_CI_AS");
 
-            modelBuilder.Entity<Article>(entity =>
+            modelBuilder.Entity<DboArticle>(entity =>
             {
                 entity.ToTable("Article");
 
@@ -91,7 +91,7 @@ namespace FripShop.Models.EfModels
                     .HasConstraintName("FK_Article_User");
             });
 
-            modelBuilder.Entity<Cart>(entity =>
+            modelBuilder.Entity<DboCart>(entity =>
             {
                 entity.ToTable("Cart");
 
@@ -118,7 +118,7 @@ namespace FripShop.Models.EfModels
                     .HasConstraintName("FK_Cart_User");
             });
 
-            modelBuilder.Entity<Rating>(entity =>
+            modelBuilder.Entity<DboRating>(entity =>
             {
                 entity.HasKey(e => e.ArticleId)
                     .HasName("PK_Rating_1");
@@ -139,7 +139,7 @@ namespace FripShop.Models.EfModels
 
                 entity.HasOne(d => d.Article)
                     .WithOne(p => p.Rating)
-                    .HasForeignKey<Rating>(d => d.ArticleId)
+                    .HasForeignKey<DboRating>(d => d.ArticleId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_Rating_Article");
 
@@ -150,7 +150,7 @@ namespace FripShop.Models.EfModels
                     .HasConstraintName("FK_Rating_User");
             });
 
-            modelBuilder.Entity<Transaction>(entity =>
+            modelBuilder.Entity<DboTransaction>(entity =>
             {
                 entity.ToTable("Transaction");
 
@@ -184,7 +184,7 @@ namespace FripShop.Models.EfModels
                     .HasConstraintName("FK_Transaction_User");
             });
 
-            modelBuilder.Entity<User>(entity =>
+            modelBuilder.Entity<DboUser>(entity =>
             {
                 entity.ToTable("User");
 
