@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace FripShop.Models.EfModels
+namespace FripShop.DataAccess.EFModels
 {
     public partial class DboArticle
     {

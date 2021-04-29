@@ -1,18 +1,17 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
 #nullable disable
 
-namespace FripShop.Models.EfModels
+namespace FripShop.DataAccess.EFModels
 {
     public partial class DboUser
     {
         public DboUser()
         {
-            Articles = new HashSet<DboArticle>();
-            Carts = new HashSet<DboCart>();
-            Ratings = new HashSet<DboRating>();
-            Transactions = new HashSet<DboTransaction>();
+            Articles = new HashSet<Models.EfModels.DboArticle>();
+            Carts = new HashSet<Models.EfModels.DboCart>();
+            Ratings = new HashSet<Models.EfModels.DboRating>();
+            Transactions = new HashSet<Models.EfModels.DboTransaction>();
         }
 
         public long Id { get; set; }
@@ -24,9 +23,9 @@ namespace FripShop.Models.EfModels
         public string Gender { get; set; }
         public double Note { get; set; }
 
-        public virtual ICollection<DboArticle> Articles { get; set; }
-        public virtual ICollection<DboCart> Carts { get; set; }
-        public virtual ICollection<DboRating> Ratings { get; set; }
-        public virtual ICollection<DboTransaction> Transactions { get; set; }
+        public virtual ICollection<Models.EfModels.DboArticle> Articles { get; set; }
+        public virtual ICollection<Models.EfModels.DboCart> Carts { get; set; }
+        public virtual ICollection<Models.EfModels.DboRating> Ratings { get; set; }
+        public virtual ICollection<Models.EfModels.DboTransaction> Transactions { get; set; }
     }
 }

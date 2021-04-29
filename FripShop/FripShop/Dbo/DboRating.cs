@@ -8,7 +8,7 @@ namespace FripShop.Models.EfModels
 {
     public class DboRating : IDbo
     {
-        public long ArticleId { get; set; }
+        public long Id { get; set; }
         public long SellerId { get; set; }
         public int Note { get; set; }
         public string Comment { get; set; }

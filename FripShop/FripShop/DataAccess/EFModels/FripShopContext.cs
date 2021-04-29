@@ -1,10 +1,9 @@
-﻿using System;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Metadata;
+﻿using Microsoft.EntityFrameworkCore;
+using FripShop.DataAccess.EFModels;
 
 #nullable disable
 
-namespace FripShop.Models.EfModels
+namespace FripShop.DataAccess.EFModels
 {
     public partial class FripShopContext : DbContext
     {

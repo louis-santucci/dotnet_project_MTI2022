@@ -1,18 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
+﻿#nullable disable
 
-#nullable disable
-
-namespace FripShop.Models.EfModels
+namespace FripShop.DataAccess.EFModels
 {
     public partial class DboRating
     {
+        public long Id { get; set; }
         public long ArticleId { get; set; }
         public long SellerId { get; set; }
         public int Note { get; set; }
         public string Comment { get; set; }
 
-        public virtual DboArticle Article { get; set; }
+        public virtual Models.EfModels.DboArticle Article { get; set; }
         public virtual DboUser Seller { get; set; }
     }
 }
