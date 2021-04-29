@@ -1,7 +1,5 @@
 ﻿using AutoMapper;
 using FripShop.Dbo;
-using FripShop.DataAccess.EFModels;
-using FripShop.Models.EfModels;
 
 namespace FripShop.DataAccess
 {

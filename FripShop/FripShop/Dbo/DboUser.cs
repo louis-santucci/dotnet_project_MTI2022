@@ -4,7 +4,7 @@ using FripShop.Dbo;
 
 #nullable disable
 
-namespace FripShop.Models.EfModels
+namespace FripShop.Dbo
 {
     public class DboUser : IDbo
     {

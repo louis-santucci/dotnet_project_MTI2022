@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using FripShop.Dbo;
 
-namespace FripShop.Models.EfModels
+namespace FripShop.Dbo
 {
     public class DboCart : IDbo
     {
