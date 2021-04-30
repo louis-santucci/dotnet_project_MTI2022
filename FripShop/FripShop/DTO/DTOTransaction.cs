@@ -1,13 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using FripShop.Dbo;
 
 #nullable disable
 
-namespace FripShop.Dbo
+namespace FripShop.DTO
 {
-    public class DboTransaction : IDbo
+    public class DTOTransaction : IDTO
     {
         [Key]
         public long Id { get; set; }

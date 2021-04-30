@@ -11,6 +11,6 @@ namespace FripShop.DTO
         public int Quantity { get; set; }
 
         public virtual DTOArticle Article { get; set; }
-        public virtual DTOUser Buyer { get; set; }
+        public virtual DTOUserInfo Buyer { get; set; }
     }
 }

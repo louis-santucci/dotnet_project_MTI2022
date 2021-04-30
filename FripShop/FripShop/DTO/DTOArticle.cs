@@ -19,5 +19,7 @@ namespace FripShop.DTO
         public string Brand { get; set; }
         public int Condition { get; set; }
         public DateTime CreatedAt { get; set; }
+
+        public DTOUserInfo User { get; set; }
     }
 }
