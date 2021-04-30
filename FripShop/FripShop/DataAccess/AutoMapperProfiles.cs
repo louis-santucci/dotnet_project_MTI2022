@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using FripShop.Dbo;
+using FripShop.DTO;
 
 namespace FripShop.DataAccess
 {
@@ -7,20 +7,20 @@ namespace FripShop.DataAccess
     {
         public AutoMapperProfiles()
         {
-            CreateMap<DboArticle, EFModels.Article>();
-            CreateMap<EFModels.Article, DboArticle>();
+            CreateMap<DTOArticle, EFModels.Article>();
+            CreateMap<EFModels.Article, DTOArticle>();
 
-            CreateMap<DboCart, EFModels.Cart>();
-            CreateMap<EFModels.Cart, DboCart>();
+            CreateMap<DTOCart, EFModels.Cart>();
+            CreateMap<EFModels.Cart, DTOCart>();
 
-            CreateMap<DboRating, EFModels.Rating>();
-            CreateMap<EFModels.Rating, DboRating>();
+            CreateMap<DTORating, EFModels.Rating>();
+            CreateMap<EFModels.Rating, DTORating>();
 
-            CreateMap<DboTransaction, EFModels.Transaction>();
-            CreateMap<EFModels.Transaction, DboTransaction>();
+            CreateMap<DTOTransaction, EFModels.Transaction>();
+            CreateMap<EFModels.Transaction, DTOTransaction>();
 
-            CreateMap<DboUser, EFModels.User>();
-            CreateMap<EFModels.User, DboUser>();
+            CreateMap<DTOUser, EFModels.User>();
+            CreateMap<EFModels.User, DTOUser>();
         }
     }
 }

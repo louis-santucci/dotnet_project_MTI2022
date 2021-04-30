@@ -5,23 +5,23 @@ using System.Threading.Tasks;
 using AutoMapper;
 using FripShop.DataAccess.EFModels;
 using FripShop.DataAccess.Interfaces;
-using FripShop.Dbo;
+using FripShop.DTO;
 using Microsoft.Extensions.Logging;
 
 namespace FripShop.DataAccess
 {
-    public class ArticleRepository : Repository<Article, DboArticle>, IArticleRepo
+    public class ArticleRepository : Repository<Article, DTOArticle>, IArticleRepo
     {
         public ArticleRepository(FripShopContext context, ILogger<ArticleRepository> logger, IMapper mapper) : base(context, logger, mapper) {}
-        public async Task<DboUser> GetUserFromId(long id)
+        public async Task<DTOUser> GetUserFromId(long id)
         {
             try
             {
-                return _mapper.Map<DboUser>(_context.Users.Find(id));
+                return _mapper.Map<DTOUser>(_context.Users.Find(id));
             }
             catch (Exception ex)
             {
-                _logger.LogError($"REPOSITORY {typeof(DboUser)} -- Get() -- Error on db : ", ex);
+                _logger.LogError($"REPOSITORY {typeof(DTOUser)} -- Get() -- Error on db : ", ex);
                 return null;
             }
         }
