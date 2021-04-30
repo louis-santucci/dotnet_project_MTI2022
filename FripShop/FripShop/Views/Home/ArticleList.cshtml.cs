@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using FripShop.DataAccess.EFModels;
+using FripShop.DataAccess.Interfaces;
 using FripShop.Dbo;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
@@ -16,7 +17,8 @@ namespace FripShop.Views.Home
     {
 
         private readonly ILogger<ArticleListModel> _logger;
-        private readonly DataAccess.Interfaces.IRepo<Article, DboArticle> _articleRepo;
+        private readonly DataAccess.Interfaces.IArticleRepo _articleRepo;
+        private readonly DataAccess.Interfaces.IUserRepo _userRepo;
         private string _sessionId;
 
         public enum Comparison
@@ -25,6 +27,14 @@ namespace FripShop.Views.Home
             Price,
             Condition,
             SellerRate
+        }
+
+
+        public ArticleListModel(ILogger<ArticleListModel> logger, DataAccess.Interfaces.IArticleRepo articleRepo, IUserRepo userRepo)
+        {
+            _logger = logger;
+            _articleRepo = articleRepo;
+            _userRepo = userRepo;
         }
 
         /// <summary>
@@ -80,7 +90,7 @@ namespace FripShop.Views.Home
                     res = @ascending ? res.OrderBy(x => x.Price).ToList() : res.OrderByDescending(x => x.Price).ToList();
                     break;
                 case Comparison.SellerRate:
-                    res = @ascending ? res.OrderBy(x => x.Seller.Note).ToList() : res.OrderByDescending(x => x.Seller.Note).ToList();
+                    //TODO
                     break;
             }
             return res;
