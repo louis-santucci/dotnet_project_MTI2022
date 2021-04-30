@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using FripShop.DataAccess.Interfaces;
-using FripShop.Dbo;
+using FripShop.DTO;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Logging;
 
@@ -25,14 +25,14 @@ namespace FripShop.Views.Article
             SellerRate
         }
 
-        public IEnumerable<DboArticle> DboArticles { get; set; }
+        public IEnumerable<DTOArticle> DboArticles { get; set; }
 
         public IndexModel(ILogger<IndexModel> logger, DataAccess.Interfaces.IArticleRepo articleRepo, IUserRepo userRepo)
         {
             _logger = logger;
             _articleRepo = articleRepo;
             _userRepo = userRepo;
-            DboArticles = new List<DboArticle>();
+            DboArticles = new List<DTOArticle>();
         }
 
         /// <summary>
@@ -48,7 +48,7 @@ namespace FripShop.Views.Article
                                                         Comparison comparison = Comparison.Date, bool ascending = false,
                                                         string search = null) // Filters
         {
-            var res = new List<DboArticle>();
+            var res = new List<DTOArticle>();
 
             foreach (var element in await _articleRepo.Get())
             {
