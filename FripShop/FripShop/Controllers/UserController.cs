@@ -35,7 +35,7 @@ namespace FripShop.Controllers
             return View();
         }
 
-        [HttpPost]
+        [HttpPost("/api/users/")]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Register([FromBody] DTOUser userModel)
         {
@@ -60,13 +60,13 @@ namespace FripShop.Controllers
             return BadRequest();
         }
 
-        [HttpGet]
+        [HttpGet("/api/users/{userId}")]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Get(int id)
+        public async Task<ActionResult> Get(int userId)
         {
             try
             {
-                var user = await _userRepo.GetById(id);
+                var user = await _userRepo.GetById(userId);
                 if (user != null)
                     return Ok(User);
             }
@@ -77,7 +77,7 @@ namespace FripShop.Controllers
             return NotFound();
         }
 
-        [HttpPost]
+        [HttpPost("/api/users/editUser")]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Edit([FromBody] DTOUser userModel)
         {
@@ -113,7 +113,7 @@ namespace FripShop.Controllers
             return BadRequest();
         }
 
-        [HttpPost]
+        [HttpPost("/api/users/delete")]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Delete([FromBody] long id)
         {
