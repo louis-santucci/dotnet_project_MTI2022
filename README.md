@@ -15,6 +15,18 @@ l’application. Suite à chaque vente, le client peut noter le vendeur. La note
 que le nombre total de notes) sera affichée lors du processus d’achat, afin d’informer chaque client de
 la confiance qu’il peut accorder au vendeur.
 
-ENDPOINTS API
-//TODO Faire liste endpoints avec les contrôleurs API
+--- ENDPOINTS API ---
 
+Article controller:
+- "/api/articles/" : GET : PUBLIC : Get tous les articles présents dans la DB, retourne un JSON contenant la liste des articles avec leur vendeur respectif
+- "/api/articles/{articleId}" : GET : PUBLIC : Get un article, retourne un JSON avec l'article dedans
+- "/api/articles/{articleId}/getUser" : GET : PUBLIC : Get le user PUBLIC d'un article, retourne un JSON avec le user PUBLIC
+- "/api/articles/create" : POST : PRIVATE : Poste un nouvel article avec l'objet en body (JSON)
+
+User controller:
+- "/api/users/register" : POST : PRIVATE : Post pour enregistrer un nouveau User, avec le User en body (JSON). Renvoie le user créé.
+- "/api/users/{userId}" : GET : PRIVATE : Get pour choper les informations privées d'un user. Retourne l'objet User (JSON)
+- "/api/users/{userId}/public" : GET : PUBLIC : Get les informations publiques d'un User, retourne un UserPublic (JSON)
+- "/api/users/editUser" : POST : PRIVATE : Post pour éditer un user déjà existant, avec les nouvelles infos du user dans l'objet (JSON)
+- "/api/users/delete" : POST : PRIVATE : Post pour supprimer un User, avec dans le body l'ID du User.
+- "/api/users/{userId}/getArticles" : GET : PUBLIC : Get pour récupérer tous les articles mis en vente d'un User
