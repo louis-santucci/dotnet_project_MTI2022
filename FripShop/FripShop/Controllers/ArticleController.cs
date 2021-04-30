@@ -30,6 +30,7 @@ namespace FripShop.Controllers
 
         /// API Calls
         [HttpGet("/api/articles/")]
+        [ValidateAntiForgeryToken]
         public async Task<ActionResult> GetAll()
         {
             var results = await this._articleRepo.Get();
@@ -37,6 +38,7 @@ namespace FripShop.Controllers
         }
 
         [HttpGet("/api/articles/{articleId}")]
+        [ValidateAntiForgeryToken]
         public async Task<ActionResult> GetId(long articleId)
         {
             var articles = await this._articleRepo.Get();
@@ -46,6 +48,7 @@ namespace FripShop.Controllers
         }
 
         [HttpGet("/api/articles/{articleId}/getUser")]
+        [ValidateAntiForgeryToken]
         public async Task<ActionResult> GetUserFromArticle(long articleId)
         {
             var user = await _articleRepo.GetUserFromId(articleId);
@@ -55,6 +58,7 @@ namespace FripShop.Controllers
         }
 
         [HttpPost("/api/articles/create")]
+        [ValidateAntiForgeryToken]
         public async Task<ActionResult> CreateArticle([FromBody] DTOArticle article)
         {
             throw new NotImplementedException();

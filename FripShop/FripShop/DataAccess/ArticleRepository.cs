@@ -13,15 +13,15 @@ namespace FripShop.DataAccess
     public class ArticleRepository : Repository<Article, DTOArticle>, IArticleRepo
     {
         public ArticleRepository(FripShopContext context, ILogger<ArticleRepository> logger, IMapper mapper) : base(context, logger, mapper) {}
-        public async Task<DTOUser> GetUserFromId(long id)
+        public async Task<DTOUserInfo> GetUserFromId(long id)
         {
             try
             {
-                return _mapper.Map<DTOUser>(_context.Users.Find(id));
+                return _mapper.Map<DTOUserInfo>(_context.Users.Find(id));
             }
             catch (Exception ex)
             {
-                _logger.LogError($"REPOSITORY {typeof(DTOUser)} -- Get() -- Error on db : ", ex);
+                _logger.LogError($"REPOSITORY {typeof(DTOUserInfo)} -- Get() -- Error on db : ", ex);
                 return null;
             }
         }

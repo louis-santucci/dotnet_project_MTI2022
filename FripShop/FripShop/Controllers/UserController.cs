@@ -35,7 +35,8 @@ namespace FripShop.Controllers
             return View();
         }
 
-        [HttpPost("/api/users/")]
+        /// API Calls
+        [HttpPost("/api/users/register")]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Register([FromBody] DTOUser userModel)
         {
@@ -129,6 +130,26 @@ namespace FripShop.Controllers
             }
 
             return Ok(id);
+        }
+
+        [HttpGet("/api/users/{userId}/getArticles")]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> GetArticlesFromId(long userId)
+        {
+            try
+            {
+                var articles = await _articleRepo.Get();
+                var results = articles.Where(a => a.SellerId == userId);
+                if (results.Count() != 0)
+                    return Ok(results);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError("CONTROLLER USER -- GetArticlesFromId() -- Error on db : ", ex);
+                return BadRequest();
+            }
+
+            return NotFound(userId);
         }
     }
 }
