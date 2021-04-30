@@ -26,8 +26,7 @@ namespace FripShop
             services.AddEntityFrameworkSqlServer()
                 .AddDbContext<DataAccess.EFModels.FripShopContext>(options => options.UseSqlServer(_connectionString));
             services.AddAutoMapper(typeof(DataAccess.AutoMapperProfiles));
-            services.AddControllers();
-            services.AddRazorPages().AddRazorRuntimeCompilation();
+            services.AddControllersWithViews().AddRazorRuntimeCompilation();
             services.AddTransient<DataAccess.Interfaces.IArticleRepo, DataAccess.ArticleRepository>();
             services.AddTransient<DataAccess.Interfaces.IUserRepo, DataAccess.UserRepository>();
         }
@@ -55,7 +54,6 @@ namespace FripShop
 
             app.UseEndpoints(endpoints =>
             {
-                endpoints.MapRazorPages();
                 endpoints.MapControllerRoute(
                     name: "default",
                     pattern: "{controller=Home}/{action=Index}/{id?}");
