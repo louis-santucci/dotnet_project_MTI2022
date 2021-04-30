@@ -20,7 +20,7 @@ namespace FripShop.Controllers
             _logger = logger;
         }
 
-        public async Task<ActionResult> Index()
+        public ActionResult Index()
         {
             return View();
         }
