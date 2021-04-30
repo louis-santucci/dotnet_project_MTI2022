@@ -15,7 +15,6 @@ namespace FripShop.Views.Home
 {
     public class ArticleListModel : PageModel
     {
-
         private readonly ILogger<ArticleListModel> _logger;
         private readonly DataAccess.Interfaces.IArticleRepo _articleRepo;
         private readonly DataAccess.Interfaces.IUserRepo _userRepo;
@@ -29,6 +28,7 @@ namespace FripShop.Views.Home
             SellerRate
         }
 
+        public List<DboArticle> DboArticles { get; set; }
 
         public ArticleListModel(ILogger<ArticleListModel> logger, DataAccess.Interfaces.IArticleRepo articleRepo, IUserRepo userRepo)
         {
@@ -45,12 +45,13 @@ namespace FripShop.Views.Home
         /// <param name="price">Tuple containing the price range</param>
         /// <param name="comparison">Type of the sorting parameter</param>
         /// <param name="ascending">Boolean to indicate the direction of the sorting algorithm</param>
-        public async Task<List<DboArticle>> OnGetAsync(string gender = null, List<string> categories = null,
+        public Task<IActionResult> OnGetAsync(string gender = null, List<string> categories = null,
                                                         Tuple<float, float> price = null, int conditionMin = 0,
                                                         Comparison comparison = Comparison.Date, bool ascending = false,
                                                         string search = null) // Filters
         {
             var res = new List<DboArticle>();
+
             foreach (var element in _articleRepo.Get().Result)
             {
                 if (search != null)
@@ -93,7 +94,9 @@ namespace FripShop.Views.Home
                     //TODO
                     break;
             }
-            return res;
+
+            DboArticles = res;
+            return null;
         }
     }
 }

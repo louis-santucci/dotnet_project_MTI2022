@@ -1,9 +1,25 @@
-﻿@page
-@model FripShop.Views.Home.ArticleListModel
+﻿@using FripShop.Views.Home
+@model ArticleListModel
 @{
     ViewBag.Title = "Articles";
 }
 
 <div class="text-center">
     <h1 class="display-4">Welcome</h1>
+    <div>
+       @foreach (var article in Model.DboArticles)
+        {
+        <div class="border box-shadow"> 
+            <h1>
+                @Html.DisplayFor(modelItem => article.Name);
+            </h1>
+            <p>
+                @Html.DisplayFor(modelItem => article.Description);
+            </p>
+            <p>
+                @Html.DisplayFor(modelItem => article.Price);
+            </p>
+        </div>
+        }
+    </div>
 </div>
