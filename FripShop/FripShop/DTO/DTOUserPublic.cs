@@ -5,7 +5,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace FripShop.DTO
 {
-    public class DTOUserInfo : DTOUser, IDTO
+    public class DTOUserPublic : IDTO
     {
         [Key]
         public long Id { get; set; }

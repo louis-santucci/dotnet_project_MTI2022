@@ -20,6 +20,6 @@ namespace FripShop.DTO
         public int Condition { get; set; }
         public DateTime CreatedAt { get; set; }
 
-        public DTOUserInfo User { get; set; }
+        public DTOUserPublic User { get; set; }
     }
 }
