@@ -25,8 +25,6 @@ namespace FripShop.Dbo
         public int Condition { get; set; }
         public DateTime CreatedAt { get; set; }
 
-        public virtual DboUser Seller { get; set; }
-        public virtual DboRating Rating { get; set; }
         public virtual ICollection<DboCart> Carts { get; set; }
         public virtual ICollection<DboTransaction> Transactions { get; set; }
     }
