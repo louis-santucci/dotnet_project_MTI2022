@@ -7,5 +7,9 @@ using FripShop.DTO;
 
 namespace FripShop.DataAccess.Interfaces
 {
-    public interface IUserRepo : IRepo<User, DTOUser> { }
+    public interface IUserRepo : IRepo<User, DTOUser>
+    {
+        DTOUser GetUserByEmail(string email);
+        DTOUser GetUserByUserName(string userName);
+    }
 }
