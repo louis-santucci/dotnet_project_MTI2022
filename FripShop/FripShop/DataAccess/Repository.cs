@@ -11,7 +11,7 @@ namespace FripShop.DataAccess
 {
     public class Repository<DbEntity, ModelEntity> : IRepo<DbEntity, ModelEntity>
         where DbEntity : class, new()
-        where ModelEntity : class, Dbo.IDbo, new()
+        where ModelEntity : class, DTO.IDTO, new()
     {
 
         private DbSet<DbEntity> _set;
