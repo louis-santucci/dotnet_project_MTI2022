@@ -2,7 +2,7 @@
 
 namespace FripShop.DTO
 {
-    public class DTORegisterUser : DTOUserInfo
+    public class DTOUser : IDTO
     {
         [Key]
         public long Id { get; set; }
