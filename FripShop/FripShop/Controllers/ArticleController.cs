@@ -45,15 +45,23 @@ namespace FripShop.Controllers
         [HttpGet("/api/articles/")]
         public async Task<ActionResult> GetAll()
         {
-            var results = await this._articleRepo.Get();
-            foreach (var result in results)
+            try
             {
-                var user = await _articleRepo.GetUserFromId(result.Id);
-                result.User = DtoUserToDtoUserPublic(user);
+                var results = await this._articleRepo.Get();
+                foreach (var result in results)
+                {
+                    var user = await _articleRepo.GetUserFromId(result.Id);
+                    result.User = DtoUserToDtoUserPublic(user);
+                }
+                return Ok(results);
             }
-            return Ok(results);
+            catch (Exception ex)
+            {
+                _logger.LogError("CONTROLLER ARTICLE -- GetAll() -- Error on db : ", ex);
+                return BadRequest();
+            }
         }
-
+    
         [HttpGet("/api/articles/{articleId}")]
         public async Task<ActionResult> GetId(long articleId)
         {
@@ -83,6 +91,18 @@ namespace FripShop.Controllers
         public async Task<ActionResult> CreateArticle([FromBody] DTOArticle article)
         {
             throw new NotImplementedException();
+            try
+            {
+                if (ModelState.IsValid)
+                {
+
+                }
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError("CONTROLLER ARTICLE -- CreateArticle() -- Error on db : ", ex);
+            }
+
         }
     }
 }
