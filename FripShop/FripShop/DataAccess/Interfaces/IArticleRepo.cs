@@ -6,6 +6,6 @@ namespace FripShop.DataAccess.Interfaces
 {
     public interface IArticleRepo : IRepo<Article, DTOArticle>
     {
-        public Task<DTOUserInfo> GetUserFromId(long id);
+        public Task<DTOUser> GetUserFromId(long id);
     }
 }

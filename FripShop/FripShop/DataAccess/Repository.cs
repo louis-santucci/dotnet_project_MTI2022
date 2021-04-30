@@ -124,7 +124,7 @@ namespace FripShop.DataAccess
         {
             try
             {
-                var result = _set.FindAsync(id);
+                var result = await _set.FindAsync(id);
                 if (result != null)
                     return _mapper.Map<ModelEntity>(result);
             }
