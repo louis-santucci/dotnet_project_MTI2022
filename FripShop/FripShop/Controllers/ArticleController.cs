@@ -1,7 +1,10 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using System;
+using Microsoft.AspNetCore.Mvc;
 using System.Linq;
 using System.Threading.Tasks;
 using FripShop.DataAccess.Interfaces;
+using FripShop.DTO;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.Extensions.Logging;
 
 namespace FripShop.Controllers
@@ -20,7 +23,7 @@ namespace FripShop.Controllers
             _logger = logger;
         }
 
-        public async Task<ActionResult> Index()
+        public ActionResult Index()
         {
             return View();
         }
@@ -49,6 +52,12 @@ namespace FripShop.Controllers
             if (user != null)
                 return Ok(user);
             return NotFound();
+        }
+
+        [HttpPost("/api/articles/create")]
+        public async Task<ActionResult> CreateArticle([FromBody] DTOArticle article)
+        {
+            throw new NotImplementedException();
         }
     }
 }

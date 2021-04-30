@@ -1,11 +1,11 @@
 ﻿using System.Threading.Tasks;
 using FripShop.DataAccess.EFModels;
-using FripShop.Dbo;
+using FripShop.DTO;
 
 namespace FripShop.DataAccess.Interfaces
 {
-    public interface IArticleRepo : IRepo<Article, DboArticle>
+    public interface IArticleRepo : IRepo<Article, DTOArticle>
     {
-        public Task<DboUser> GetUserFromId(long id);
+        public Task<DTOUser> GetUserFromId(long id);
     }
 }
