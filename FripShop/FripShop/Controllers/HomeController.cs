@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System.Diagnostics;
-using FripShop.Dbo;
+using FripShop.DTO;
 
 namespace FripShop.Controllers
 {
