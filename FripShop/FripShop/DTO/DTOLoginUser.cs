@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace FripShop.DTO
 {
-    public class DTOLoginUser
+    public class DTOLoginUser : DTOUser, IDTO
     {
         [Key]
         public long Id { get; set; }

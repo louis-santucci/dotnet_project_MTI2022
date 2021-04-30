@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
 using FripShop.DataAccess.EFModels;
 using FripShop.DataAccess.Interfaces;
+using FripShop.DTO;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 
@@ -11,10 +13,10 @@ namespace FripShop.DataAccess
 {
     public class Repository<DbEntity, ModelEntity> : IRepo<DbEntity, ModelEntity>
         where DbEntity : class, new()
-        where ModelEntity : class, DTO.IDTO, new()
+        where ModelEntity : class, IDTO, new()
     {
 
-        private DbSet<DbEntity> _set;
+        protected DbSet<DbEntity> _set;
         protected FripShopContext _context;
         protected ILogger _logger;
         protected IMapper _mapper;
@@ -116,6 +118,23 @@ namespace FripShop.DataAccess
                 _logger.LogError($"REPOSITORY {typeof(ModelEntity)} -- Delete() -- Error on db : ", ex);
                 return false;
             }
+        }
+
+        public async Task<ModelEntity> GetById(long id)
+        {
+            try
+            {
+                var result = await _set.FindAsync(id);
+                if (result != null)
+                    return _mapper.Map<ModelEntity>(result);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError($"REPOSITORY {typeof(ModelEntity)} -- GetById() -- Error on db : ", ex);
+                return null;
+            }
+
+            return null;
         }
 
         public Task<int> Count()

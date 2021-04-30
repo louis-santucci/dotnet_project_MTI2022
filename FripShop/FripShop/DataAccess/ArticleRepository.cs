@@ -21,7 +21,7 @@ namespace FripShop.DataAccess
             }
             catch (Exception ex)
             {
-                _logger.LogError($"REPOSITORY {typeof(DTOUser)} -- Get() -- Error on db : ", ex);
+                _logger.LogError($"REPOSITORY {typeof(DTOUserPublic)} -- Get() -- Error on db : ", ex);
                 return null;
             }
         }

@@ -1,24 +1,17 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+
+#nullable disable
 
 namespace FripShop.DTO
 {
-    public class DTOUser : IDTO
+    public class DTOUserPublic : IDTO
     {
         [Key]
         public long Id { get; set; }
-
         public string UserName { get; set; }
-
-        public string Email { get; set; }
-
-        public string Password { get; set; }
-
         public string Name { get; set; }
-
-        public string Address { get; set; }
-        
         public string Gender { get; set; }
-
         public double Note { get; set; }
     }
 }

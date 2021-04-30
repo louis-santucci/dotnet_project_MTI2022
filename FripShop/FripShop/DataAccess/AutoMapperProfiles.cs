@@ -21,6 +21,9 @@ namespace FripShop.DataAccess
 
             CreateMap<DTOUser, EFModels.User>();
             CreateMap<EFModels.User, DTOUser>();
+
+            CreateMap<DTOUser, DTOUserPublic>();
+            CreateMap<DTOUserPublic, DTOUser>();
         }
     }
 }

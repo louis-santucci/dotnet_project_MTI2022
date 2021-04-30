@@ -34,6 +34,7 @@ namespace FripShop.Views.Article
             _articleRepo = articleRepo;
             _userRepo = userRepo;
             //DboArticles = new List<DboArticle>();
+
         }
 
         /// <summary>
@@ -50,7 +51,6 @@ namespace FripShop.Views.Article
         //                                                string search = null) // Filters
         //{
         //    var res = new List<DboArticle>();
-
         //    foreach (var element in await _articleRepo.Get())
         //    {
         //        if (search != null)
