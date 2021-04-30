@@ -1,14 +1,7 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Collections.Generic;
+﻿using Microsoft.AspNetCore.Mvc;
 using System.Linq;
 using System.Threading.Tasks;
-using FripShop.DataAccess;
-using FripShop.DataAccess.EFModels;
 using FripShop.DataAccess.Interfaces;
-using FripShop.Dbo;
-using FripShop.Views.Article;
 using Microsoft.Extensions.Logging;
 
 namespace FripShop.Controllers
