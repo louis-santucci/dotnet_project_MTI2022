@@ -1,21 +1,18 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using FripShop.DataAccess.EFModels;
 using FripShop.DataAccess.Interfaces;
 using FripShop.Dbo;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Microsoft.Extensions.Logging;
-using Microsoft.IdentityModel.Protocols.OpenIdConnect;
 
-namespace FripShop.Pages.Home
+namespace FripShop.Views.Article
 {
-    public class ArticleListModel : PageModel
+    public class IndexModel : PageModel
     {
-        private readonly ILogger<ArticleListModel> _logger;
+        private readonly ILogger<IndexModel> _logger;
         private readonly DataAccess.Interfaces.IArticleRepo _articleRepo;
         private readonly DataAccess.Interfaces.IUserRepo _userRepo;
         private string _sessionId;
@@ -28,13 +25,14 @@ namespace FripShop.Pages.Home
             SellerRate
         }
 
-        public List<DboArticle> DboArticles { get; set; }
+        public IEnumerable<DboArticle> DboArticles { get; set; }
 
-        public ArticleListModel(ILogger<ArticleListModel> logger, DataAccess.Interfaces.IArticleRepo articleRepo, IUserRepo userRepo)
+        public IndexModel(ILogger<IndexModel> logger, DataAccess.Interfaces.IArticleRepo articleRepo, IUserRepo userRepo)
         {
             _logger = logger;
             _articleRepo = articleRepo;
             _userRepo = userRepo;
+            DboArticles = new List<DboArticle>();
         }
 
         /// <summary>
@@ -45,14 +43,14 @@ namespace FripShop.Pages.Home
         /// <param name="price">Tuple containing the price range</param>
         /// <param name="comparison">Type of the sorting parameter</param>
         /// <param name="ascending">Boolean to indicate the direction of the sorting algorithm</param>
-        public Task<IActionResult> OnGetAsync(string gender = null, List<string> categories = null,
+        public async Task OnGetAsync(string gender = null, List<string> categories = null,
                                                         Tuple<float, float> price = null, int conditionMin = 0,
                                                         Comparison comparison = Comparison.Date, bool ascending = false,
                                                         string search = null) // Filters
         {
             var res = new List<DboArticle>();
 
-            foreach (var element in _articleRepo.Get().Result)
+            foreach (var element in await _articleRepo.Get())
             {
                 if (search != null)
                 {
@@ -85,7 +83,7 @@ namespace FripShop.Pages.Home
                     res = @ascending ? res.OrderBy(x => x.CreatedAt).ToList() : res.OrderByDescending(x => x.CreatedAt).ToList();
                     break;
                 case Comparison.Condition:
-                    res = @ascending ? res.OrderBy(x => x.Condition).ToList() : res.OrderByDescending(x => x.Condition).ToList();    
+                    res = @ascending ? res.OrderBy(x => x.Condition).ToList() : res.OrderByDescending(x => x.Condition).ToList();
                     break;
                 case Comparison.Price:
                     res = @ascending ? res.OrderBy(x => x.Price).ToList() : res.OrderByDescending(x => x.Price).ToList();
@@ -94,9 +92,7 @@ namespace FripShop.Pages.Home
                     //TODO
                     break;
             }
-
             DboArticles = res;
-            return null;
         }
     }
 }
