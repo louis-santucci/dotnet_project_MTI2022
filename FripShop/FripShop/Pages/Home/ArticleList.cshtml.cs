@@ -11,7 +11,7 @@ using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Microsoft.Extensions.Logging;
 using Microsoft.IdentityModel.Protocols.OpenIdConnect;
 
-namespace FripShop.Views.Home
+namespace FripShop.Pages.Home
 {
     public class ArticleListModel : PageModel
     {
