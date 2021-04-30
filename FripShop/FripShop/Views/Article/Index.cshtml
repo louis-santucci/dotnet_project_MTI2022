@@ -1,29 +1,18 @@
-﻿@model FripShop.Views.Article.IndexModel
-
+﻿@model IEnumerable<FripShop.Dbo.DboArticle>
 @{
     ViewBag.Title = "Articles";
 }
 
+
 <div class="text-center">
     <h1 class="display-4">Welcome</h1>
     <div>
-
-        @if (Model != null)
-        {
-            foreach (var article in Model.DboArticles)
+        @foreach (var article in Model)
             {
-                <div class="border box-shadow">
-                    <h1>
-                        @Html.DisplayFor(modelItem => article.Name);
-                    </h1>
-                    <p>
-                        @Html.DisplayFor(modelItem => article.Description);
-                    </p>
-                    <p>
-                        @Html.DisplayFor(modelItem => article.Price);
-                    </p>
+                <div>
+                    @article.Name <br />
+                    @article.Price <br />
                 </div>
             }
-        }
     </div>
 </div>
