@@ -1,12 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.ComponentModel.DataAnnotations;
 
-namespace FripShop.Dbo
+namespace FripShop.DTO
 {
-    public class DboRegisterUser : DboUser
+    public class DTORegisterUser : DTOUser
     {
         [Key]
         public long Id { get; set; }
@@ -39,7 +35,5 @@ namespace FripShop.Dbo
         [DataType(DataType.Text)]
         [Display(Name = "Gender")]
         public string Gender { get; set; }
-        
-        public double Note { get; set; }
     }
 }

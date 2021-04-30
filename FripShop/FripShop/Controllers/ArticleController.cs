@@ -2,7 +2,7 @@
 using System.Linq;
 using System.Threading.Tasks;
 using FripShop.DataAccess.Interfaces;
-using FripShop.Dbo;
+using FripShop.DTO;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.Extensions.Logging;
 
@@ -54,7 +54,7 @@ namespace FripShop.Controllers
         }
 
         [HttpPost("/api/articles/create")]
-        public async Task<ActionResult> CreateArticle([FromBody] DboArticle article)
+        public async Task<ActionResult> CreateArticle([FromBody] DTOArticle article)
         {
 
         }

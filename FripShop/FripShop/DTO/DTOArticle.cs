@@ -1,18 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using FripShop.Dbo;
 
-namespace FripShop.Dbo
+namespace FripShop.DTO
 {
-    public class DboArticle : IDbo
+    public class DTOArticle : IDTO
     {
-        public DboArticle()
-        {
-            Carts = new HashSet<DboCart>();
-            Transactions = new HashSet<DboTransaction>();
-        }
-
         [Key]
         public long Id { get; set; }
         public string ImageSource { get; set; }
@@ -26,8 +19,5 @@ namespace FripShop.Dbo
         public string Brand { get; set; }
         public int Condition { get; set; }
         public DateTime CreatedAt { get; set; }
-
-        public virtual ICollection<DboCart> Carts { get; set; }
-        public virtual ICollection<DboTransaction> Transactions { get; set; }
     }
 }
