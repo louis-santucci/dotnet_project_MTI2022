@@ -35,10 +35,37 @@ namespace FripShop.Controllers
             return View();
         }
 
+        public static DTOUser DtoUserEditionToDtoUser(DTOUserEdition userModel)
+        {
+            var user = new DTOUser();
+
+            user.Id = userModel.Id;
+            user.Email = userModel.Email;
+            user.Address = userModel.Address;
+            user.Name = userModel.Name;
+            user.Password = userModel.Password;
+            user.UserName = userModel.UserName;
+            user.Gender = userModel.Gender;
+            user.Note = 10;
+
+            return user;
+        }
+
+        public static DTOUserPublic DtoUserToDtoUserPublic(DTOUser userModel)
+        {
+            DTOUserPublic userPublic = new DTOUserPublic();
+            userPublic.Id = userModel.Id;
+            userPublic.Name = userModel.Name;
+            userPublic.UserName = userModel.UserName;
+            userPublic.Note = userModel.Note;
+            userPublic.Gender = userModel.Gender;
+            return userPublic;
+        }
+
         /// API Calls
         [HttpPost("/api/users/register")]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Register([FromBody] DTOUser userModel)
+        public async Task<ActionResult> Register([FromBody] DTOUserEdition userModel)
         {
             try
             {
@@ -48,7 +75,7 @@ namespace FripShop.Controllers
                         return BadRequest(userModel);
                     if (_userRepo.GetUserByUserName(userModel.UserName) != null)
                         return BadRequest(userModel);
-                    var result = await _userRepo.Insert(userModel);
+                    var result = await _userRepo.Insert(DtoUserEditionToDtoUser(userModel));
                     if (result != null)
                         return Created(result.Id.ToString(), result);
                 }
@@ -69,7 +96,7 @@ namespace FripShop.Controllers
             {
                 var user = await _userRepo.GetById(userId);
                 if (user != null)
-                    return Ok(User);
+                    return Ok(user);
             }
             catch (Exception ex)
             {
@@ -78,9 +105,25 @@ namespace FripShop.Controllers
             return NotFound();
         }
 
+        [HttpGet("/api/users/{userId}/public")]
+        public async Task<ActionResult> GetPublic(int userId)
+        {
+            try
+            {
+                var user = await _userRepo.GetById(userId);
+                if (user != null)
+                    return Ok(DtoUserToDtoUserPublic(user));
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError("CONTROLLER USER -- GetPublic() -- Error on db : ", ex);
+            }
+            return NotFound();
+        }
+
         [HttpPost("/api/users/editUser")]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Edit([FromBody] DTOUser userModel)
+        public async Task<ActionResult> Edit([FromBody] DTOUserEdition userModel)
         {
             try
             {
@@ -89,13 +132,9 @@ namespace FripShop.Controllers
                     var currentUser = await _userRepo.GetById(userModel.Id);
                     if (currentUser == null)
                         return NotFound();
-                    currentUser.Gender = userModel.Gender;
-                    currentUser.Name = userModel.Name;
-                    currentUser.UserName = userModel.UserName;
-                    currentUser.Password = userModel.Password;
-                    currentUser.Address = userModel.Address;
-                    currentUser.Email = userModel.Email;
-
+                    if (currentUser.Id != userModel.Id)
+                        return BadRequest();
+                    var current = DtoUserEditionToDtoUser(userModel);
                     if (_userRepo.GetUserByEmail(currentUser.Email) != null
                         && _userRepo.GetUserByUserName(currentUser.UserName) != null)
                     {
@@ -133,13 +172,18 @@ namespace FripShop.Controllers
         }
 
         [HttpGet("/api/users/{userId}/getArticles")]
-        [ValidateAntiForgeryToken]
         public async Task<ActionResult> GetArticlesFromId(long userId)
         {
             try
             {
                 var articles = await _articleRepo.Get();
                 var results = articles.Where(a => a.SellerId == userId);
+                var privateUser = await _userRepo.GetById(userId);
+                var publicUser = DtoUserToDtoUserPublic(privateUser);
+                foreach (var result in results)
+                {
+                    result.User = publicUser;
+                }
                 if (results.Count() != 0)
                     return Ok(results);
             }
