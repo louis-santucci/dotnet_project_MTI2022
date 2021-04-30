@@ -14,7 +14,7 @@ namespace FripShop.Controllers
 {
     [Route("api/articles")]
     [ApiController]
-    public class ArticleController : ControllerBase
+    public class ArticleController : Controller
     {
 
         private readonly IArticleRepo _articleRepo;

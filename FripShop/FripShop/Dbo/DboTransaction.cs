@@ -8,6 +8,7 @@ namespace FripShop.Dbo
 {
     public class DboTransaction : IDbo
     {
+        [Key]
         public long Id { get; set; }
         public long ArticleId { get; set; }
         public long BuyerId { get; set; }

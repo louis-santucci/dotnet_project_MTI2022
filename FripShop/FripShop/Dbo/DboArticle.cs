@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using FripShop.Dbo;
 
 namespace FripShop.Dbo
@@ -12,6 +13,7 @@ namespace FripShop.Dbo
             Transactions = new HashSet<DboTransaction>();
         }
 
+        [Key]
         public long Id { get; set; }
         public string ImageSource { get; set; }
         public long SellerId { get; set; }
