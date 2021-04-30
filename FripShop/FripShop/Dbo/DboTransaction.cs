@@ -13,8 +13,5 @@ namespace FripShop.Dbo
         public long BuyerId { get; set; }
         public string TransactionState { get; set; }
         public DateTime LastUpdateAt { get; set; }
-
-        public virtual DboArticle Article { get; set; }
-        public virtual DboUser Buyer { get; set; }
     }
 }
