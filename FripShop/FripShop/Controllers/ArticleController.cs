@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using System;
+using Microsoft.AspNetCore.Mvc;
 using System.Linq;
 using System.Threading.Tasks;
 using FripShop.DataAccess.Interfaces;
@@ -56,7 +57,7 @@ namespace FripShop.Controllers
         [HttpPost("/api/articles/create")]
         public async Task<ActionResult> CreateArticle([FromBody] DTOArticle article)
         {
-
+            throw new NotImplementedException();
         }
     }
 }
