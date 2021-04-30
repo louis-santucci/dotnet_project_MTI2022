@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace FripShop.Dbo
+﻿namespace FripShop.DTO
 {
     public class ErrorViewModel
     {
