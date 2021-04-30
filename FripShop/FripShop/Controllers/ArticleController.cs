@@ -8,32 +8,39 @@ using FripShop.DataAccess;
 using FripShop.DataAccess.EFModels;
 using FripShop.DataAccess.Interfaces;
 using FripShop.Dbo;
+using FripShop.Views.Article;
 using Microsoft.Extensions.Logging;
 
 namespace FripShop.Controllers
 {
-    [Route("api/articles")]
-    [ApiController]
     public class ArticleController : Controller
     {
 
         private readonly IArticleRepo _articleRepo;
         private readonly IUserRepo _userRepo;
+        private readonly ILogger<ArticleController> _logger;
 
-        public ArticleController(IArticleRepo articleRepo, IUserRepo userRepo)
+        public ArticleController(IArticleRepo articleRepo, IUserRepo userRepo, ILogger<ArticleController> logger)
         {
             _articleRepo = articleRepo;
             _userRepo = userRepo;
+            _logger = logger;
         }
 
-        [HttpGet("")]
+        public async Task<ActionResult> Index()
+        {
+            return View();
+        }
+
+        /// API Calls
+        [HttpGet("/api/articles/")]
         public async Task<ActionResult> GetAll()
         {
             var results = await this._articleRepo.Get();
             return Ok(results);
         }
 
-        [HttpGet("{articleId}")]
+        [HttpGet("/api/articles/{articleId}")]
         public async Task<ActionResult> GetId(long articleId)
         {
             var articles = await this._articleRepo.Get();
@@ -42,7 +49,7 @@ namespace FripShop.Controllers
             return NotFound();
         }
 
-        [HttpGet("{articleId}/getUser")]
+        [HttpGet("/api/articles/{articleId}/getUser")]
         public async Task<ActionResult> GetUserFromArticle(long articleId)
         {
             var user = await _articleRepo.GetUserFromId(articleId);
