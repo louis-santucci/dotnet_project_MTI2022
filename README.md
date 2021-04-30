@@ -14,3 +14,7 @@ Chaque vendeur est noté vis à vis de son honnêteté ainsi qu’à la qualité
 l’application. Suite à chaque vente, le client peut noter le vendeur. La note globale d’un vendeur (ainsi
 que le nombre total de notes) sera affichée lors du processus d’achat, afin d’informer chaque client de
 la confiance qu’il peut accorder au vendeur.
+
+ENDPOINTS API
+//TODO Faire liste endpoints avec les contrôleurs API
+

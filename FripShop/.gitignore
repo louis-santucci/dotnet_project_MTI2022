@@ -1,5 +1,7 @@
 FripShop/bin/
 FripShop/obj/
+FripShopDatabase/bin/
+FripShopDatabase/obj/
 UnitTestFripShop/bin/
 UnitTestFripShop/obj/
 *.jfm

@@ -26,19 +26,22 @@ namespace FripShop
             services.AddEntityFrameworkSqlServer()
                 .AddDbContext<DataAccess.EFModels.FripShopContext>(options => options.UseSqlServer(_connectionString));
             services.AddAutoMapper(typeof(DataAccess.AutoMapperProfiles));
-            services.AddControllersWithViews();
+            services.AddControllersWithViews().AddRazorRuntimeCompilation();
+            services.AddTransient<DataAccess.Interfaces.IArticleRepo, DataAccess.ArticleRepository>();
+            services.AddTransient<DataAccess.Interfaces.IUserRepo, DataAccess.UserRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
+            _connectionString = Configuration.GetConnectionString("FripShop");
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
             }
             else
             {
-                app.UseExceptionHandler("/Home/Error");
+                app.UseExceptionHandler("/Error");
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }

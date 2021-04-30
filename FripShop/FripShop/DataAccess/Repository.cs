@@ -19,6 +19,14 @@ namespace FripShop.DataAccess
         protected ILogger _logger;
         protected IMapper _mapper;
 
+        public Repository(FripShopContext context, ILogger logger, IMapper mapper)
+        {
+            _mapper = mapper;
+            _context = context;
+            _logger = logger;
+            _set = _context.Set<DbEntity>();
+        }
+
         public virtual async Task<IEnumerable<ModelEntity>> Get(string includeString = "")
         {
             try
