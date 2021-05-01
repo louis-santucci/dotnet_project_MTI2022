@@ -9,6 +9,9 @@ using FripShop.DataAccess.EFModels;
 using FripShop.DataAccess.Interfaces;
 using FripShop.DTO;
 using Microsoft.Extensions.Logging;
+using Microsoft.EntityFrameworkCore;
+using System.Security.Cryptography;
+using System.Text;
 
 namespace FripShop.Controllers
 {
@@ -75,6 +78,7 @@ namespace FripShop.Controllers
                         return BadRequest(userModel);
                     if (_userRepo.GetUserByUserName(userModel.UserName) != null)
                         return BadRequest(userModel);
+                    userModel.Password = HashPassword(userModel.Password);
                     var result = await _userRepo.Insert(DtoUserEditionToDtoUser(userModel));
                     if (result != null)
                         return Created(result.Id.ToString(), result);
@@ -86,6 +90,52 @@ namespace FripShop.Controllers
                 return BadRequest();
             }
             return BadRequest();
+        }
+
+        /// API Calls
+        [HttpPost("/api/users/login")]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> Login([FromBody] DTOUserEdition userModel)
+        {
+            try
+            {
+                if (ModelState.IsValid)
+                {
+                    if (_userRepo.GetUserByEmail(userModel.Email) == null)
+                        return BadRequest(userModel);
+                    if (_userRepo.GetUserByUserName(userModel.UserName) == null)
+                        return BadRequest(userModel);
+                    string typedPassword = userModel.Password;
+                    var user = _userRepo.GetUserByEmail(userModel.Email);
+                    if (HashPassword(typedPassword) == user.Password)
+                        return Ok();
+                    else
+                        throw new Exception();
+                }
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError("CONTROLLER USER -- Login() -- Error on db : ", ex);
+                return BadRequest();
+            }
+            return BadRequest();
+        }
+
+        private string HashPassword(string password)
+        {
+            MD5 md5 = new MD5CryptoServiceProvider();
+
+            md5.ComputeHash(ASCIIEncoding.ASCII.GetBytes(password));
+
+            byte[] result = md5.Hash;
+
+            StringBuilder strBuilder = new StringBuilder();
+            for (int i = 0; i < result.Length; i++)
+            {
+                strBuilder.Append(result[i].ToString("x2"));
+            }
+
+            return strBuilder.ToString();
         }
 
         [HttpGet("/api/users/{userId}")]
