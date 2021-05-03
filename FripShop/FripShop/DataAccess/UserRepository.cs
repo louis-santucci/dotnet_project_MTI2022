@@ -16,7 +16,7 @@ namespace FripShop.DataAccess
             logger, mapper)
         {}
 
-        public DTOUser GetUserByEmail(string email)
+        public async Task<DTOUser> GetUserByEmail(string email)
         {
             if (_set.Count() == 0)
                 return null;
@@ -26,7 +26,7 @@ namespace FripShop.DataAccess
             return null;
         }
 
-        public DTOUser GetUserByUserName(string userName)
+        public async Task<DTOUser> GetUserByUserName(string userName)
         {
             if (_set.Count() == 0)
                 return null;

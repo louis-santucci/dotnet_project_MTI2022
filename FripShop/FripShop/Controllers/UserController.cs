@@ -77,14 +77,14 @@ namespace FripShop.Controllers
             {
                 if (ModelState.IsValid)
                 {
-                    if (_userRepo.GetUserByEmail(userModel.Email) != null)
+                    if (await _userRepo.GetUserByEmail(userModel.Email) != null)
                         return BadRequest(userModel);
-                    if (_userRepo.GetUserByUserName(userModel.UserName) != null)
+                    if (await _userRepo.GetUserByUserName(userModel.UserName) != null)
                         return BadRequest(userModel);
                     userModel.Password = HashPassword(userModel.Password);
                     var result = await _userRepo.Insert(DtoUserEditionToDtoUser(userModel));
                     if (result != null)
-                        return View();
+                        return View("Success");
                 }
             }
             catch (Exception ex)
@@ -103,18 +103,18 @@ namespace FripShop.Controllers
             return View("Profile", _loginmodel);
         }
 
-        public ActionResult Login(DTOLoginUser userModel)
+        public async Task<ActionResult> Login(DTOLoginUser userModel)
         {
             try
             {
                 if (ModelState.IsValid)
                 {
-                    if (_userRepo.GetUserByEmail(userModel.Email) == null)
+                    if (await _userRepo.GetUserByEmail(userModel.Email) == null)
                         return BadRequest(userModel);
-                    if (_userRepo.GetUserByUserName(userModel.UserName) == null)
+                    if (await _userRepo.GetUserByUserName(userModel.UserName) == null)
                         return BadRequest(userModel);
                     string typedPassword = userModel.Password;
-                    var user = _userRepo.GetUserByEmail(userModel.Email);
+                    var user = await _userRepo.GetUserByEmail(userModel.Email);
                     if (HashPassword(typedPassword) == user.Password)
                         return Ok();
                     else

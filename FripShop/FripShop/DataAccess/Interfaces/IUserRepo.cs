@@ -9,7 +9,7 @@ namespace FripShop.DataAccess.Interfaces
 {
     public interface IUserRepo : IRepo<User, DTOUser>
     {
-        DTOUser GetUserByEmail(string email);
-        DTOUser GetUserByUserName(string userName);
+        Task<DTOUser> GetUserByEmail(string email);
+        Task<DTOUser> GetUserByUserName(string userName);
     }
 }
