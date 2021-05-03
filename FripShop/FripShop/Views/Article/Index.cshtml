@@ -5,6 +5,7 @@
     var queries = this.Context.Request.Query;
     _Filter filter = new _Filter();
     filter.gender = queries["gender"];
+    filter.category = queries["category"];
     filter.minPrice = queries["minPrice"];
     filter.maxPrice = queries["maxPrice"];
     filter.conditionMin = queries["condition"];
