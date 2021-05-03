@@ -98,7 +98,7 @@ namespace FripShop.Controllers
         }*/
 
         [HttpPost]
-        public ActionResult Register(DTOUserEdition userModel)
+        public async Task<ActionResult> Register(DTOUserEdition userModel)
         {
             try
             {
@@ -109,9 +109,9 @@ namespace FripShop.Controllers
                     if (_userRepo.GetUserByUserName(userModel.UserName) != null)
                         return BadRequest(userModel);
                     userModel.Password = HashPassword(userModel.Password);
-                    var result = _userRepo.Insert(DtoUserEditionToDtoUser(userModel));
+                    var result = await _userRepo.Insert(DtoUserEditionToDtoUser(userModel));
                     if (result != null)
-                        return Created(result.Id.ToString(), result);
+                        return View("Index", userModel);
                 }
             }
             catch (Exception ex)
@@ -119,7 +119,7 @@ namespace FripShop.Controllers
                 _logger.LogError("CONTROLLER USER -- Register() -- Error on db : ", ex);
                 return BadRequest();
             }
-            return View("Index", userModel);
+            return BadRequest();
         }
 
         public ActionResult Login()
