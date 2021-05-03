@@ -15,6 +15,7 @@ using System.Text;
 using System.Security.Claims;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authorization;
 
 namespace FripShop.Controllers
 {
@@ -49,6 +50,20 @@ namespace FripShop.Controllers
         public IActionResult LoginPage()
         {
             return View("Login");
+        }
+
+        [Authorize]
+        public async Task<IActionResult> Profile()
+        {
+            var email = HttpContext.User.Identity.Name;
+            var user = await _userRepo.GetUserByEmail(email);
+            DTOLoginUser userToReturn = new DTOLoginUser();
+            userToReturn.Name = user.Name;
+            userToReturn.Email = user.Email;
+            userToReturn.UserName = user.UserName;
+            userToReturn.Address = user.Address;
+            userToReturn.Gender = user.Gender;
+            return View(userToReturn);
         }
 
         public static DTOUser DtoUserEditionToDtoUser(DTOUserEdition userModel)
