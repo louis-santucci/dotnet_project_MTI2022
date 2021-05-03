@@ -1,8 +1,13 @@
 ﻿@model IEnumerable<FripShop.DTO.DTOArticle>
 @{
     ViewBag.Title = "Articles";
+
+    var queries = this.Context.Request.Query;
+    _Filter filter = new _Filter();
+    filter.gender = queries["gender"];
 }
 
+@{ Html.RenderPartial("_Filter", filter); }
 
 <div style="padding-top:15px">
     <div class="card-columns">
