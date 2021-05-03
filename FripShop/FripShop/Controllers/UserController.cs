@@ -28,6 +28,12 @@ namespace FripShop.Controllers
         private readonly IUserRepo _userRepo;
         private readonly ILogger<UserController> _logger;
 
+        /// <summary>
+        /// Public constructor for user controller
+        /// </summary>
+        /// <param name="logger">Logger for dependancy injection</param>
+        /// <param name="articleRepo">Article repository for dependancy injection</param>
+        /// <param name="userRepo">User repository for dependancy injection</param>
         public UserController(ILogger<UserController> logger, IArticleRepo articleRepo, IUserRepo userRepo)
         {
             this._userRepo = userRepo;
@@ -56,10 +62,10 @@ namespace FripShop.Controllers
         }
 
         [Authorize]
-        public async Task<IActionResult> Profile()
+        public IActionResult Profile()
         {
             var email = HttpContext.User.Identity.Name;
-            var user = await _userRepo.GetUserByEmail(email);
+            var user = _userRepo.GetUserByEmail(email);
             DTOLoginUser userToReturn = new DTOLoginUser();
             userToReturn.Name = user.Name;
             userToReturn.Email = user.Email;
@@ -103,9 +109,9 @@ namespace FripShop.Controllers
             {
                 if (ModelState.IsValid)
                 {
-                    if (await _userRepo.GetUserByEmail(userModel.Email) != null)
+                    if (_userRepo.GetUserByEmail(userModel.Email) != null)
                         return BadRequest(userModel);
-                    if (await _userRepo.GetUserByUserName(userModel.UserName) != null)
+                    if (_userRepo.GetUserByUserName(userModel.UserName) != null)
                         return BadRequest(userModel);
                     userModel.Password = HashPassword(userModel.Password);
                     var result = await _userRepo.Insert(DtoUserEditionToDtoUser(userModel));
@@ -130,10 +136,10 @@ namespace FripShop.Controllers
             {
                 if (ModelState.IsValid)
                 {
-                    if (await _userRepo.GetUserByEmail(userModel.Email) == null)
+                    if (_userRepo.GetUserByEmail(userModel.Email) == null)
                         return BadRequest(userModel);
                     string typedPassword = userModel.Password;
-                    var user = await _userRepo.GetUserByEmail(userModel.Email);
+                    var user = _userRepo.GetUserByEmail(userModel.Email);
                     if (HashPassword(typedPassword) == user.Password)
                     {
                         var claims = new List<Claim>

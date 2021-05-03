@@ -18,7 +18,6 @@ namespace FripShop.Views.Article
         private readonly ILogger<IndexModel> _logger;
         private readonly DataAccess.Interfaces.IArticleRepo _articleRepo;
         private readonly DataAccess.Interfaces.IUserRepo _userRepo;
-        private string _sessionId;
 
         public IndexModel(ILogger<IndexModel> logger, DataAccess.Interfaces.IArticleRepo articleRepo, IUserRepo userRepo)
         {

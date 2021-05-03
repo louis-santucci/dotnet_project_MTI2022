@@ -8,7 +8,7 @@ namespace FripShop.DataAccess.EFModels
     /// <summary>
     /// Class for EntityFrameworkCore transaction model
     /// </summary>
-    public partial class Transaction
+    public class Transaction
     {
         public long Id { get; set; }
         public long ArticleId { get; set; }

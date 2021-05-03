@@ -20,6 +20,12 @@ namespace FripShop.Controllers
         private readonly IUserRepo _userRepo;
         private readonly ILogger<ArticleController> _logger;
 
+        /// <summary>
+        /// Public constructor for article controller
+        /// </summary>
+        /// <param name="articleRepo">Article repository for dependancy injection</param>
+        /// <param name="userRepo">User repository for dependancy injection</param>
+        /// <param name="logger">Logger for dependancy injection</param>
         public ArticleController(IArticleRepo articleRepo, IUserRepo userRepo, ILogger<ArticleController> logger)
         {
             _articleRepo = articleRepo;
@@ -196,7 +202,7 @@ namespace FripShop.Controllers
             var results = await this._articleRepo.Get();
             foreach (var result in results)
             {
-                var user = await _articleRepo.GetUserFromId(result.Id);
+                var user = _articleRepo.GetUserFromId(result.Id);
                 result.User = DtoUserToDtoUserPublic(user);
             }
             return Ok(results);
@@ -209,7 +215,7 @@ namespace FripShop.Controllers
             if (articles.Any(c => c.Id == articleId))
             {
                 var article = articles.Single(c => c.Id == articleId);
-                var user = await _articleRepo.GetUserFromId(article.Id);
+                var user = _articleRepo.GetUserFromId(article.Id);
                 article.User = DtoUserToDtoUserPublic(user);
                 return Ok(article);
             }
@@ -218,9 +224,9 @@ namespace FripShop.Controllers
         }
 
         [HttpGet("/api/articles/{articleId}/getUser")]
-        public async Task<ActionResult> GetUserFromArticle(long articleId)
+        public ActionResult GetUserFromArticle(long articleId)
         {
-            var user = await _articleRepo.GetUserFromId(articleId);
+            var user = _articleRepo.GetUserFromId(articleId);
             if (user != null)
                 return Ok(user);
             return NotFound();
@@ -228,13 +234,13 @@ namespace FripShop.Controllers
 
         [Authorize]
         [HttpPost]
-        [ValidateAntiForgeryToken]&
+        [ValidateAntiForgeryToken]
         public async Task<ActionResult> CreateArticle(DTOArticleEdition article)
         {
             try
             {
                 var claimsUserEmail = HttpContext.User.Identity.Name;
-                var user = await _userRepo.GetUserByEmail(claimsUserEmail);
+                var user = _userRepo.GetUserByEmail(claimsUserEmail);
                 var newArticle = DTOArticleEditionToArticle(article, user);
                 var result = await _articleRepo.Insert(newArticle);
                 if (result != null)

@@ -16,7 +16,7 @@ namespace FripShop.DataAccess
     public class ArticleRepository : Repository<Article, DTOArticle>, IArticleRepo
     {
         public ArticleRepository(FripShopContext context, ILogger<ArticleRepository> logger, IMapper mapper) : base(context, logger, mapper) {}
-        public async Task<DTOUser> GetUserFromId(long id)
+        public DTOUser GetUserFromId(long id)
         {
             try
             {

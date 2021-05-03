@@ -9,6 +9,11 @@ namespace FripShop.DataAccess.Interfaces
     /// </summary>
     public interface IArticleRepo : IRepo<Article, DTOArticle>
     {
-        public Task<DTOUser> GetUserFromId(long id);
+        /// <summary>
+        /// Get user in function of its ID
+        /// </summary>
+        /// <param name="id">the ID of the wanted user</param>
+        /// <returns>The wanted user with all its information</returns>
+        public DTOUser GetUserFromId(long id);
     }
 }

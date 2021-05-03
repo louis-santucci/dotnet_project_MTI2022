@@ -8,7 +8,7 @@ namespace FripShop.DataAccess.EFModels
     /// <summary>
     /// Class for EntityFrameworkCore rating model
     /// </summary>
-    public partial class Rating
+    public class Rating
     {
         public long ArticleId { get; set; }
         public long BuyerId { get; set; }

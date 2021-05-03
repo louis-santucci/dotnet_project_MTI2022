@@ -15,6 +15,10 @@ namespace FripShop.Controllers
     {
         private readonly ILogger<HomeController> _logger;
 
+        /// <summary>
+        /// Public constructor for home controller
+        /// </summary>
+        /// <param name="logger">Logger for dependancy injection</param>
         public HomeController(ILogger<HomeController> logger)
         {
             _logger = logger;

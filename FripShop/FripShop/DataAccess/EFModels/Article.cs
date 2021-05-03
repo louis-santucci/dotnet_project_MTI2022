@@ -8,8 +8,11 @@ namespace FripShop.DataAccess.EFModels
     /// <summary>
     /// Class for EntityFrameworkCore article model
     /// </summary>
-    public partial class Article
+    public class Article
     {
+        /// <summary>
+        /// Public constructor for EntityFrameworkCore article model
+        /// </summary>
         public Article()
         {
             Carts = new HashSet<Cart>();

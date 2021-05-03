@@ -8,7 +8,7 @@ namespace FripShop.DataAccess.EFModels
     /// <summary>
     /// Class for EntityFrameworkCore cart model
     /// </summary>
-    public partial class Cart
+    public class Cart
     {
         public long Id { get; set; }
         public long BuyerId { get; set; }

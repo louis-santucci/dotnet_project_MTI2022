@@ -12,15 +12,15 @@ namespace FripShop.DTO
     public class DTOLoginUser : DTOUser, IDTO
     {
         [Key]
-        public long Id { get; set; }
+        public new long Id { get; set; }
 
         [Required(ErrorMessage = "Please enter your email...")]
         [Display(Name = "Email")]
-        public string Email { get; set; }
+        public new string Email { get; set; }
 
         [Required(ErrorMessage = "Please enter your password...")]
         [DataType(DataType.Password)]
         [Display(Name = "Password")]
-        public string Password { get; set; }
+        public new string Password { get; set; }
     }
 }

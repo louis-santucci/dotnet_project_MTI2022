@@ -11,7 +11,7 @@ using Microsoft.Extensions.Logging;
 namespace FripShop.DataAccess
 {
     /// <summary>
-    /// Class for user repository
+    /// Class f
     /// </summary>
     public class UserRepository : Repository<User, DTOUser>, IUserRepo
     {
@@ -19,22 +19,22 @@ namespace FripShop.DataAccess
             logger, mapper)
         {}
 
-        public async Task<DTOUser> GetUserByEmail(string email)
+        public DTOUser GetUserByEmail(string email)
         {
-            if (_set.Count() == 0)
+            if (_set.Any() == false)
                 return null;
             var result = this._set.Where(c => c.Email == email);
-            if (result.Count() != 0)
+            if (result.Any())
                 return _mapper.Map<DTOUser>(result.Single());
             return null;
         }
 
-        public async Task<DTOUser> GetUserByUserName(string userName)
+        public DTOUser GetUserByUserName(string userName)
         {
-            if (_set.Count() == 0)
+            if (_set.Any() == false)
                 return null;
             var result = this._set.Where(c => c.UserName == userName);
-            if (result.Count() != 0)
+            if (result.Any())
                 return _mapper.Map<DTOUser>(result.Single());
             return null;
         }
