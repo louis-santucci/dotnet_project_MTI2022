@@ -39,10 +39,10 @@
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.condition, htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.conditionMin, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.condition, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.condition, "", new { @class = "text-danger" })
+                @Html.EditorFor(model => model.conditionMin, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.conditionMin, "", new { @class = "text-danger" })
             </div>
         </div>
 
@@ -87,7 +87,7 @@
         var gender = document.getElementById('gender').value;
         var minPrice = document.getElementById('minPrice').value;
         var maxPrice = document.getElementById('maxPrice').value;
-        var condition = document.getElementById('condition').value;
+        var conditionMin = document.getElementById('conditionMin').value;
         var sortBy = document.getElementById('sortBy').value;
         var ascending = document.getElementById('ascending').value;
         var search = document.getElementById('search').value;
@@ -95,7 +95,7 @@
         window.location.href = '?gender=' + gender +
             '?minprice' + minPrice +
             '?maxPrice' + maxPrice +
-            '?condition' + condition +
+            '?conditionMin' + conditionMin +
             '?sortBy' + sortBy +
             '?ascending' + ascending +
             '?search' + search;

@@ -150,6 +150,9 @@ namespace FripShop.Controllers
                     if (element.Price > price.Item2 || element.Price < price.Item1)
                         continue;
                 }
+                if (conditionMin != null && conditionMin > element.Condition)
+                    continue;
+
                 res.Add(element);
             }
             // Filter OK

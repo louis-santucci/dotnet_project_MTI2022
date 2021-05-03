@@ -11,7 +11,7 @@ namespace FripShop.Views.Article
           public List<string> categories { get; set; }
           public string minPrice { get; set; }
           public string maxPrice { get; set; }
-          public string condition { get; set; }
+          public string conditionMin { get; set; }
           public string sortBy { get; set; }
           public string ascending { get; set; }
           public string search { get; set; }
