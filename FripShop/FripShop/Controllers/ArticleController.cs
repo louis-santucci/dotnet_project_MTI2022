@@ -111,9 +111,11 @@ namespace FripShop.Controllers
                     continue;
                 if (search != null)
                 {
-                    if (element.Description.ToLower().Contains(search.ToLower()) ||
+                    if (!(
+                        element.Description.ToLower().Contains(search.ToLower()) ||
                         element.Name.ToLower().Contains(search.ToLower()) ||
-                        element.Brand.ToLower().Contains(search.ToLower()))
+                        element.Brand.ToLower().Contains(search.ToLower())
+                        ))
                         continue;
                 }
                 if (gender != null)
