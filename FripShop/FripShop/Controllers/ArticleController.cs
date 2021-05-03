@@ -57,6 +57,8 @@ namespace FripShop.Controllers
 
             foreach (var element in await _articleRepo.Get())
             {
+                if (element.State != "free")
+                    continue;
                 if (search != null)
                 {
                     if (element.Description.ToLower().Contains(search.ToLower()) ||
