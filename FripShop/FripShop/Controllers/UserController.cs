@@ -12,6 +12,9 @@ using Microsoft.Extensions.Logging;
 using Microsoft.EntityFrameworkCore;
 using System.Security.Cryptography;
 using System.Text;
+using System.Security.Claims;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authentication;
 
 namespace FripShop.Controllers
 {
@@ -41,6 +44,11 @@ namespace FripShop.Controllers
         public IActionResult RegisterPage()
         {
             return View("Register");
+        }
+
+        public IActionResult LoginPage()
+        {
+            return View("Login");
         }
 
         public static DTOUser DtoUserEditionToDtoUser(DTOUserEdition userModel)
@@ -97,12 +105,7 @@ namespace FripShop.Controllers
 
         /// API Calls
 
-        public ActionResult Login()
-        {
-            DTOLoginUser _loginmodel = new DTOLoginUser();
-            return View("Profile", _loginmodel);
-        }
-
+        [HttpPost]
         public async Task<ActionResult> Login(DTOLoginUser userModel)
         {
             try
@@ -111,12 +114,19 @@ namespace FripShop.Controllers
                 {
                     if (await _userRepo.GetUserByEmail(userModel.Email) == null)
                         return BadRequest(userModel);
-                    if (await _userRepo.GetUserByUserName(userModel.UserName) == null)
-                        return BadRequest(userModel);
                     string typedPassword = userModel.Password;
                     var user = await _userRepo.GetUserByEmail(userModel.Email);
                     if (HashPassword(typedPassword) == user.Password)
-                        return Ok();
+                    {
+                        var claims = new List<Claim>
+                        {
+                            new Claim(ClaimTypes.Name, userModel.Email)
+                        };
+                        var claimsIdentity = new ClaimsIdentity(claims, "Login");
+
+                        await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, new ClaimsPrincipal(claimsIdentity));
+                        return Redirect("/Home");
+                    }
                     else
                         throw new Exception();
                 }
@@ -159,7 +169,7 @@ namespace FripShop.Controllers
         }*/
 
         /// API Calls
-        [HttpPost("/api/users/login")]
+        /*[HttpPost("/api/users/login")]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Login([FromBody] DTOUserEdition userModel)
         {
@@ -171,9 +181,8 @@ namespace FripShop.Controllers
                         return BadRequest(userModel);
                     if (_userRepo.GetUserByUserName(userModel.UserName) == null)
                         return BadRequest(userModel);
-                    string typedPassword = userModel.Password;
-                    var user = _userRepo.GetUserByEmail(userModel.Email);
-                    if (HashPassword(typedPassword) == user.Password)
+                    var user = await _userRepo.GetUserByEmail(userModel.Email);
+                    if (HashPassword(userModel.Password) == user.Password)
                         return Ok();
                     else
                         throw new Exception();
@@ -185,7 +194,7 @@ namespace FripShop.Controllers
                 return BadRequest();
             }
             return BadRequest();
-        }
+        }*/
 
         private string HashPassword(string password)
         {

@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace FripShop.Views.User
 {
-    public class Register : PageModel
+    public class Login : PageModel
     {
         public void OnGet()
         {

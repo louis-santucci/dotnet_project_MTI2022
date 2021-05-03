@@ -7,10 +7,18 @@
     <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
     <div>
         <a class="nav-link text-dark" asp-area="" asp-controller="User" asp-action="RegisterPage">Register</a>
-        <a class="nav-link text-dark" asp-area="" asp-controller="User" asp-action="Login">Login</a>
+        <a class="nav-link text-dark" asp-area="" asp-controller="User" asp-action="LoginPage">Login</a>
     </div>
-    
-</div>
+    @using (Html.BeginForm("Logout", "Home", FormMethod.Post))
+    {
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Logout" id="Submit" class="btn btn-default" />
+            </div>
+        </div>
+    }
+
+    </div>
 <div>
 
 </div>

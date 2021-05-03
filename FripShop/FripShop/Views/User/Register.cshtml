@@ -3,12 +3,11 @@
     ViewBag.Title = "Index";
 }
 <div>
-    Profile Page !
     @using (Html.BeginForm("Register", "User", FormMethod.Post))
     {
         @Html.AntiForgeryToken()
     <div class="form-horizontal">
-        <h4>Infos de connexion</h4>
+        <h4>Infos du compte</h4>
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         <div class="form-group">

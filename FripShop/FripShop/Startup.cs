@@ -6,6 +6,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.EntityFrameworkCore;
 using AutoMapper;
+using Microsoft.AspNetCore.Authentication.Cookies;
 
 namespace FripShop
 {
@@ -29,6 +30,14 @@ namespace FripShop
             services.AddControllersWithViews().AddRazorRuntimeCompilation();
             services.AddTransient<DataAccess.Interfaces.IArticleRepo, DataAccess.ArticleRepository>();
             services.AddTransient<DataAccess.Interfaces.IUserRepo, DataAccess.UserRepository>();
+            services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+            .AddCookie(options =>
+            {
+                options.LoginPath = "/User/LoginPage";
+
+            });
+
+            services.AddControllersWithViews();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -50,6 +59,7 @@ namespace FripShop
 
             app.UseRouting();
 
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
