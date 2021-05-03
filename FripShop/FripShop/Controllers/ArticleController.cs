@@ -24,14 +24,11 @@ namespace FripShop.Controllers
             _logger = logger;
         }
 
-        [HttpGet("/api/articles/gender/{gender}")]
         public async Task<ActionResult> Index(string gender)
         {
-            var all = await GetArticlesFromGender(gender);
-            return View(all);
+            var resArticles = await GetArticles(gender);
+            return View(resArticles);
         }
-
-        
 
         /// Controller functions
 
@@ -69,8 +66,27 @@ namespace FripShop.Controllers
                 }
                 if (gender != null)
                 {
-                    if (gender != element.Sex)
-                        continue;
+                    switch (gender)
+                    {
+                        case "child":
+                            if (element.Sex != "child")
+                                continue;
+                            break;
+                        case "man":
+                            if (element.Sex != "man" && element.Sex != "unisex")
+                                continue;
+                            break;
+                        case "woman":
+                            if (element.Sex != "woman" && element.Sex != "unisex")
+                                continue;
+                            break;
+                        case "unisex":
+                            if (element.Sex != "unisex")
+                                continue;
+                            break;
+                        default:
+                            continue;
+                    }
                 }
                 if (categories != null)
                 {
@@ -101,21 +117,6 @@ namespace FripShop.Controllers
                     break;
             }
 
-            return res;
-        }
-
-        public async Task<IEnumerable<DTOArticle>> GetArticlesFromGender(string gender)
-        {
-            var res = new List<DTOArticle>();
-            foreach (var element in await _articleRepo.Get())
-            {
-                if (gender != null)
-                {
-                    if (gender != element.Sex)
-                        continue;
-                }
-                res.Add(element);
-            }
             return res;
         }
 
