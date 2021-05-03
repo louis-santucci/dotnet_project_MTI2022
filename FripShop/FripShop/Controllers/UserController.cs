@@ -15,6 +15,7 @@ using System.Text;
 using System.Security.Claims;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authorization;
 
 namespace FripShop.Controllers
 {
@@ -49,6 +50,20 @@ namespace FripShop.Controllers
         public IActionResult LoginPage()
         {
             return View("Login");
+        }
+
+        [Authorize]
+        public async Task<IActionResult> Profile()
+        {
+            var email = HttpContext.User.Identity.Name;
+            var user = await _userRepo.GetUserByEmail(email);
+            DTOLoginUser userToReturn = new DTOLoginUser();
+            userToReturn.Name = user.Name;
+            userToReturn.Email = user.Email;
+            userToReturn.UserName = user.UserName;
+            userToReturn.Address = user.Address;
+            userToReturn.Gender = user.Gender;
+            return View(userToReturn);
         }
 
         public static DTOUser DtoUserEditionToDtoUser(DTOUserEdition userModel)
@@ -138,63 +153,6 @@ namespace FripShop.Controllers
             }
             return BadRequest();
         }
-
-        /// API Calls
-        /*[HttpPost("/api/users/login")]
-        [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Login([FromBody] DTOLoginUser userModel)
-        {
-            try
-            {
-                if (ModelState.IsValid)
-                {
-                    if (_userRepo.GetUserByEmail(userModel.Email) == null)
-                        return BadRequest(userModel);
-                    if (_userRepo.GetUserByUserName(userModel.UserName) == null)
-                        return BadRequest(userModel);
-                    string typedPassword = userModel.Password;
-                    var user = _userRepo.GetUserByEmail(userModel.Email);
-                    if (HashPassword(typedPassword) == user.Password)
-                        return Ok();
-                    else
-                        throw new Exception();
-                }
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError("CONTROLLER USER -- Login() -- Error on db : ", ex);
-                return BadRequest();
-            }
-            return BadRequest();
-        }*/
-
-        /// API Calls
-        /*[HttpPost("/api/users/login")]
-        [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Login([FromBody] DTOUserEdition userModel)
-        {
-            try
-            {
-                if (ModelState.IsValid)
-                {
-                    if (_userRepo.GetUserByEmail(userModel.Email) == null)
-                        return BadRequest(userModel);
-                    if (_userRepo.GetUserByUserName(userModel.UserName) == null)
-                        return BadRequest(userModel);
-                    var user = await _userRepo.GetUserByEmail(userModel.Email);
-                    if (HashPassword(userModel.Password) == user.Password)
-                        return Ok();
-                    else
-                        throw new Exception();
-                }
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError("CONTROLLER USER -- Login() -- Error on db : ", ex);
-                return BadRequest();
-            }
-            return BadRequest();
-        }*/
 
         private string HashPassword(string password)
         {
