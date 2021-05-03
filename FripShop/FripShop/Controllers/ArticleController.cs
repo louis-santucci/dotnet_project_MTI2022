@@ -165,6 +165,24 @@ namespace FripShop.Controllers
             return userPublic;
         }
 
+        public static DTOArticle DTOArticleEditionToArticle(DTOArticleEdition article, DTOUser user)
+        {
+            var newArticle = new DTOArticle();
+            newArticle.Brand = article.Brand;
+            newArticle.Category = article.Category;
+            newArticle.Condition = article.Condition;
+            newArticle.State = "Free";
+            newArticle.CreatedAt = DateTime.Now;
+            newArticle.Description = article.Description;
+            newArticle.ImageSource = article.ImageSource;
+            newArticle.Name = article.Name;
+            newArticle.Price = article.Price;
+            newArticle.SellerId = user.Id;
+            newArticle.Sex = article.Sex;
+            newArticle.User = DtoUserToDtoUserPublic(user);
+            return newArticle;
+        }
+
         /// API Calls
         [HttpGet("/api/articles/")]
         public async Task<ActionResult> GetAll()
@@ -202,11 +220,29 @@ namespace FripShop.Controllers
             return NotFound();
         }
 
-        [HttpPost("/api/articles/create")]
+        [Authorize]
+        [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> CreateArticle([FromBody] DTOArticle article)
+        public async Task<ActionResult> CreateArticle(DTOArticleEdition article)
         {
-            throw new NotImplementedException();
+            try
+            {
+                var claimsUserEmail = HttpContext.User.Identity.Name;
+                var user = await _userRepo.GetUserByEmail(claimsUserEmail);
+                var newArticle = DTOArticleEditionToArticle(article, user);
+                var result = await _articleRepo.Insert(newArticle);
+                if (result != null)
+                {
+                    return RedirectToAction("Index");
+                }
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError("CONTROLLER ARTICLE -- CreateArticle() -- Error : ", ex);
+                return BadRequest();
+            }
+
+            return View();
         }
     }
 }

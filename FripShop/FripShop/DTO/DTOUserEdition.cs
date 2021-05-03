@@ -7,7 +7,7 @@ namespace FripShop.DTO
         [Key]
         public long Id { get; set; }
 
-        [Required(ErrorMessage = "Please enter your username..")]
+        [Required(ErrorMessage = "Please enter your username...")]
         [DataType(DataType.Text)]
         [Display(Name = "UserName")]
         public string UserName { get; set; }
