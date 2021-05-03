@@ -11,6 +11,11 @@ using Microsoft.Extensions.Logging;
 
 namespace FripShop.DataAccess
 {
+    /// <summary>
+    /// Generic class for repositories
+    /// </summary>
+    /// <typeparam name="DbEntity"></typeparam>
+    /// <typeparam name="ModelEntity"></typeparam>
     public class Repository<DbEntity, ModelEntity> : IRepo<DbEntity, ModelEntity>
         where DbEntity : class, new()
         where ModelEntity : class, IDTO, new()

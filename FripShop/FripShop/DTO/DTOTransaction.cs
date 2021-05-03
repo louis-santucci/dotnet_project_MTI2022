@@ -5,6 +5,9 @@ using System.ComponentModel.DataAnnotations;
 
 namespace FripShop.DTO
 {
+    /// <summary>
+    /// Class for DTO transaction model
+    /// </summary>
     public class DTOTransaction : IDTO
     {
         [Key]

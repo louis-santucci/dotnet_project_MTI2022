@@ -5,6 +5,11 @@ using System.Threading.Tasks;
 
 namespace FripShop.DataAccess.Interfaces
 {
+    /// <summary>
+    /// Generic interface for repositories
+    /// </summary>
+    /// <typeparam name="DbEntity">The EntityFrameworkCore model</typeparam>
+    /// <typeparam name="ModelEntity">The DTO model</typeparam>
     public interface IRepo<DbEntity, ModelEntity>
     {
         Task<IEnumerable<ModelEntity>> Get(string includeString = "");

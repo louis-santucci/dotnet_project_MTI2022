@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace FripShop.DTO
 {
+    /// <summary>
+    /// Class for DTO user login model
+    /// </summary>
     public class DTOLoginUser : DTOUser, IDTO
     {
         [Key]

@@ -5,6 +5,9 @@ using System.Collections.Generic;
 
 namespace FripShop.DataAccess.EFModels
 {
+    /// <summary>
+    /// Class for EntityFrameworkCore article model
+    /// </summary>
     public partial class Article
     {
         public Article()

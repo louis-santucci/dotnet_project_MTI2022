@@ -8,6 +8,9 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace FripShop.Controllers
 {
+    /// <summary>
+    /// Controller for basic functions
+    /// </summary>
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;

@@ -4,6 +4,9 @@
 
 namespace FripShop.DTO
 {
+    /// <summary>
+    /// Class for DTO rating model
+    /// </summary>
     public class DTORating : IDTO
     {
         [Key]

@@ -5,6 +5,9 @@ using System.Collections.Generic;
 
 namespace FripShop.DataAccess.EFModels
 {
+    /// <summary>
+    /// Class for EntityFrameworkCore rating model
+    /// </summary>
     public partial class Rating
     {
         public long ArticleId { get; set; }

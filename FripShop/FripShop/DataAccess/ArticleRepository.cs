@@ -10,6 +10,9 @@ using Microsoft.Extensions.Logging;
 
 namespace FripShop.DataAccess
 {
+    /// <summary>
+    /// Class for article repository
+    /// </summary>
     public class ArticleRepository : Repository<Article, DTOArticle>, IArticleRepo
     {
         public ArticleRepository(FripShopContext context, ILogger<ArticleRepository> logger, IMapper mapper) : base(context, logger, mapper) {}

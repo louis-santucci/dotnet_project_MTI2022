@@ -4,6 +4,9 @@ using System.ComponentModel.DataAnnotations;
 
 namespace FripShop.DTO
 {
+    /// <summary>
+    /// Class for DTO article edition model
+    /// </summary>
     public class DTOArticleEdition : IDTO
     {
         [Key]

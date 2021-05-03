@@ -2,6 +2,9 @@
 
 namespace FripShop.DTO
 {
+    /// <summary>
+    /// Class for DTO private user model
+    /// </summary>
     public class DTOUser : IDTO
     {
         [Key]

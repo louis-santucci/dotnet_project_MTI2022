@@ -11,6 +11,9 @@ using Microsoft.AspNetCore.Authentication.Cookies;
 
 namespace FripShop
 {
+    /// <summary>
+    /// Startup file for configuration of services and the routing
+    /// </summary>
     public class Startup
     {
         private string _connectionString;

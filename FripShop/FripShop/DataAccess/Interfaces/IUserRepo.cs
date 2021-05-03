@@ -7,6 +7,9 @@ using FripShop.DTO;
 
 namespace FripShop.DataAccess.Interfaces
 {
+    /// <summary>
+    /// Interface for user repository
+    /// </summary>
     public interface IUserRepo : IRepo<User, DTOUser>
     {
         Task<DTOUser> GetUserByEmail(string email);

@@ -5,6 +5,9 @@ using System.Collections.Generic;
 
 namespace FripShop.DataAccess.EFModels
 {
+    /// <summary>
+    /// Class for EntityFrameworkCore cart model
+    /// </summary>
     public partial class Cart
     {
         public long Id { get; set; }

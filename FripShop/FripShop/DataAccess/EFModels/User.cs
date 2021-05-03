@@ -5,6 +5,9 @@ using System.Collections.Generic;
 
 namespace FripShop.DataAccess.EFModels
 {
+    /// <summary>
+    /// Class for EntityFrameworkCore uqer model
+    /// </summary>
     public partial class User
     {
         public User()

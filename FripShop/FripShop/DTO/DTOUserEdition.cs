@@ -2,6 +2,9 @@
 
 namespace FripShop.DTO
 {
+    /// <summary>
+    /// Class for DTO user edition model
+    /// </summary>
     public class DTOUserEdition : IDTO
     {
         [Key]

@@ -19,6 +19,9 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace FripShop.Controllers
 {
+    /// <summary>
+    /// Controller for user actions
+    /// </summary>
     public class UserController : Controller
     {
         private readonly IArticleRepo _articleRepo;

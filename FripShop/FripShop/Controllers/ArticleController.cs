@@ -10,6 +10,9 @@ using System.Collections.Generic;
 
 namespace FripShop.Controllers
 {
+    /// <summary>
+    /// Controller for the articles
+    /// </summary>
     public class ArticleController : Controller
     {
 
