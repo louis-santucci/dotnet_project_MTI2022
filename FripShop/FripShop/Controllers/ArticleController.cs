@@ -24,9 +24,41 @@ namespace FripShop.Controllers
             _logger = logger;
         }
 
-        public async Task<ActionResult> Index(string gender)
+        public async Task<ActionResult> Index(string gender = null, List<string> categories = null,
+                                                        string minPrice = null, string maxPrice = null, string conditionMin = null,
+                                                        string sortBy = null, string ascending = null,
+                                                        string search = null)
         {
-            var resArticles = await GetArticles(gender);
+            Tuple<float, float> priceTuple = null;
+            if (minPrice != null && maxPrice != null)
+                priceTuple = Tuple.Create(float.Parse(minPrice), float.Parse(maxPrice));
+
+            int cond = 0;
+            if (conditionMin != null)
+                cond = int.Parse(conditionMin);
+
+            Comparison comp = Comparison.Date;
+            if (sortBy != null)
+                switch (sortBy)
+                {
+                    case "price":
+                        comp = Comparison.Price;
+                        break;
+                    case "condition":
+                        comp = Comparison.Condition;
+                        break;
+                    case "rating":
+                        comp = Comparison.SellerRating;
+                        break;
+                    default:
+                        break;
+                }
+
+            bool asc = true;
+            if (ascending != null && ascending == "false")
+                asc = false;
+
+            var resArticles = await GetArticles(gender, categories, priceTuple, cond, comp, asc, search);
             return View(resArticles);
         }
 
@@ -37,7 +69,7 @@ namespace FripShop.Controllers
             Date,
             Price,
             Condition,
-            SellerRate
+            SellerRating
         }
 
         /// <summary>
@@ -90,7 +122,7 @@ namespace FripShop.Controllers
                             continue;
                     }
                 }
-                if (categories != null)
+                if (categories != null && categories.Count > 0)
                 {
                     if (!categories.Exists(c => c.Equals(element.Category)))
                         continue;
@@ -114,7 +146,7 @@ namespace FripShop.Controllers
                 case Comparison.Price:
                     res = @ascending ? res.OrderBy(x => x.Price).ToList() : res.OrderByDescending(x => x.Price).ToList();
                     break;
-                case Comparison.SellerRate:
+                case Comparison.SellerRating:
                     //TODO
                     break;
             }
