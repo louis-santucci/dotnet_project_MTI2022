@@ -29,36 +29,54 @@ namespace FripShop.Controllers
                                                         string sortBy = null, string ascending = null,
                                                         string search = null)
         {
-            Tuple<float, float> priceTuple = null;
-            if (minPrice != null && maxPrice != null)
-                priceTuple = Tuple.Create(float.Parse(minPrice), float.Parse(maxPrice));
+            IEnumerable<DTOArticle> resArticles = null;
 
-            int cond = 0;
-            if (conditionMin != null)
-                cond = int.Parse(conditionMin);
-
-            Comparison comp = Comparison.Date;
-            if (sortBy != null)
-                switch (sortBy)
+            try
+            {
+                Tuple<float, float> priceTuple = null;
+                if (minPrice != null || maxPrice != null)
                 {
-                    case "price":
-                        comp = Comparison.Price;
-                        break;
-                    case "condition":
-                        comp = Comparison.Condition;
-                        break;
-                    case "rating":
-                        comp = Comparison.SellerRating;
-                        break;
-                    default:
-                        break;
+                    float min = 0f;
+                    float max = float.MaxValue;
+                    if (minPrice != null)
+                        min = float.Parse(minPrice);
+                    if (maxPrice != null)
+                        max = float.Parse(maxPrice);
+                    priceTuple = Tuple.Create(min, max);
                 }
 
-            bool asc = true;
-            if (ascending != null && ascending == "false")
-                asc = false;
+                int cond = 0;
+                if (conditionMin != null)
+                    cond = int.Parse(conditionMin);
 
-            var resArticles = await GetArticles(gender, categories, priceTuple, cond, comp, asc, search);
+                Comparison comp = Comparison.Date;
+                if (sortBy != null)
+                    switch (sortBy)
+                    {
+                        case "price":
+                            comp = Comparison.Price;
+                            break;
+                        case "condition":
+                            comp = Comparison.Condition;
+                            break;
+                        case "rating":
+                            comp = Comparison.SellerRating;
+                            break;
+                        default:
+                            break;
+                    }
+
+                bool asc = true;
+                if (ascending != null && ascending == "false")
+                    asc = false;
+
+                resArticles = await GetArticles(gender, categories, priceTuple, cond, comp, asc, search);
+            }
+            catch
+            {
+                resArticles = await GetArticles();
+            }
+            
             return View(resArticles);
         }
 
