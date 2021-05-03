@@ -5,6 +5,12 @@
     var queries = this.Context.Request.Query;
     _Filter filter = new _Filter();
     filter.gender = queries["gender"];
+    filter.minPrice = queries["minPrice"];
+    filter.maxPrice = queries["maxPrice"];
+    filter.conditionMin = queries["condition"];
+    filter.sortBy = queries["sortBy"];
+    filter.ascending = queries["ascending"];
+    filter.search = queries["search"];
 }
 
 @{ Html.RenderPartial("_Filter", filter); }
