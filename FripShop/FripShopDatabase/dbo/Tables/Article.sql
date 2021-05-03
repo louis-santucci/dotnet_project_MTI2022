@@ -1,5 +1,5 @@
 ﻿CREATE TABLE [dbo].[Article] (
-    [id]          BIGINT         NOT NULL,
+    [id]          BIGINT         IDENTITY (1, 1) NOT NULL,
     [imageSource] NVARCHAR (100) NULL,
     [sellerId]    BIGINT         NOT NULL,
     [state]       NVARCHAR (20)  NOT NULL,
@@ -12,6 +12,10 @@
     [condition]   INT            NOT NULL,
     [createdAt]   DATETIME       NOT NULL,
     CONSTRAINT [PK_Article] PRIMARY KEY CLUSTERED ([id] ASC),
-    CONSTRAINT [FK_Article_User] FOREIGN KEY ([sellerId]) REFERENCES [dbo].[User] ([id])
+    CONSTRAINT [FK_Article_User] FOREIGN KEY ([sellerId]) REFERENCES [dbo].[User] ([id]) ON DELETE CASCADE
 );
+
+
+
+
 
