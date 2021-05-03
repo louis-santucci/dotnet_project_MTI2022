@@ -1,3 +1,4 @@
+using System;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -36,7 +37,12 @@ namespace FripShop
                 options.LoginPath = "/User/LoginPage";
 
             });
-
+            services.ConfigureApplicationCookie(options =>
+            {
+                options.Cookie.Name = ".Authentication.Cookie";
+                options.ExpireTimeSpan = TimeSpan.FromMinutes(60);
+                options.SlidingExpiration = true;
+            });
             services.AddControllersWithViews();
         }
 
