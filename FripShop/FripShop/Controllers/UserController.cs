@@ -38,6 +38,11 @@ namespace FripShop.Controllers
             return View();
         }
 
+        public IActionResult Index()
+        {
+            return View();
+        }
+
         public static DTOUser DtoUserEditionToDtoUser(DTOUserEdition userModel)
         {
             var user = new DTOUser();
@@ -66,7 +71,7 @@ namespace FripShop.Controllers
         }
 
         /// API Calls
-        [HttpPost("/api/users/register")]
+        /*[HttpPost("/api/users/register")]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Register([FromBody] DTOUserEdition userModel)
         {
@@ -90,12 +95,40 @@ namespace FripShop.Controllers
                 return BadRequest();
             }
             return BadRequest();
+        }*/
+
+        [HttpPost]
+        public ActionResult Register(DTOUserEdition userModel)
+        {
+            try
+            {
+                if (ModelState.IsValid)
+                {
+                    if (_userRepo.GetUserByEmail(userModel.Email) != null)
+                        return BadRequest(userModel);
+                    if (_userRepo.GetUserByUserName(userModel.UserName) != null)
+                        return BadRequest(userModel);
+                    userModel.Password = HashPassword(userModel.Password);
+                    var result = _userRepo.Insert(DtoUserEditionToDtoUser(userModel));
+                    if (result != null)
+                        return Created(result.Id.ToString(), result);
+                }
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError("CONTROLLER USER -- Register() -- Error on db : ", ex);
+                return BadRequest();
+            }
+            return View("Index", userModel);
         }
 
-        /// API Calls
-        [HttpPost("/api/users/login")]
-        [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Login([FromBody] DTOUserEdition userModel)
+        public ActionResult Login()
+        {
+            DTOLoginUser _loginmodel = new DTOLoginUser();
+            return View("Profile", _loginmodel);
+        }
+
+        public ActionResult Login(DTOLoginUser userModel)
         {
             try
             {
@@ -120,6 +153,35 @@ namespace FripShop.Controllers
             }
             return BadRequest();
         }
+
+        /// API Calls
+        /*[HttpPost("/api/users/login")]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> Login([FromBody] DTOLoginUser userModel)
+        {
+            try
+            {
+                if (ModelState.IsValid)
+                {
+                    if (_userRepo.GetUserByEmail(userModel.Email) == null)
+                        return BadRequest(userModel);
+                    if (_userRepo.GetUserByUserName(userModel.UserName) == null)
+                        return BadRequest(userModel);
+                    string typedPassword = userModel.Password;
+                    var user = _userRepo.GetUserByEmail(userModel.Email);
+                    if (HashPassword(typedPassword) == user.Password)
+                        return Ok();
+                    else
+                        throw new Exception();
+                }
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError("CONTROLLER USER -- Login() -- Error on db : ", ex);
+                return BadRequest();
+            }
+            return BadRequest();
+        }*/
 
         private string HashPassword(string password)
         {
@@ -245,5 +307,6 @@ namespace FripShop.Controllers
 
             return NotFound(userId);
         }
+
     }
 }
