@@ -24,11 +24,14 @@ namespace FripShop.Controllers
             _logger = logger;
         }
 
-        public async Task<ActionResult> Index()
+        [HttpGet("/api/articles/gender/{gender}")]
+        public async Task<ActionResult> Index(string gender)
         {
-            var all = await GetArticles();
+            var all = await GetArticlesFromGender(gender);
             return View(all);
         }
+
+        
 
         /// Controller functions
 
@@ -101,7 +104,20 @@ namespace FripShop.Controllers
             return res;
         }
 
-
+        public async Task<IEnumerable<DTOArticle>> GetArticlesFromGender(string gender)
+        {
+            var res = new List<DTOArticle>();
+            foreach (var element in await _articleRepo.Get())
+            {
+                if (gender != null)
+                {
+                    if (gender != element.Sex)
+                        continue;
+                }
+                res.Add(element);
+            }
+            return res;
+        }
 
         public static DTOUserPublic DtoUserToDtoUserPublic(DTOUser userModel)
         {
