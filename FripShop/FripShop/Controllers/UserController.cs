@@ -38,9 +38,9 @@ namespace FripShop.Controllers
             return View();
         }
 
-        public IActionResult Index()
+        public IActionResult RegisterPage()
         {
-            return View();
+            return View("Register");
         }
 
         public static DTOUser DtoUserEditionToDtoUser(DTOUserEdition userModel)
@@ -111,7 +111,7 @@ namespace FripShop.Controllers
                     userModel.Password = HashPassword(userModel.Password);
                     var result = await _userRepo.Insert(DtoUserEditionToDtoUser(userModel));
                     if (result != null)
-                        return View("Index", userModel);
+                        return View();
                 }
             }
             catch (Exception ex)
