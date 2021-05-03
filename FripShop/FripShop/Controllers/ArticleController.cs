@@ -57,7 +57,7 @@ namespace FripShop.Controllers
 
             foreach (var element in await _articleRepo.Get())
             {
-                if (element.State != "free")
+                if (element.State.ToLower() != "free")
                     continue;
                 if (search != null)
                 {
@@ -71,19 +71,19 @@ namespace FripShop.Controllers
                     switch (gender)
                     {
                         case "child":
-                            if (element.Sex != "child")
+                            if (element.Sex.ToLower() != "child")
                                 continue;
                             break;
                         case "man":
-                            if (element.Sex != "man" && element.Sex != "unisex")
+                            if (element.Sex.ToLower() != "man" && element.Sex.ToLower() != "unisex")
                                 continue;
                             break;
                         case "woman":
-                            if (element.Sex != "woman" && element.Sex != "unisex")
+                            if (element.Sex.ToLower() != "woman" && element.Sex.ToLower() != "unisex")
                                 continue;
                             break;
                         case "unisex":
-                            if (element.Sex != "unisex")
+                            if (element.Sex.ToLower() != "unisex")
                                 continue;
                             break;
                         default:
