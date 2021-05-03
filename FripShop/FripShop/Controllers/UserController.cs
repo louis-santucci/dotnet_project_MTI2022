@@ -173,7 +173,7 @@ namespace FripShop.Controllers
                         return BadRequest(userModel);
                     string typedPassword = userModel.Password;
                     var user = _userRepo.GetUserByEmail(userModel.Email);
-                    if (HashPassword(typedPassword) == user.Password)
+                    if (HashPassword(typedPassword) == userModel.Password)
                         return Ok();
                     else
                         throw new Exception();
