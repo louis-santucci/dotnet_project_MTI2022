@@ -29,54 +29,36 @@ namespace FripShop.Controllers
                                                         string sortBy = null, string ascending = null,
                                                         string search = null)
         {
-            IEnumerable<DTOArticle> resArticles = null;
+            Tuple<float, float> priceTuple = null;
+            if (minPrice != null && maxPrice != null)
+                priceTuple = Tuple.Create(float.Parse(minPrice), float.Parse(maxPrice));
 
-            try
-            {
-                Tuple<float, float> priceTuple = null;
-                if (minPrice != null || maxPrice != null)
+            int cond = 0;
+            if (conditionMin != null)
+                cond = int.Parse(conditionMin);
+
+            Comparison comp = Comparison.Date;
+            if (sortBy != null)
+                switch (sortBy)
                 {
-                    float min = 0f;
-                    float max = float.MaxValue;
-                    if (minPrice != null)
-                        min = float.Parse(minPrice);
-                    if (maxPrice != null)
-                        max = float.Parse(maxPrice);
-                    priceTuple = Tuple.Create(min, max);
+                    case "price":
+                        comp = Comparison.Price;
+                        break;
+                    case "condition":
+                        comp = Comparison.Condition;
+                        break;
+                    case "rating":
+                        comp = Comparison.SellerRating;
+                        break;
+                    default:
+                        break;
                 }
 
-                int cond = 0;
-                if (conditionMin != null)
-                    cond = int.Parse(conditionMin);
+            bool asc = true;
+            if (ascending != null && ascending == "false")
+                asc = false;
 
-                Comparison comp = Comparison.Date;
-                if (sortBy != null)
-                    switch (sortBy)
-                    {
-                        case "price":
-                            comp = Comparison.Price;
-                            break;
-                        case "condition":
-                            comp = Comparison.Condition;
-                            break;
-                        case "rating":
-                            comp = Comparison.SellerRating;
-                            break;
-                        default:
-                            break;
-                    }
-
-                bool asc = true;
-                if (ascending != null && ascending == "false")
-                    asc = false;
-
-                resArticles = await GetArticles(gender, categories, priceTuple, cond, comp, asc, search);
-            }
-            catch
-            {
-                resArticles = await GetArticles();
-            }
-            
+            var resArticles = await GetArticles(gender, categories, priceTuple, cond, comp, asc, search);
             return View(resArticles);
         }
 
@@ -98,6 +80,7 @@ namespace FripShop.Controllers
         /// <param name="price">Tuple containing the price range</param>
         /// <param name="comparison">Type of the sorting parameter</param>
         /// <param name="ascending">Boolean to indicate the direction of the sorting algorithm</param>
+        /// <returns>List of articles in fonction of the different filters</returns>
         public async Task<IEnumerable<DTOArticle>> GetArticles(string gender = null, List<string> categories = null,
                                                         Tuple<float, float> price = null, int conditionMin = 0,
                                                         Comparison comparison = Comparison.Date, bool ascending = false,
@@ -111,11 +94,9 @@ namespace FripShop.Controllers
                     continue;
                 if (search != null)
                 {
-                    if (!(
-                        element.Description.ToLower().Contains(search.ToLower()) ||
+                    if (element.Description.ToLower().Contains(search.ToLower()) ||
                         element.Name.ToLower().Contains(search.ToLower()) ||
-                        element.Brand.ToLower().Contains(search.ToLower())
-                        ))
+                        element.Brand.ToLower().Contains(search.ToLower()))
                         continue;
                 }
                 if (gender != null)
@@ -152,9 +133,6 @@ namespace FripShop.Controllers
                     if (element.Price > price.Item2 || element.Price < price.Item1)
                         continue;
                 }
-                if (conditionMin > element.Condition)
-                    continue;
-
                 res.Add(element);
             }
             // Filter OK
@@ -170,7 +148,9 @@ namespace FripShop.Controllers
                     res = @ascending ? res.OrderBy(x => x.Price).ToList() : res.OrderByDescending(x => x.Price).ToList();
                     break;
                 case Comparison.SellerRating:
-                    //TODO
+                    res = @ascending
+                        ? res.OrderBy(x => x.User.Note).ToList()
+                        : res.OrderByDescending(x => x.User.Note).ToList();
                     break;
             }
 
@@ -245,7 +225,7 @@ namespace FripShop.Controllers
 
         [Authorize]
         [HttpPost]
-        [ValidateAntiForgeryToken]
+        [ValidateAntiForgeryToken]&
         public async Task<ActionResult> CreateArticle(DTOArticleEdition article)
         {
             try
