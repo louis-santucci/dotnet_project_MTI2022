@@ -92,7 +92,7 @@ namespace FripShop.Controllers
                 _logger.LogError("CONTROLLER USER -- Register() -- Error on db : ", ex);
                 return BadRequest();
             }
-            return BadRequest();
+            return View();
         }
 
         /// API Calls
