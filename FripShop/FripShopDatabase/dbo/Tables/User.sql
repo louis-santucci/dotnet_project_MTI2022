@@ -1,5 +1,5 @@
 ﻿CREATE TABLE [dbo].[User] (
-    [id]       BIGINT         NOT NULL,
+    [id]       BIGINT         IDENTITY (1, 1) NOT NULL,
     [userName] NVARCHAR (50)  NOT NULL,
     [email]    NVARCHAR (50)  NOT NULL,
     [password] NVARCHAR (40)  NOT NULL,
@@ -10,6 +10,8 @@
     CONSTRAINT [PK_User] PRIMARY KEY CLUSTERED ([id] ASC),
     CONSTRAINT [IX_User] UNIQUE NONCLUSTERED ([id] ASC)
 );
+
+
 
 
 GO

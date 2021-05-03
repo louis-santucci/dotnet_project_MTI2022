@@ -18,17 +18,21 @@ namespace FripShop.DataAccess
 
         public DTOUser GetUserByEmail(string email)
         {
-            var result = this._set.Single(c => c.Email == email);
-            if (result != null)
-                return _mapper.Map<DTOUser>(result);
+            if (_set.Count() == 0)
+                return null;
+            var result = this._set.Where(c => c.Email == email);
+            if (result.Count() != 0)
+                return _mapper.Map<DTOUser>(result.Single());
             return null;
         }
 
         public DTOUser GetUserByUserName(string userName)
         {
-            var result = this._set.Single(c => c.UserName == userName);
-            if (result != null)
-                return _mapper.Map<DTOUser>(result);
+            if (_set.Count() == 0)
+                return null;
+            var result = this._set.Where(c => c.UserName == userName);
+            if (result.Count() != 0)
+                return _mapper.Map<DTOUser>(result.Single());
             return null;
         }
     }

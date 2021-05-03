@@ -57,6 +57,8 @@ namespace FripShop.Controllers
 
             foreach (var element in await _articleRepo.Get())
             {
+                if (element.State != "free")
+                    continue;
                 if (search != null)
                 {
                     if (element.Description.ToLower().Contains(search.ToLower()) ||
@@ -119,21 +121,6 @@ namespace FripShop.Controllers
 
             return res;
         }
-
-        //public async Task<IEnumerable<DTOArticle>> GetArticlesFromGender(string gender)
-        //{
-        //    var res = new List<DTOArticle>();
-        //    foreach (var element in await _articleRepo.Get())
-        //    {
-        //        if (gender != null)
-        //        {
-        //            if (gender != element.Sex)
-        //                continue;
-        //        }
-        //        res.Add(element);
-        //    }
-        //    return res;
-        //}
 
         public static DTOUserPublic DtoUserToDtoUserPublic(DTOUser userModel)
         {
