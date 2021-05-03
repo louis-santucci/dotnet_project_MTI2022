@@ -10,7 +10,9 @@ using Microsoft.Extensions.Logging;
 
 namespace FripShop.Views.Article
 {
-    
+    /// <summary>
+    /// Class for index article view
+    /// </summary>
     public class IndexModel : PageModel
     {
         private readonly ILogger<IndexModel> _logger;

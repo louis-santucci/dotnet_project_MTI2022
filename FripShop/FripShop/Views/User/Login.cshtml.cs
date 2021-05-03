@@ -7,6 +7,9 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace FripShop.Views.User
 {
+    /// <summary>
+    /// Class for user login view
+    /// </summary>
     public class Login : PageModel
     {
         public void OnGet()

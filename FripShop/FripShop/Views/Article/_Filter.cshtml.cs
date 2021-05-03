@@ -5,6 +5,9 @@ using System.Threading.Tasks;
 
 namespace FripShop.Views.Article
 {
+    /// <summary>
+    /// Class for filter view
+    /// </summary>
     public class _Filter
     {   
           public string gender { get; set; }
