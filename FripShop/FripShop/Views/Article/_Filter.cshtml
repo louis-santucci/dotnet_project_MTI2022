@@ -17,10 +17,10 @@
         <div class="form-group row px-3">
             <label class="control-label col-md-2">Sexe</label>
             <div class="col-md-10">
-                @Html.RadioButtonFor(model => model.gender, "man") @Html.Label("Homme")
-                @Html.RadioButtonFor(model => model.gender, "woman") @Html.Label("Femme")
-                @Html.RadioButtonFor(model => model.gender, "unisex") @Html.Label("Unisexe")
-                @Html.RadioButtonFor(model => model.gender, "child") @Html.Label("Enfant")
+                @Html.RadioButtonFor(model => model.gender, "man", new { @id = "man" }) @Html.Label("Homme")
+                @Html.RadioButtonFor(model => model.gender, "woman", new { @id = "woman" }) @Html.Label("Femme")
+                @Html.RadioButtonFor(model => model.gender, "unisex", new { @id = "unisex" }) @Html.Label("Unisexe")
+                @Html.RadioButtonFor(model => model.gender, "child", new { @id = "child" }) @Html.Label("Enfant")
                 @Html.ValidationMessageFor(model => model.gender, "", new { @class = "text-danger" })
             </div>
         </div>
@@ -51,12 +51,12 @@
         <div class="form-group row px-3">
             <label class="control-label col-md-2">Condition minimale</label>
             <div class="col-md-10">
-                @Html.RadioButtonFor(model => model.conditionMin, "0") @Html.Label("0")
-                @Html.RadioButtonFor(model => model.conditionMin, "1") @Html.Label("1")
-                @Html.RadioButtonFor(model => model.conditionMin, "2") @Html.Label("2")
-                @Html.RadioButtonFor(model => model.conditionMin, "3") @Html.Label("3")
-                @Html.RadioButtonFor(model => model.conditionMin, "4") @Html.Label("4")
-                @Html.RadioButtonFor(model => model.conditionMin, "5") @Html.Label("5")
+                @Html.RadioButtonFor(model => model.conditionMin, "0", new { @id = "cond_0" }) @Html.Label("0")
+                @Html.RadioButtonFor(model => model.conditionMin, "1", new { @id = "cond_1" }) @Html.Label("1")
+                @Html.RadioButtonFor(model => model.conditionMin, "2", new { @id = "cond_2" }) @Html.Label("2")
+                @Html.RadioButtonFor(model => model.conditionMin, "3", new { @id = "cond_3" }) @Html.Label("3")
+                @Html.RadioButtonFor(model => model.conditionMin, "4", new { @id = "cond_4" }) @Html.Label("4")
+                @Html.RadioButtonFor(model => model.conditionMin, "5", new { @id = "cond_5" }) @Html.Label("5")
                 @Html.ValidationMessageFor(model => model.conditionMin, "", new { @class = "text-danger" })
             </div>
         </div>
@@ -72,15 +72,15 @@
         <div class="form-group row px-3">
             <label class="control-label col-md-2">Ordre de tri</label>
             <div class="col-md-10">
-                @Html.RadioButtonFor(model => model.ascending, "true") @Html.Label("Croissant")
-                @Html.RadioButtonFor(model => model.ascending, "false") @Html.Label("Décroissant")
+                @Html.RadioButtonFor(model => model.ascending, "true", new { @id = "ascending" }) @Html.Label("Croissant")
+                @Html.RadioButtonFor(model => model.ascending, "false", new { @id = "descending" }) @Html.Label("Décroissant")
                 @Html.ValidationMessageFor(model => model.ascending, "", new { @class = "text-danger" })
             </div>
         </div>
 
         <div class="form-group row px-3">
             <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Filter" id="Submit" class="btn btn-default" onclick="filter()" />
+                <a href="#" value="Filter" id="Submit" class="btn btn-default" onclick="filter()" >Filtrer</a>
             </div>
         </div>
 
@@ -92,22 +92,85 @@
 <script type='text/javascript'>
     function filter() {
         //Grab your values
-        var gender = document.getElementById('gender').value;
-        var category = document.getElementById('category').value;
-        var minPrice = document.getElementById('minPrice').value;
-        var maxPrice = document.getElementById('maxPrice').value;
-        var conditionMin = document.getElementById('conditionMin').value;
-        var sortBy = document.getElementById('sortBy').value;
-        var ascending = document.getElementById('ascending').value;
         var search = document.getElementById('search').value;
 
-        window.location.href = '?gender=' + gender +
-            '?category' + category +
-            '?minprice' + minPrice +
-            '?maxPrice' + maxPrice +
-            '?conditionMin' + conditionMin +
-            '?sortBy' + sortBy +
-            '?ascending' + ascending +
-            '?search' + search;
+        var gender = '';
+        if (document.getElementById('man').checked)
+            gender = 'man'
+        if (document.getElementById('woman').checked)
+            gender = 'woman'
+        if (document.getElementById('unisex').checked)
+            gender = 'unisex'
+        if (document.getElementById('child').checked)
+            gender = 'child'
+
+
+        var category = '';
+        switch (document.getElementById('category').value) {
+            case 'Hauts':
+                category = 'top';
+                break;
+            case 'Bas':
+                category = 'pants';
+                break;
+            case 'Chaussures':
+                category = 'shoes';
+                break;
+            case 'Accessoires':
+                category = 'accessories';
+                break;
+        }
+
+        var minPrice = document.getElementById('minPrice').value;
+        var maxPrice = document.getElementById('maxPrice').value;
+
+        var conditionMin = '';
+        if (document.getElementById('cond_0').checked)
+            conditionMin = '0'
+        if (document.getElementById('cond_1').checked)
+            conditionMin = '1'
+        if (document.getElementById('cond_2').checked)
+            conditionMin = '2'
+        if (document.getElementById('cond_3').checked)
+            conditionMin = '3'
+        if (document.getElementById('cond_4').checked)
+            conditionMin = '4'
+        if (document.getElementById('cond_5').checked)
+            conditionMin = '5'
+
+        var sortBy = '';
+        switch (document.getElementById('sortBy').value) {
+            case 'Date':
+                sortBy = 'date';
+                break;
+            case 'Prix':
+                sortBy = 'price';
+                break;
+            case 'Condition':
+                sortBy = 'condition';
+                break;
+            case 'Note':
+                sortBy = 'rating'
+                break;
+        }
+
+        var ascending = '';
+        if (document.getElementById('ascending').checked)
+            ascending = 'true';
+        if (document.getElementById('descending').checked)
+            ascending = 'false';
+
+        var href = '?gender=' + gender +
+            '&category=' + category +
+            '&minprice=' + minPrice +
+            '&maxPrice=' + maxPrice +
+            '&conditionMin=' + conditionMin +
+            '&sortBy=' + sortBy +
+            '&ascending=' + ascending +
+            '&search=' + search;
+
+        console.log(href)
+        
+        window.location.href = href;
     }
 </script>
