@@ -41,12 +41,14 @@
                 </div>
                 <div class="nav-item" style="text-align: right">
                     <ul class="navbar-nav flex-grow-1">
+                        
+                        
 
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="User" asp-action="RegisterPage">Register</a>
+                            <a class="nav-link text-dark" asp-area="" asp-controller="User" asp-action="RegisterPage" id="registerButton">Register</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="User" asp-action="LoginPage">Login</a>
+                            <a class="nav-link text-dark" asp-area="" asp-controller="User" asp-action="LoginPage" id="loginButton">Login</a>
                         </li>
                         <li class="nav-item">
                             @using (Html.BeginForm("Logout", "Home", FormMethod.Post))
@@ -75,9 +77,10 @@
             &copy; 2021 - FripShop - <a asp-area="" asp-controller="Home" asp-action="Privacy">Vie privée / CGU</a>
         </div>
     </footer>
-    <script src="~/lib/jquery/dist/jquery.min.js"></script>
-    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="~/js/site.js" asp-append-version="true"></script>
+    <script  type="text/javascript" src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script  type="text/javascript" src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script  type="text/javascript" src="~/js/site.js" asp-append-version="true"></script>
+    <script  type="text/javascript" src="~/js/login_logout.js"></script>
     @RenderSection("Scripts", required: false)
 </body>
 </html>
