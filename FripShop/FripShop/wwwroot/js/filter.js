@@ -44,19 +44,7 @@ function paginated_filter(relative_page = 0) {
     var minPrice = document.getElementById('minPrice').value;
     var maxPrice = document.getElementById('maxPrice').value;
 
-    var conditionMin = '';
-    if (document.getElementById('cond_0').checked)
-        conditionMin = '0'
-    if (document.getElementById('cond_1').checked)
-        conditionMin = '1'
-    if (document.getElementById('cond_2').checked)
-        conditionMin = '2'
-    if (document.getElementById('cond_3').checked)
-        conditionMin = '3'
-    if (document.getElementById('cond_4').checked)
-        conditionMin = '4'
-    if (document.getElementById('cond_5').checked)
-        conditionMin = '5'
+    var conditionMin = document.getElementById('conditionMin').value;
 
     var sortBy = '';
     if (document.getElementById('date').checked)
