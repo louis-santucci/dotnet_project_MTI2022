@@ -24,10 +24,10 @@ namespace FripShop.Controllers
             _logger = logger;
         }
 
-        public async Task<ActionResult> Index(string gender = null, List<string> categories = null,
-                                                        string minPrice = null, string maxPrice = null, string conditionMin = null,
-                                                        string sortBy = null, string ascending = null,
-                                                        string search = null)
+        public async Task<ActionResult> Index(string gender = null, string category = null,
+                                                string minPrice = null, string maxPrice = null, string conditionMin = null,
+                                                string sortBy = null, string ascending = null,
+                                                string search = null)
         {
             IEnumerable<DTOArticle> resArticles = null;
 
@@ -70,7 +70,7 @@ namespace FripShop.Controllers
                 if (ascending != null && ascending == "false")
                     asc = false;
 
-                resArticles = await GetArticles(gender, categories, priceTuple, cond, comp, asc, search);
+                resArticles = await GetArticles(gender, category, priceTuple, cond, comp, asc, search);
             }
             catch
             {
@@ -98,7 +98,7 @@ namespace FripShop.Controllers
         /// <param name="price">Tuple containing the price range</param>
         /// <param name="comparison">Type of the sorting parameter</param>
         /// <param name="ascending">Boolean to indicate the direction of the sorting algorithm</param>
-        public async Task<IEnumerable<DTOArticle>> GetArticles(string gender = null, List<string> categories = null,
+        public async Task<IEnumerable<DTOArticle>> GetArticles(string gender = null, string category = null,
                                                         Tuple<float, float> price = null, int conditionMin = 0,
                                                         Comparison comparison = Comparison.Date, bool ascending = false,
                                                         string search = null) // Filters
@@ -142,9 +142,9 @@ namespace FripShop.Controllers
                             continue;
                     }
                 }
-                if (categories != null && categories.Count > 0)
+                if (category != null)
                 {
-                    if (!categories.Exists(c => c.Equals(element.Category)))
+                    if (element.Category != category)
                         continue;
                 }
                 if (price != null)
