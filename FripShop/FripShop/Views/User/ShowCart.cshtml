@@ -1,0 +1,15 @@
+﻿@model IEnumerable<FripShop.DTO.DTOCart>
+
+
+<div style="padding-top:15px">
+    <div class="card-columns">
+        @foreach (var cartItem in Model)
+        {
+            <div class="card">
+                <div class="nav-link text-dark" asp-area="" asp-controller="Article" asp-action="GetArticlesTest" asp-route-articleId="@cartItem.ArticleId"></div>
+                
+            </div>
+            <a class="nav-link text-dark" asp-area="" asp-controller="Article" asp-action="GetArticlesTest" asp-route-articleId="@cartItem.ArticleId">Cart</a>
+        }
+    </div>
+</div>

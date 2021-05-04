@@ -19,26 +19,19 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace FripShop.Controllers
 {
-    /// <summary>
-    /// Controller for user actions
-    /// </summary>
     public class UserController : Controller
     {
         private readonly IArticleRepo _articleRepo;
         private readonly IUserRepo _userRepo;
         private readonly ILogger<UserController> _logger;
+        private readonly ICartRepo _cartRepo;
 
-        /// <summary>
-        /// Public constructor for user controller
-        /// </summary>
-        /// <param name="logger">Logger for dependancy injection</param>
-        /// <param name="articleRepo">Article repository for dependancy injection</param>
-        /// <param name="userRepo">User repository for dependancy injection</param>
-        public UserController(ILogger<UserController> logger, IArticleRepo articleRepo, IUserRepo userRepo)
+        public UserController(ILogger<UserController> logger, IArticleRepo articleRepo, IUserRepo userRepo, ICartRepo cartRepo)
         {
             this._userRepo = userRepo;
             this._articleRepo = articleRepo;
             this._logger = logger;
+            this._cartRepo = cartRepo;
         }
 
         public ActionResult Details(int id)
@@ -62,7 +55,7 @@ namespace FripShop.Controllers
         }
 
         [Authorize]
-        public IActionResult Profile()
+        public async Task<IActionResult> Profile()
         {
             var email = HttpContext.User.Identity.Name;
             var user = _userRepo.GetUserByEmail(email);
@@ -74,6 +67,56 @@ namespace FripShop.Controllers
             userToReturn.Gender = user.Gender;
             return View(userToReturn);
         }
+
+        public async Task<IActionResult> showCart()
+        {
+            var cart = await GetCartFromId();
+            return View(cart);
+        }
+
+     
+        public async Task<IActionResult> AddArticle(int articleID)
+        {
+            try
+            {
+                DTOCart cart = new DTOCart();
+                var email = HttpContext.User.Identity.Name;
+                var user = _userRepo.GetUserByEmail(email);
+                cart.ArticleId = articleID;
+            //    cart.Article = await _articleRepo.GetArticleFromId(articleID);
+            //    cart.Buyer = DtoUserToDtoUserPublic(user);
+                cart.BuyerId = user.Id;
+                cart.Quantity = 1;
+                var result = await _cartRepo.Insert(cart);
+                if (result != null)
+                {
+                    return View();
+                }
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError("CONTROLLER USER -- AddArticle() -- Error on db : ", ex);
+                return BadRequest();
+            }
+            return RedirectToAction("Index","Article");
+
+        }
+
+
+        public async Task<IEnumerable<DTOCart>> GetCartFromId()
+        {
+            var res = new List<DTOArticle>();
+            var email = HttpContext.User.Identity.Name;
+            var user = _userRepo.GetUserByEmail(email);
+            var cart = await _cartRepo.Get();
+            var results = cart.Where(a => a.BuyerId == user.Id);
+
+           return results;
+         
+     
+        }
+
+
 
         public static DTOUser DtoUserEditionToDtoUser(DTOUserEdition userModel)
         {
@@ -109,9 +152,9 @@ namespace FripShop.Controllers
             {
                 if (ModelState.IsValid)
                 {
-                    if (_userRepo.GetUserByEmail(userModel.Email) != null)
+                    if ( _userRepo.GetUserByEmail(userModel.Email) != null)
                         return BadRequest(userModel);
-                    if (_userRepo.GetUserByUserName(userModel.UserName) != null)
+                    if ( _userRepo.GetUserByUserName(userModel.UserName) != null)
                         return BadRequest(userModel);
                     userModel.Password = HashPassword(userModel.Password);
                     var result = await _userRepo.Insert(DtoUserEditionToDtoUser(userModel));
@@ -136,7 +179,7 @@ namespace FripShop.Controllers
             {
                 if (ModelState.IsValid)
                 {
-                    if (_userRepo.GetUserByEmail(userModel.Email) == null)
+                    if ( _userRepo.GetUserByEmail(userModel.Email) == null)
                         return BadRequest(userModel);
                     string typedPassword = userModel.Password;
                     var user = _userRepo.GetUserByEmail(userModel.Email);

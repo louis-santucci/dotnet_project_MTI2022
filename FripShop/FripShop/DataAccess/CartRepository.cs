@@ -1,27 +1,24 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using AutoMapper;
+﻿using AutoMapper;
 using FripShop.DataAccess.EFModels;
 using FripShop.DataAccess.Interfaces;
 using FripShop.DTO;
 using Microsoft.Extensions.Logging;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace FripShop.DataAccess
 {
-    /// <summary>
-    /// Class for article repository
-    /// </summary>
-    public class ArticleRepository : Repository<Article, DTOArticle>, IArticleRepo
+    public class CartRepository : Repository<Cart, DTOCart>, ICartRepo
     {
-        public ArticleRepository(FripShopContext context, ILogger<ArticleRepository> logger, IMapper mapper) : base(context, logger, mapper) {}
+        public CartRepository(FripShopContext context, ILogger<CartRepository> logger, IMapper mapper) : base(context, logger, mapper) { }
 
-        public async Task<DTOArticle> GetArticleFromId(long articleId)
+        public async Task<DTOCart> GetCartByEmail(string email)
         {
             try
             {
-                return _mapper.Map<DTOArticle>(_context.Articles.Find(articleId));
+                return _mapper.Map<DTOCart>(_context.Carts.Find(email));
             }
             catch (Exception ex)
             {
@@ -30,11 +27,11 @@ namespace FripShop.DataAccess
             }
         }
 
-        public DTOUser GetUserFromId(long id)
+        public async Task<DTOCart> GetCartByUserName(string userName)
         {
             try
             {
-                return _mapper.Map<DTOUser>(_context.Users.Find(id));
+                return _mapper.Map<DTOCart>(_context.Carts.Find(userName));
             }
             catch (Exception ex)
             {

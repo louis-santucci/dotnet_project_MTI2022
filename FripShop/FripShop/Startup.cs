@@ -34,6 +34,7 @@ namespace FripShop
             services.AddControllersWithViews().AddRazorRuntimeCompilation();
             services.AddTransient<DataAccess.Interfaces.IArticleRepo, DataAccess.ArticleRepository>();
             services.AddTransient<DataAccess.Interfaces.IUserRepo, DataAccess.UserRepository>();
+            services.AddTransient<DataAccess.Interfaces.ICartRepo, DataAccess.CartRepository>();
             services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
             .AddCookie(options =>
             {
