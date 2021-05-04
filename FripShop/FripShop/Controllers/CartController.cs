@@ -200,6 +200,8 @@ namespace FripShop.Controllers
                 {
                     var curr = await _articleRepo.GetArticleFromId(elem.ArticleId);
                     list.Add(curr);
+                    curr.State = "sold";
+                    _articleRepo.Update(curr);
                 }
 
 
@@ -217,7 +219,6 @@ namespace FripShop.Controllers
                 smtp.Credentials = new NetworkCredential("fripshop.dotnet@gmail.com", "fripshopdotnet");
                 smtp.DeliveryMethod = SmtpDeliveryMethod.Network;
                 smtp.Send(message);
-
 
                 var del = DeleteUserCart(user.Id);
             }

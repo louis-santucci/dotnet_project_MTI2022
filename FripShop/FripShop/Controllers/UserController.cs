@@ -76,7 +76,6 @@ namespace FripShop.Controllers
                 DTOCart cart = new DTOCart();
                 var email = HttpContext.User.Identity.Name;
                 var user = _userRepo.GetUserByEmail(email);
-                var article = await _articleRepo.GetArticleFromId(articleID);
                 var test = await _cartRepo.UserCartAlreadyContains(articleID, user.Id);
                 if (test == false)
                 {
