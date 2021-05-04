@@ -9,9 +9,11 @@ namespace FripShop.DataAccess.Interfaces
 {
     public interface ICartRepo: IRepo<Cart, DTOCart>
     {
-        public Task<DTOCart> GetCartByEmail(string email);
-        public Task<DTOCart> GetCartByUserName(string userName);
+        public Task<IEnumerable<DTOCart>> GetCartByUserId(long id);
 
         public Task<DTOCart> GetCartItemByArticleId(long articleId);
+
+        public Task<Boolean> UserCartAlreadyContains(long articleId, long userId);
+
     }
 }

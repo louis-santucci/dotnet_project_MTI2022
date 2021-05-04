@@ -76,15 +76,18 @@ namespace FripShop.Controllers
                 DTOCart cart = new DTOCart();
                 var email = HttpContext.User.Identity.Name;
                 var user = _userRepo.GetUserByEmail(email);
-                cart.ArticleId = articleID;
-            //    cart.Article = await _articleRepo.GetArticleFromId(articleID);
-            //    cart.Buyer = DtoUserToDtoUserPublic(user);
-                cart.BuyerId = user.Id;
-                cart.Quantity = 1;
-                var result = await _cartRepo.Insert(cart);
-                if (result != null)
+                var article = await _articleRepo.GetArticleFromId(articleID);
+                var test = await _cartRepo.UserCartAlreadyContains(articleID, user.Id);
+                if (test == false)
                 {
-                    return View();
+                    cart.ArticleId = articleID;
+                    cart.BuyerId = user.Id;
+                    cart.Quantity = 1;
+                    var result = await _cartRepo.Insert(cart);
+                    if (result != null)
+                    {
+                        return View();
+                    }
                 }
             }
             catch (Exception ex)

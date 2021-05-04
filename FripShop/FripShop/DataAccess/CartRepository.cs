@@ -14,31 +14,26 @@ namespace FripShop.DataAccess
     {
         public CartRepository(FripShopContext context, ILogger<CartRepository> logger, IMapper mapper) : base(context, logger, mapper) { }
 
-        public async Task<DTOCart> GetCartByEmail(string email)
+        public async Task<IEnumerable<DTOCart>> GetCartByUserId(long id)
         {
             try
             {
-                return _mapper.Map<DTOCart>(_context.Carts.Find(email));
+                var UserCart = _context.Carts.Where(cartItem => cartItem.BuyerId == id).ToList();
+                foreach(var cart in UserCart)
+                {
+                    cart.Article = null;
+                    cart.Buyer = null;
+                }
+                return _mapper.Map<IEnumerable<DTOCart>>(UserCart);
             }
             catch (Exception ex)
             {
-                _logger.LogError($"REPOSITORY {typeof(DTOUserPublic)} -- Get() -- Error on db : ", ex);
+                _logger.LogError($"REPOSITORY {typeof(DTOUserPublic)} -- GetCartByUserId() -- Error on db : ", ex);
                 return null;
             }
         }
 
-        public async Task<DTOCart> GetCartByUserName(string userName)
-        {
-            try
-            {
-                return _mapper.Map<DTOCart>(_context.Carts.Find(userName));
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError($"REPOSITORY {typeof(DTOUserPublic)} -- Get() -- Error on db : ", ex);
-                return null;
-            }
-        }
+
 
         public async Task<DTOCart> GetCartItemByArticleId(long articleId)
         {
@@ -54,6 +49,25 @@ namespace FripShop.DataAccess
                 _logger.LogError($"REPOSITORY {typeof(DTOUserPublic)} -- Get() -- Error on db : ", ex);
                 return null;
             }
+        }
+
+        public async Task<bool> UserCartAlreadyContains(long articleId, long userId)
+        {
+            try
+            {
+                var test = _context.Carts.Where(a => (a.ArticleId == articleId && a.BuyerId == userId)).FirstOrDefault();
+                if (test == null)
+                {
+                    return false;
+                }
+                return true;
+            }
+            catch (Exception ex)
+            {
+
+                _logger.LogError($"REPOSITORY {typeof(DTOUserPublic)} -- Get() -- Error on db : ", ex);
+                return true;
+            };
         }
     }
 }
