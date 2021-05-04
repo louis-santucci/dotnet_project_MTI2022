@@ -16,23 +16,37 @@
 
 @{ Html.RenderPartial("_Filter", filter); }
 
-<div style="padding-top:15px">
-    <div class="card-columns">
-        @foreach (var article in Model)
+<hr class="mb-0 mx-3"/>
+
+<div>
+    @{ var articles = Model.ToList();
+        var i = 0; }
+
+
+    @while (i < articles.Count())
+    {
+    <div class="card-deck mx-2">
+
+        @{ var j = 0; }
+        @while (j < 3 && i < articles.Count())
         {
-            <div class="card">
-                <img class="card-img-top" src="{ @article.ImageSource }" alt="Card image cap">
+            <div class="card mt-3 mx-2">
+                <img class="card-img-top" src="{ @articles[i].ImageSource }" alt="Card image cap">
                 <div class="card-body">
-                    <h5 class="card-title">@article.Name</h5>
-                    <p class="card-text"><small>Marque : </small><small class="text-muted">@article.Brand</small></p>
-                    <p class="card-text"><small>Condition : </small><small class="text-muted">@article.Condition / 5</small></p>
-                    <p class="card-text">@article.Description</p>
+                    <h5 class="card-title">@articles[i].Name</h5>
+                    <p class="card-text"><small>Marque : </small><small class="text-muted">@articles[i].Brand</small></p>
+                    <p class="card-text"><small>Condition : </small><small class="text-muted">@articles[i].Condition / 5</small></p>
+                    <p class="card-text">@articles[i].Description</p>
                 </div>
                 <div class="card-footer text-center">
-                    <span class="text-success font-weight-bolder">@article.Price €</span>
-                    <a class="card-text" asp-area="" asp-controller="User" asp-action="AddArticle" asp-route-articleID="@article.Id">Add To Cart</a>
+                    <span class="text-success font-weight-bolder">@articles[i].Price €</span>
+                    <a class="card-text" asp-area="" asp-controller="User" asp-action="AddArticle" asp-route-articleID="@articles[i].Id">Add To Cart</a>
                 </div>
             </div>
+
+            i++;
+            j++;
         }
     </div>
+    }
 </div>
