@@ -162,9 +162,12 @@ namespace FripShop.Controllers
 
             foreach(var item in articleList)
             {
-                buy += "_____________________________\n\n";
-                buy += item.Name + " | " + item.Price + "€\n\n";
-                total += item.Price;
+                if (item != null)
+                {
+                    buy += "_____________________________\n\n";
+                    buy += item.Name + " | " + item.Price + "€\n\n";
+                    total += item.Price;
+                }
                 
             }
 
@@ -200,8 +203,11 @@ namespace FripShop.Controllers
                 {
                     var curr = await _articleRepo.GetArticleFromId(elem.ArticleId);
                     list.Add(curr);
-                    curr.State = "sold";
-                    _articleRepo.Update(curr);
+                    if (curr != null)
+                    {
+                        curr.State = "sold";
+                        var test = _articleRepo.Update(curr);
+                    }
                 }
 
 
