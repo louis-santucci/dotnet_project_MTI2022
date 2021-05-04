@@ -77,25 +77,14 @@ namespace FripShop.Controllers
                 var email = HttpContext.User.Identity.Name;
                 var user = _userRepo.GetUserByEmail(email);
                 cart.ArticleId = articleID;
-            //    cart.Article = await _articleRepo.GetArticleFromId(articleID);
-            //    cart.Buyer = DtoUserToDtoUserPublic(user);
                 cart.BuyerId = user.Id;
                 cart.Quantity = 1;
-                cart.Buyer = null;
                 cart.Article = null;
+                cart.Buyer = null;
                 var result = await _cartRepo.Insert(cart);
                 if (result != null)
                 {
-                    cart.ArticleId = articleID;
-                    cart.BuyerId = user.Id;
-                    cart.Quantity = 1;
-                    cart.Article = null;
-                    cart.Buyer = null;
-                    var result = await _cartRepo.Insert(cart);
-                    if (result != null)
-                    {
-                        return View();
-                    }
+                    return View();
                 }
             }
             catch (Exception ex)
