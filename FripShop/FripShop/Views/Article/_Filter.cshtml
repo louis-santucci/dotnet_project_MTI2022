@@ -28,7 +28,10 @@
         <div class="form-group row px-3">
             <label class="control-label col-md-2">Catégorie</label>
             <div class="col-md-10">
-                @Html.DropDownListFor(model => model.category, new SelectList(Enum.GetValues(typeof(_Filter.Category))), "---", new { @class = "form-control" })
+                @Html.RadioButtonFor(model => model.category, "top", new { @id = "top" }) @Html.Label("Hauts")
+                @Html.RadioButtonFor(model => model.category, "pants", new { @id = "pants" }) @Html.Label("Bas")
+                @Html.RadioButtonFor(model => model.category, "shoes", new { @id = "shoes" }) @Html.Label("Chaussures")
+                @Html.RadioButtonFor(model => model.category, "accessories", new { @id = "accessories" }) @Html.Label("Accessoires")
                 @Html.ValidationMessageFor(model => model.category, "", new { @class = "text-danger" })
             </div>
         </div>
@@ -64,7 +67,10 @@
         <div class="form-group row px-3">
             <label class="control-label col-md-2">Trier par</label>
             <div class="col-md-10">
-                @Html.DropDownListFor(model => model.sortBy, new SelectList(Enum.GetValues(typeof(_Filter.Comparison))), "---", new { @class = "form-control" })
+                @Html.RadioButtonFor(model => model.sortBy, "date", new { @id = "date" }) @Html.Label("Date")
+                @Html.RadioButtonFor(model => model.sortBy, "price", new { @id = "price" }) @Html.Label("Prix")
+                @Html.RadioButtonFor(model => model.sortBy, "rating", new { @id = "rating" }) @Html.Label("Note")
+                @Html.RadioButtonFor(model => model.sortBy, "condition", new { @id = "condition" }) @Html.Label("Condition")
                 @Html.ValidationMessageFor(model => model.sortBy, "", new { @class = "text-danger" })
             </div>
         </div>
@@ -106,20 +112,14 @@
 
 
         var category = '';
-        switch (document.getElementById('category').value) {
-            case 'Hauts':
-                category = 'top';
-                break;
-            case 'Bas':
-                category = 'pants';
-                break;
-            case 'Chaussures':
-                category = 'shoes';
-                break;
-            case 'Accessoires':
-                category = 'accessories';
-                break;
-        }
+        if (document.getElementById('top').checked)
+            category = 'top'
+        if (document.getElementById('pants').checked)
+            category = 'pants'
+        if (document.getElementById('shoes').checked)
+            category = 'shoes'
+        if (document.getElementById('accessories').checked)
+            category = 'accessories'
 
         var minPrice = document.getElementById('minPrice').value;
         var maxPrice = document.getElementById('maxPrice').value;
@@ -139,20 +139,14 @@
             conditionMin = '5'
 
         var sortBy = '';
-        switch (document.getElementById('sortBy').value) {
-            case 'Date':
-                sortBy = 'date';
-                break;
-            case 'Prix':
-                sortBy = 'price';
-                break;
-            case 'Condition':
-                sortBy = 'condition';
-                break;
-            case 'Note':
-                sortBy = 'rating'
-                break;
-        }
+        if (document.getElementById('date').checked)
+            sortBy = 'date'
+        if (document.getElementById('price').checked)
+            sortBy = 'price'
+        if (document.getElementById('rating').checked)
+            sortBy = 'rating'
+        if (document.getElementById('condition').checked)
+            sortBy = 'condition'
 
         var ascending = '';
         if (document.getElementById('ascending').checked)

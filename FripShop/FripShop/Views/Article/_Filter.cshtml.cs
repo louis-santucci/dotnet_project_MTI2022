@@ -7,21 +7,6 @@ namespace FripShop.Views.Article
 {
     public class _Filter
     {
-        public enum Category
-        {
-            Hauts,
-            Bas,
-            Chaussures,
-            Accessoires
-        }
-        public enum Comparison
-        {
-            Date,
-            Prix,
-            Condition,
-            Note
-        }
-
         public string gender { get; set; }
         public string category { get; set; }
         public string minPrice { get; set; }
