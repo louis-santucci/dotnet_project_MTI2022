@@ -82,9 +82,18 @@ function paginated_filter(relative_page = 0) {
         if (pageTemp <= 0)
             pageRes = "1";
         else
-            pageRes = (pageTemp).toString();
+            pageRes = pageTemp.toString();
     }
-    //var page = document.getElementById('pageSize').value;
+
+    var pageSizeRes = "12";
+    var pageSize = document.getElementById('pageSize').value;
+    if (pageSize != '') {
+        pageSizeVal = parseInt(pageSize)
+        if (pageSizeVal <= 0)
+            pageSizeRes = "1";
+        else
+            pageSizeRes = pageSizeVal.toString();
+    }
 
     var href = '?gender=' + gender +
         '&category=' + category +
@@ -94,8 +103,8 @@ function paginated_filter(relative_page = 0) {
         '&sortBy=' + sortBy +
         '&ascending=' + ascending +
         '&search=' + search +
-        '&page=' + pageRes;
-        //'&pageSize=' + pageSize;
+        '&page=' + pageRes +
+        '&pageSize=' + pageSizeRes;
 
     console.log(href)
 
