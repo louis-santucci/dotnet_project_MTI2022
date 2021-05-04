@@ -10,6 +10,7 @@ namespace FripShop.Views.Article
     /// </summary>
     public class _Filter
     {
+        // Filter
         public string gender { get; set; }
         public string category { get; set; }
         public string minPrice { get; set; }
@@ -18,5 +19,9 @@ namespace FripShop.Views.Article
         public string sortBy { get; set; }
         public string ascending { get; set; }
         public string search { get; set; }
+
+        // Pagination
+        public string page { get; set; }
+        public string pageSize { get; set; }
     }
 }

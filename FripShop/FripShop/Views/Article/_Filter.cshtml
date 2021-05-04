@@ -3,7 +3,7 @@
 <div style="margin-top:15px" class="border rounded mx-3">
     @using (Html.BeginForm("Index", "Article", FormMethod.Get))
     {
-    <div class="form-horizontal py-2">
+    <div class="form-horizontal py-3">
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
 
         <div class="form-group row px-3">
@@ -40,7 +40,7 @@
             
                 <label class="control-label col-2">Prix min</label>
                 <div class="col-4">
-                    @Html.EditorFor(model => model.minPrice, new { htmlAttributes = new { @class = "form-control", @type = "number", @min = "0", @step = "1"} })
+                    @Html.EditorFor(model => model.minPrice, new { htmlAttributes = new { @class = "form-control", @type = "number", @min = "0", @step = "1" } })
                     @Html.ValidationMessageFor(model => model.minPrice, "", new { @class = "text-danger" })
                 </div>
             
@@ -87,6 +87,21 @@
         <div class="form-group row px-3">
             <div class="col-md-offset-2 col-md-10">
                 <a href="#" value="Filter" id="filter_submit" class="btn btn-default">Filtrer</a>
+            </div>
+        </div>
+
+        <div class="border mx-3 py-3">
+            <div class="row justify-content-between">
+                <div class="col-4 text-center">
+                    <a href="#" value="Filter" id="filter_submit" class="btn btn-default">Previous page</a>
+                </div>
+                <div class="col-4">
+                    @Html.EditorFor(model => model.maxPrice, new { htmlAttributes = new { @class = "form-control", @type = "number", @min = "0", @step = "1" } })
+                    @Html.ValidationMessageFor(model => model.maxPrice, "", new { @class = "text-danger" })
+                </div>
+                <div class="col-4 text-center">
+                    <a href="#" value="Filter" id="filter_submit" class="btn btn-default">Next page</a>
+                </div>
             </div>
         </div>
 
