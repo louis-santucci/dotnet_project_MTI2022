@@ -78,7 +78,11 @@ function paginated_filter(relative_page = 0) {
     var page = document.getElementById('page').value;
     if (page != '') {
         pageVal = parseInt(page);
-        pageRes = (pageVal + relative_page).toString();
+        pageTemp = pageVal + relative_page;
+        if (pageTemp <= 0)
+            pageRes = "1";
+        else
+            pageRes = (pageTemp).toString();
     }
     //var page = document.getElementById('pageSize').value;
 
