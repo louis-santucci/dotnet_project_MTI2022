@@ -55,7 +55,7 @@ namespace FripShop.Controllers
 
                 return results;
         }
-
+        
         public async Task<IActionResult> DeleteArticleFromCart(long articleId)
         {
             var cart = await GetCurrentUserCart();

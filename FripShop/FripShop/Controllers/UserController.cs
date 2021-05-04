@@ -81,6 +81,8 @@ namespace FripShop.Controllers
             //    cart.Buyer = DtoUserToDtoUserPublic(user);
                 cart.BuyerId = user.Id;
                 cart.Quantity = 1;
+                cart.Buyer = null;
+                cart.Article = null;
                 var result = await _cartRepo.Insert(cart);
                 if (result != null)
                 {

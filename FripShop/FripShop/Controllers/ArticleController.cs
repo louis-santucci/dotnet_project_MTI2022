@@ -213,6 +213,13 @@ namespace FripShop.Controllers
             return newArticle;
         }
 
+        [Authorize]
+        [HttpGet]
+        public async Task<ActionResult> CreateArticleView()
+        {
+            return View("Create");
+        }
+
         /// API Calls
         [HttpGet("/api/articles/")]
         public async Task<ActionResult> GetAll()
@@ -252,7 +259,6 @@ namespace FripShop.Controllers
 
         [Authorize]
         [HttpPost]
-        [ValidateAntiForgeryToken]
         public async Task<ActionResult> CreateArticle(DTOArticleEdition article)
         {
             try
@@ -272,7 +278,7 @@ namespace FripShop.Controllers
                 return BadRequest();
             }
 
-            return View();
+            return View("Create");
         }
     }
 }
