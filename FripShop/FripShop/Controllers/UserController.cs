@@ -68,7 +68,7 @@ namespace FripShop.Controllers
             return View(userToReturn);
         }
 
-     
+
         public async Task<IActionResult> AddArticle(int articleID)
         {
             try
@@ -96,8 +96,8 @@ namespace FripShop.Controllers
                 _logger.LogError("CONTROLLER USER -- AddArticle() -- Error on db : ", ex);
                 return BadRequest();
             }
-            return RedirectToAction("Index","Article");
 
+            return RedirectToAction("Index", "Article");
         }
 
 

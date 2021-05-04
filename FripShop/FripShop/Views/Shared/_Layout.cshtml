@@ -31,10 +31,36 @@
                             <a class="nav-link text-dark" href="/Article?gender=child">Enfants</a>
                         </li>
                         <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Article" asp-action="CreateArticleView">Vendre</a>
+                        </li>
+                        <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Cart" asp-action="Index">Cart</a>
+                        </li>
+
+                    </ul>
+                </div>
+                <div class="nav-item" style="text-align: right">
+                    <ul class="navbar-nav flex-grow-1">
+
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="User" asp-action="RegisterPage">Register</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="User" asp-action="LoginPage">Login</a>
+                        </li>
+                        <li class="nav-item">
+                            @using (Html.BeginForm("Logout", "Home", FormMethod.Post))
+                            {
+                                <div class="form-group">
+                                    <div class="col-md-offset-2 col-md-10">
+                                        <input type="submit" value="Logout" id="Submit" class="btn btn-default" />
+                                    </div>
+                                </div>
+                            }
                         </li>
                     </ul>
                 </div>
+                
             </div>
         </nav>
     </header>
