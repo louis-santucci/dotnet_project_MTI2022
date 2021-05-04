@@ -22,6 +22,18 @@
     @{ var articles = Model.ToList();
         var i = 0; }
 
+    @if (articles.Count() == 0)
+    {
+    <div class="card-deck mx-2">
+        <div class="card text-white bg-info mt-3 mx-2 text-center">
+            <div class="card-header">Information</div>
+            <div class="card-body">
+                <h5 class="card-title">Cette page est vide</h5>
+                <p class="card-text">La page que vous consultez actuellement est vide. Il est possible que votre recherche n'ait pas porté ses fruits, ou que vous avez dépassé la dernière page d'articles disponibles.</p>
+            </div>
+        </div>
+    </div>
+    }
 
     @while (i < articles.Count())
     {
@@ -49,4 +61,4 @@
         }
     </div>
     }
-</div>
+        </div>
