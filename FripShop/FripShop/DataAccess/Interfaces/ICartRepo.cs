@@ -11,5 +11,7 @@ namespace FripShop.DataAccess.Interfaces
     {
         public Task<DTOCart> GetCartByEmail(string email);
         public Task<DTOCart> GetCartByUserName(string userName);
+
+        public Task<DTOCart> GetCartItemByArticleId(long articleId);
     }
 }
