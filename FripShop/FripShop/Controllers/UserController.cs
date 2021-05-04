@@ -68,7 +68,7 @@ namespace FripShop.Controllers
             return View(userToReturn);
         }
 
-     
+
         public async Task<IActionResult> AddArticle(int articleID)
         {
             try
@@ -76,15 +76,20 @@ namespace FripShop.Controllers
                 DTOCart cart = new DTOCart();
                 var email = HttpContext.User.Identity.Name;
                 var user = _userRepo.GetUserByEmail(email);
-                cart.ArticleId = articleID;
-                cart.BuyerId = user.Id;
-                cart.Quantity = 1;
-                cart.Article = null;
-                cart.Buyer = null;
-                var result = await _cartRepo.Insert(cart);
-                if (result != null)
+
+                var test = await _cartRepo.UserCartAlreadyContains(articleID, user.Id);
+                if (test == false)
                 {
-                    return View();
+                    cart.ArticleId = articleID;
+                    cart.BuyerId = user.Id;
+                    cart.Quantity = 1;
+                    cart.Article = null;
+                    cart.Buyer = null;
+                    var result = await _cartRepo.Insert(cart);
+                    if (result != null)
+                    {
+                        return View();
+                    }
                 }
             }
             catch (Exception ex)
@@ -92,8 +97,8 @@ namespace FripShop.Controllers
                 _logger.LogError("CONTROLLER USER -- AddArticle() -- Error on db : ", ex);
                 return BadRequest();
             }
-            return RedirectToAction("Index","Article");
 
+            return RedirectToAction("Index", "Article");
         }
 
 
