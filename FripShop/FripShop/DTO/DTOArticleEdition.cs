@@ -48,7 +48,7 @@ namespace FripShop.DTO
         public string Brand { get; set; }
 
         [Required(ErrorMessage = "Please enter a condition for your article...")]
-        [DataType(DataType.Custom)]
+        [DataType("Condition")]
         [Range(typeof(int), "0", "10")]
         [Display(Name = "Condition")]
         public int Condition { get; set; }
