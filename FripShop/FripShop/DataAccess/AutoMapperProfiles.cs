@@ -13,7 +13,7 @@ namespace FripShop.DataAccess
             CreateMap<DTOArticle, EFModels.Article>();
             CreateMap<EFModels.Article, DTOArticle>();
 
-            CreateMap<DTOCart, EFModels.Cart>();
+            CreateMap<DTOCart, EFModels.Cart>().ForSourceMember(c => c.Buyer, opt => opt.DoNotValidate()).ForSourceMember(c => c.Article, opt => opt.DoNotValidate());
             CreateMap<EFModels.Cart, DTOCart>();
 
             CreateMap<DTORating, EFModels.Rating>();
