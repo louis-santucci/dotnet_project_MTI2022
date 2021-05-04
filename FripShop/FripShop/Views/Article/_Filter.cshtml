@@ -93,32 +93,32 @@
         <div class="border mx-3 py-3">
             <div class="row justify-content-between">
 
-                @if (Model.page == null)
-                { Model.page = "1"; }
-
                 <div class="col-4 text-center">
-                    @{ var previous_page = int.Parse(Model.page) - 1; }
-                    @if (previous_page > 0)
+                    @if (Model.page != null)
                     {
-                        var previous_str = previous_page.ToString();
-                        <a href="#" value="Filter" id="previous_page" class="btn btn-default">@previous_str</a>
+                        var previous_page = int.Parse(Model.page) - 1; 
+                        if (previous_page > 0)
+                        {
+                            var previous_str = previous_page.ToString();
+                            <a href="#" value="Filter" id="previous_page" class="btn btn-default">@previous_str</a>
+                        }
                     }
-
-                </div>
+                    </div>
                 <div class="col-4">
                     @Html.EditorFor(model => model.page, new { htmlAttributes = new { @class = "form-control", @type = "number", @min = "0", @step = "1" } })
                     @Html.ValidationMessageFor(model => model.page, "", new { @class = "text-danger" })
                 </div>
                 <div class="col-4 text-center">
-
-                    @{ var next_page = int.Parse(Model.page) + 1; }
-                    @if (next_page > 0)
+                    @if (Model.page != null)
                     {
-                        var next_str = next_page.ToString();
-                        <a href="#" value="Filter" id="next_page" class="btn btn-default">@next_str</a>
+                        var next_page = int.Parse(Model.page) + 1; 
+                        if (next_page > 0)
+                        {
+                            var next_str = next_page.ToString();
+                            <a href="#" value="Filter" id="next_page" class="btn btn-default">@next_str</a>
+                        }
                     }
-
-                </div>
+                    </div>
             </div>
         </div>
 

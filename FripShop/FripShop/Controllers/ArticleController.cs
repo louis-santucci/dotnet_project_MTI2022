@@ -79,13 +79,15 @@ namespace FripShop.Controllers
                 if (ascending != null && ascending == "false")
                     asc = false;
 
+                int pageSizeRes = 12;
+                if (pageSize != null)
+                    pageSizeRes = int.Parse(pageSize);
+
                 int pageNumber = 1;
                 if (page != null)
                     pageNumber = int.Parse(page);
 
-                int pageSizeRes = 12;
-                if (pageSize != null)
-                    pageSizeRes = int.Parse(pageSize);
+
 
                 resArticles = await GetArticles(gender, category, priceTuple, cond, comp, asc, search, pageNumber, pageSizeRes);
             }
@@ -127,15 +129,14 @@ namespace FripShop.Controllers
             var articleCount = await _articleRepo.Count();
             var pageStartIndex = (page - 1) * pageSize;
             var pageCurrentIndex = 0;
-            if (pageStartIndex >= articleCount)
-                pageStartIndex = 0;
-
 
             foreach (var element in await _articleRepo.Get())
             {
-                if (pageCurrentIndex >= page + pageSize)
+                        if ((pageCurrentIndex < pageStartIndex) ||
+                            (pageCurrentIndex >= page * pageSize))
                 {
                     //pageCurrentIndex++;
+                    pageCurrentIndex++;
                     continue;
                 }
                     
@@ -182,12 +183,7 @@ namespace FripShop.Controllers
                     if (element.Price > price.Item2 || element.Price < price.Item1)
                         continue;
                 }
-
-                //Pagination filter if reach the right page
-                if (pageCurrentIndex >= pageStartIndex)
-                {
-                    res.Add(element);
-                }
+                res.Add(element);
                 pageCurrentIndex++;
             }
             // Filter OK

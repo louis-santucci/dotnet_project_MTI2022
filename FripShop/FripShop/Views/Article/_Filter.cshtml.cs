@@ -19,7 +19,6 @@ namespace FripShop.Views.Article
         public string sortBy { get; set; }
         public string ascending { get; set; }
         public string search { get; set; }
-
         // Pagination
         public string page { get; set; }
         public string pageSize { get; set; }

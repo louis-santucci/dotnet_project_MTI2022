@@ -1,6 +1,22 @@
-﻿document.getElementById("filter_submit").addEventListener("click", filter); 
+﻿document.getElementById("filter_submit").addEventListener("click", filter);
+if (document.getElementById("previous_page"))
+    document.getElementById("previous_page").addEventListener("click", filter_previous_page); 
+if (document.getElementById("next_page"))
+    document.getElementById("next_page").addEventListener("click", filter_next_page); 
 
 function filter() {
+    paginated_filter(0);
+}
+
+function filter_previous_page() {
+    paginated_filter(-1);
+}
+
+function filter_next_page() {
+    paginated_filter(1);
+}
+
+function paginated_filter(relative_page = 0) {
     //Grab your values
     var search = document.getElementById('search').value;
 
@@ -58,11 +74,12 @@ function filter() {
     if (document.getElementById('descending').checked)
         ascending = 'false';
 
-    //var pageRes = 1
+    var pageRes = "1";
     var page = document.getElementById('page').value;
-    //if (page != '')
-    //    pageRes = page;
-
+    if (page != '') {
+        pageVal = parseInt(page);
+        pageRes = (pageVal + relative_page).toString();
+    }
     //var page = document.getElementById('pageSize').value;
 
     var href = '?gender=' + gender +
@@ -73,8 +90,7 @@ function filter() {
         '&sortBy=' + sortBy +
         '&ascending=' + ascending +
         '&search=' + search +
-        '&page=' + page
-        //'&page=' + pageRes;
+        '&page=' + pageRes;
         //'&pageSize=' + pageSize;
 
     console.log(href)
