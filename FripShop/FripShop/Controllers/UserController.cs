@@ -86,7 +86,14 @@ namespace FripShop.Controllers
                 var result = await _cartRepo.Insert(cart);
                 if (result != null)
                 {
-                    return View();
+                    cart.ArticleId = articleID;
+                    cart.BuyerId = user.Id;
+                    cart.Quantity = 1;
+                    var result = await _cartRepo.Insert(cart);
+                    if (result != null)
+                    {
+                        return View();
+                    }
                 }
             }
             catch (Exception ex)

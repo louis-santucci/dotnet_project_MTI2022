@@ -1,25 +1,48 @@
-﻿
+﻿@model FripShop.DTO.DTOCart
 <h3>@ViewData["PageTitle"]</h3>
 
 
 
    <div style="padding-top:15px">
        <div class="card-columns">
-           @foreach (var item in @ViewData["cartlist"] as IEnumerable<FripShop.DTO.DTOArticle>)
-           {
-           <div class="card">
-               <img class="card-img-top" src="{ @item.ImageSource }" alt="Card image cap">
-               <div class="card-body">
-                   <h5 class="card-title">@item.Name</h5>
-                   <p class="card-text"><small>Marque : </small><small class="text-muted">@item.Brand</small></p>
-                   <p class="card-text"><small>Condition : </small><small class="text-muted">@item.Condition / 5</small></p>
-                   <p class="card-text">@item.Description</p>
-               </div>
-               <div class="card-footer text-center">
-                   <span class="text-success font-weight-bolder">@item.Price €</span>
-               </div>
-               <a class="nav-link text-dark" asp-area="" asp-controller="Cart" asp-action="DeleteArticleFromCart" asp-route-articleId="@item.Id">Delete</a>
-           </div>
+           @{
+               if (ViewData["cartlist"] != null)
+               {
+                   foreach (var item in @ViewData["cartlist"] as IEnumerable<FripShop.DTO.DTOArticle>)
+                   {
+                       <div class="card">
+                           <img class="card-img-top" src="{ @item.ImageSource }" alt="Card image cap">
+                           <div class="card-body">
+                               <h5 class="card-title">@item.Name</h5>
+                               <p class="card-text"><small>Marque : </small><small class="text-muted">@item.Brand</small></p>
+                               <p class="card-text"><small>Condition : </small><small class="text-muted">@item.Condition / 5</small></p>
+                               <p class="card-text">@item.Description</p>
+                           </div>
+                           <div class="card-footer text-center">
+                               <span class="text-success font-weight-bolder">@item.Price €</span>
+                           </div>
+                           <a class="nav-link text-dark" asp-area="" asp-controller="Cart" asp-action="DeleteArticleFromCart" asp-route-articleId="@item.Id">Delete</a>
+                       </div>
+
+                   }
+               }
            }
        </div>
 </div>
+
+   <div style="padding-top:15px">
+       @{ 
+           double totalPrice = 0;
+           if (ViewData["cartlist"] != null)
+           {
+               foreach (var item in @ViewData["cartlist"] as IEnumerable<FripShop.DTO.DTOArticle>)
+               {
+                   totalPrice += item.Price;
+               }
+           }
+       }
+       <p class="text-success font-weight-bolder">Total price: @totalPrice €</p>
+      
+       <a class="nav-link text-dark" asp-area="" asp-controller="Cart" asp-action="ConfirmCart">Confirm</a>
+   </div>
+
