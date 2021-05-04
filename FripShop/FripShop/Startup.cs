@@ -39,13 +39,10 @@ namespace FripShop
             .AddCookie(options =>
             {
                 options.LoginPath = "/User/LoginPage";
-
-            });
-            services.ConfigureApplicationCookie(options =>
-            {
-                options.Cookie.Name = ".Authentication.Cookie";
+                options.Cookie.HttpOnly = false;
                 options.ExpireTimeSpan = TimeSpan.FromMinutes(60);
-                options.SlidingExpiration = true;
+                options.Cookie.IsEssential = true;
+
             });
             services.AddControllersWithViews();
         }
