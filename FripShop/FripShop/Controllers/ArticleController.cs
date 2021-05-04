@@ -7,6 +7,7 @@ using FripShop.DTO;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.Extensions.Logging;
 using System.Collections.Generic;
+using System.IO;
 
 namespace FripShop.Controllers
 {
@@ -15,7 +16,6 @@ namespace FripShop.Controllers
     /// </summary>
     public class ArticleController : Controller
     {
-
         private readonly IArticleRepo _articleRepo;
         private readonly IUserRepo _userRepo;
         private readonly ILogger<ArticleController> _logger;
@@ -290,8 +290,37 @@ namespace FripShop.Controllers
             try
             {
                 var claimsUserEmail = HttpContext.User.Identity.Name;
+
                 var user = _userRepo.GetUserByEmail(claimsUserEmail);
+                var imagePath = "~/ArticleImages/";
+
                 var newArticle = DTOArticleEditionToArticle(article, user);
+                var filename = Path.GetFileName(article.ImageFile.FileName);
+                var extension = Path.GetExtension(article.ImageFile.FileName);
+                if (filename == null || extension == null)
+                    newArticle.ImageSource = null;
+                else
+                {
+                    var newFilename = Path.GetRandomFileName() + extension;
+                    string path = Path.Combine("./ArticleImages/", newFilename);
+                    if (!Directory.Exists("./ArticleImages/"))
+                    {
+                        Directory.CreateDirectory("./ArticleImages");
+                    }
+                    while (System.IO.File.Exists(path))
+                    {
+                        newFilename = Path.Combine(Path.GetRandomFileName(), extension);
+                        path = Path.Combine("./ArticleImages/", newFilename);
+                    }
+
+                    using (var fileStream = new FileStream(path, FileMode.Create))
+                    {
+                        await article.ImageFile.CopyToAsync(fileStream);
+                    }
+
+                    newArticle.ImageSource = path;
+
+                }
                 var result = await _articleRepo.Insert(newArticle);
                 if (result != null)
                 {
