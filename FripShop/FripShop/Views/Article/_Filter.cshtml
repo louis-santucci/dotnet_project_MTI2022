@@ -3,20 +3,20 @@
 <div style="margin-top:15px" class="border rounded mx-3">
     @using (Html.BeginForm("Index", "Article", FormMethod.Get))
     {
-    <div class="form-horizontal py-2">
+    <div class="form-horizontal py-3">
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
 
         <div class="form-group row px-3">
-            <label class="control-label col-md-2">Rechercher</label>
-            <div class="col-md-10">
+            <label class="control-label col-md-2 pr-0">Rechercher</label>
+            <div class="col-md-10 pl-0">
                 @Html.EditorFor(model => model.search, new { htmlAttributes = new { @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.search, "", new { @class = "text-danger" })
             </div>
         </div>
 
         <div class="form-group row px-3">
-            <label class="control-label col-md-2">Sexe</label>
-            <div class="col-md-10">
+            <label class="control-label col-md-2 pr-0">Sexe</label>
+            <div class="col-md-10 pl-0">
                 @Html.RadioButtonFor(model => model.gender, "man", new { @id = "man" }) @Html.Label("Homme")
                 @Html.RadioButtonFor(model => model.gender, "woman", new { @id = "woman" }) @Html.Label("Femme")
                 @Html.RadioButtonFor(model => model.gender, "unisex", new { @id = "unisex" }) @Html.Label("Unisexe")
@@ -26,8 +26,8 @@
         </div>
 
         <div class="form-group row px-3">
-            <label class="control-label col-md-2">Catégorie</label>
-            <div class="col-md-10">
+            <label class="control-label col-md-2 pr-0">Catégorie</label>
+            <div class="col-md-10 pl-0">
                 @Html.RadioButtonFor(model => model.category, "top", new { @id = "top" }) @Html.Label("Hauts")
                 @Html.RadioButtonFor(model => model.category, "pants", new { @id = "pants" }) @Html.Label("Bas")
                 @Html.RadioButtonFor(model => model.category, "shoes", new { @id = "shoes" }) @Html.Label("Chaussures")
@@ -37,23 +37,23 @@
         </div>
 
         <div class="form-group px-3 row">
-            
-                <label class="control-label col-2">Prix min</label>
-                <div class="col-4">
-                    @Html.EditorFor(model => model.minPrice, new { htmlAttributes = new { @class = "form-control", @type = "number", @min = "0", @step = "1"} })
-                    @Html.ValidationMessageFor(model => model.minPrice, "", new { @class = "text-danger" })
-                </div>
-            
-                <label class="control-label col-2">Prix max</label>
-                <div class="col-4">
-                    @Html.EditorFor(model => model.maxPrice, new { htmlAttributes = new { @class = "form-control", @type = "number", @min = "0", @step = "1" } })
-                    @Html.ValidationMessageFor(model => model.maxPrice, "", new { @class = "text-danger" })
-                </div>
+
+            <label class="control-label col-2 pr-0">Prix min</label>
+            <div class="col-4 pl-0">
+                @Html.EditorFor(model => model.minPrice, new { htmlAttributes = new { @class = "form-control", @type = "number", @min = "0", @step = "1" } })
+                @Html.ValidationMessageFor(model => model.minPrice, "", new { @class = "text-danger" })
+            </div>
+
+            <label class="control-label col-2 pr-0">Prix max</label>
+            <div class="col-4 pl-0">
+                @Html.EditorFor(model => model.maxPrice, new { htmlAttributes = new { @class = "form-control", @type = "number", @min = "0", @step = "1" } })
+                @Html.ValidationMessageFor(model => model.maxPrice, "", new { @class = "text-danger" })
+            </div>
         </div>
 
         <div class="form-group row px-3">
-            <label class="control-label col-md-2">Condition minimale</label>
-            <div class="col-md-10">
+            <label class="control-label col-md-2 pr-0">Condition minimale</label>
+            <div class="col-md-10 pl-0">
                 @Html.RadioButtonFor(model => model.conditionMin, "0", new { @id = "cond_0" }) @Html.Label("0")
                 @Html.RadioButtonFor(model => model.conditionMin, "1", new { @id = "cond_1" }) @Html.Label("1")
                 @Html.RadioButtonFor(model => model.conditionMin, "2", new { @id = "cond_2" }) @Html.Label("2")
@@ -65,8 +65,8 @@
         </div>
 
         <div class="form-group row px-3">
-            <label class="control-label col-md-2">Trier par</label>
-            <div class="col-md-10">
+            <label class="control-label col-md-2 pr-0">Trier par</label>
+            <div class="col-md-10 pl-0">
                 @Html.RadioButtonFor(model => model.sortBy, "date", new { @id = "date" }) @Html.Label("Date")
                 @Html.RadioButtonFor(model => model.sortBy, "price", new { @id = "price" }) @Html.Label("Prix")
                 @Html.RadioButtonFor(model => model.sortBy, "rating", new { @id = "rating" }) @Html.Label("Note")
@@ -76,8 +76,8 @@
         </div>
 
         <div class="form-group row px-3">
-            <label class="control-label col-md-2">Ordre de tri</label>
-            <div class="col-md-10">
+            <label class="control-label col-md-2 pr-0">Ordre de tri</label>
+            <div class="col-md-10 pl-0">
                 @Html.RadioButtonFor(model => model.ascending, "true", new { @id = "ascending" }) @Html.Label("Croissant")
                 @Html.RadioButtonFor(model => model.ascending, "false", new { @id = "descending" }) @Html.Label("Décroissant")
                 @Html.ValidationMessageFor(model => model.ascending, "", new { @class = "text-danger" })
@@ -85,8 +85,31 @@
         </div>
 
         <div class="form-group row px-3">
+            <label class="control-label col-2 pr-0">Résultats par page</label>
+            <div class="col-4 pl-0">
+                @Html.EditorFor(model => model.pageSize, new { htmlAttributes = new { @class = "form-control", @type = "number", @min = "1", @step = "1" } })
+                @Html.ValidationMessageFor(model => model.pageSize, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group row px-3">
             <div class="col-md-offset-2 col-md-10">
-                <a href="#" value="Filter" id="filter_submit" class="btn btn-default">Filtrer</a>
+                <button href="#" value="Filter" id="filter_submit" class="btn btn-success">Filtrer</button>
+            </div>
+        </div>
+
+        <div class="border mx-3 py-3">
+            <div class="row justify-content-between">
+                <div class="col-4 text-center">
+                    <a href="#" value="Filter" id="previous_page" class="btn btn-default">&lt</a>
+                </div>
+                <div class="col-4">
+                    @Html.EditorFor(model => model.page, new { htmlAttributes = new { @class = "form-control", @type = "number", @min = "0", @step = "1" } })
+                    @Html.ValidationMessageFor(model => model.page, "", new { @class = "text-danger" })
+                </div>
+                <div class="col-4 text-center">
+                    <a href="#" value="Filter" id="next_page" class="btn btn-default">></a>
+                </div>
             </div>
         </div>
 

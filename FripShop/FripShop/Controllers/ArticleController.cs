@@ -35,8 +35,8 @@ namespace FripShop.Controllers
 
         public async Task<ActionResult> Index(string gender = null, string category = null,
                                                 string minPrice = null, string maxPrice = null, string conditionMin = null,
-                                                string sortBy = null, string ascending = null,
-                                                string search = null)
+                                                string sortBy = null, string ascending = null, string search = null,
+                                                string page = null, string pageSize= null)
         {
             IEnumerable<DTOArticle> resArticles = null;
 
@@ -79,7 +79,17 @@ namespace FripShop.Controllers
                 if (ascending != null && ascending == "false")
                     asc = false;
 
-                resArticles = await GetArticles(gender, category, priceTuple, cond, comp, asc, search);
+                int pageSizeRes = 12;
+                if (pageSize != null)
+                    pageSizeRes = int.Parse(pageSize);
+
+                int pageNumber = 1;
+                if (page != null)
+                    pageNumber = int.Parse(page);
+
+
+
+                resArticles = await GetArticles(gender, category, priceTuple, cond, comp, asc, search, pageNumber, pageSizeRes);
             }
             catch
             {
@@ -111,12 +121,25 @@ namespace FripShop.Controllers
         public async Task<IEnumerable<DTOArticle>> GetArticles(string gender = null, string category = null,
                                                         Tuple<float, float> price = null, int conditionMin = 0,
                                                         Comparison comparison = Comparison.Date, bool ascending = false,
-                                                        string search = null) // Filters
+                                                        string search = null, int page = 1, int pageSize = 12) // Filters
         {
             var res = new List<DTOArticle>();
 
+            // Pagination var init
+            var articleCount = await _articleRepo.Count();
+            var pageStartIndex = (page - 1) * pageSize;
+            var pageCurrentIndex = 0;
+
             foreach (var element in await _articleRepo.Get())
             {
+                        if ((pageCurrentIndex < pageStartIndex) ||
+                            (pageCurrentIndex >= page * pageSize))
+                {
+                    //pageCurrentIndex++;
+                    pageCurrentIndex++;
+                    continue;
+                }
+                    
                 if (element.State.ToLower() != "free")
                     continue;
                 if (search != null)
@@ -161,6 +184,7 @@ namespace FripShop.Controllers
                         continue;
                 }
                 res.Add(element);
+                pageCurrentIndex++;
             }
             // Filter OK
             switch (comparison)
