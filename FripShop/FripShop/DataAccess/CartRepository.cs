@@ -39,5 +39,21 @@ namespace FripShop.DataAccess
                 return null;
             }
         }
+
+        public async Task<DTOCart> GetCartItemByArticleId(long articleId)
+        {
+            try
+            {
+                var test = _context.Carts.Where(a => a.ArticleId == articleId).FirstOrDefault();
+                test.Buyer = null;
+                test.Article = null;
+               return _mapper.Map<DTOCart>(test);
+            }
+            catch (Exception ex)
+            {   
+                _logger.LogError($"REPOSITORY {typeof(DTOUserPublic)} -- Get() -- Error on db : ", ex);
+                return null;
+            }
+        }
     }
 }
