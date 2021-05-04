@@ -68,12 +68,6 @@ namespace FripShop.Controllers
             return View(userToReturn);
         }
 
-        public async Task<IActionResult> showCart()
-        {
-            var cart = await GetCartFromId();
-            return View(cart);
-        }
-
      
         public async Task<IActionResult> AddArticle(int articleID)
         {
@@ -100,20 +94,6 @@ namespace FripShop.Controllers
             }
             return RedirectToAction("Index","Article");
 
-        }
-
-
-        public async Task<IEnumerable<DTOCart>> GetCartFromId()
-        {
-            var res = new List<DTOArticle>();
-            var email = HttpContext.User.Identity.Name;
-            var user = _userRepo.GetUserByEmail(email);
-            var cart = await _cartRepo.Get();
-            var results = cart.Where(a => a.BuyerId == user.Id);
-
-           return results;
-         
-     
         }
 
 
@@ -331,5 +311,7 @@ namespace FripShop.Controllers
             return NotFound(userId);
         }
 
+
     }
+
 }
