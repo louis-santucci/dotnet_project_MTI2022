@@ -46,5 +46,11 @@ namespace FripShop.DataAccess.Interfaces
         /// <param name="id">The ID of the wanted DTO entity</param>
         /// <returns>The wanted entity if found, null otherwise</returns>
         Task<ModelEntity> GetById(long id);
+
+        /// <summary>
+        /// Get total number of DTO entity in DB
+        /// </summary>
+        /// <returns></returns>
+        Task<int> Count();
     }
 }
