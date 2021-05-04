@@ -58,6 +58,13 @@ function filter() {
     if (document.getElementById('descending').checked)
         ascending = 'false';
 
+    //var pageRes = 1
+    var page = document.getElementById('page').value;
+    //if (page != '')
+    //    pageRes = page;
+
+    //var page = document.getElementById('pageSize').value;
+
     var href = '?gender=' + gender +
         '&category=' + category +
         '&minprice=' + minPrice +
@@ -65,7 +72,10 @@ function filter() {
         '&conditionMin=' + conditionMin +
         '&sortBy=' + sortBy +
         '&ascending=' + ascending +
-        '&search=' + search;
+        '&search=' + search +
+        '&page=' + page
+        //'&page=' + pageRes;
+        //'&pageSize=' + pageSize;
 
     console.log(href)
 
