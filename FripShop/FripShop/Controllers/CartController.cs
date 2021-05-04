@@ -1,5 +1,6 @@
 ﻿using FripShop.DataAccess.Interfaces;
 using FripShop.DTO;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System;
@@ -29,10 +30,13 @@ namespace FripShop.Controllers
 
         public IUserRepo UserRepo => _userRepo;
 
-        /// Recupere le cart de la personne connecte
-        /// recherche chaque article grace a leurs id
-        /// retourne la liste des articles
-        /// les view data permettent de transferer les infos a la view
+
+        /// <summary>
+        /// Get the Cart of the connected account
+        /// Search each article by their id
+        /// ViewData[] transfers infos to the .cshtml
+        /// </summary>
+        /// <returns> View du Cart </returns>
         public async Task<IActionResult> Index()
         {
             var cart = await GetCurrentUserCart();
@@ -50,7 +54,10 @@ namespace FripShop.Controllers
             return View("ShowCart");
         }
 
-        //Recupere le Cart associe a l'Id de la personne connecte
+        /// <summary>
+        /// Get the cart of the connected account
+        /// </summary>
+        /// <returns> Liste de DTOCart</returns>
         public async Task<IEnumerable<DTOCart>> GetCurrentUserCart()
         {
                 var res = new List<DTOArticle>();
@@ -62,6 +69,12 @@ namespace FripShop.Controllers
                 return results;
         }
 
+        /// <summary>
+        /// Delete one article of the connected account by the article id
+        /// </summary>
+        /// <param name="articleId"></param>
+        /// <returns>View du Cart</returns>
+        [Authorize]
         public async Task<IActionResult> DeleteArticleFromCart(long articleId)
         {
             var cart = await GetCurrentUserCart();
@@ -87,6 +100,13 @@ namespace FripShop.Controllers
             return View("ShowCart");
         }
 
+
+        /// <summary>
+        /// Delete all the cart of cartList
+        /// </summary>
+        /// <param name="cartList"></param>
+        /// <returns></returns>
+        [Authorize]
         public async Task<IActionResult> DeleteCart(IEnumerable<DTOCart> cartList)
         {
             var list = new List<DTOArticle>();
@@ -104,7 +124,12 @@ namespace FripShop.Controllers
             return View("ShowCart");
         }
 
-
+        /// <summary>
+        /// Delete user Cart by userId
+        /// </summary>
+        /// <param name="userId"></param>
+        /// <returns> current View</returns>
+        [Authorize]
         public async Task<IActionResult> DeleteUserCart(long userId)
         {
             try
@@ -123,6 +148,13 @@ namespace FripShop.Controllers
             }
         }
 
+        /// <summary>
+        /// Build the mail string
+        /// </summary>
+        /// <param name="articleList"></param>
+        /// <param name="user"></param>
+        /// <returns>string</returns>
+        [Authorize]
         public string build_string(IEnumerable<DTOArticle> articleList, DTOUser user)
         {
             string buy = "\n\n Les Articles acheté sont : \n";
@@ -148,6 +180,13 @@ namespace FripShop.Controllers
             return res;
         }
 
+        /// <summary>
+        /// Delete Cart content
+        /// Send a mail with the cart content 
+        /// Acts like when you buy something
+        /// </summary>
+        /// <returns></returns>
+        [Authorize]
         public async Task<IActionResult> ConfirmCart()
         {
             try
