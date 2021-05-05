@@ -135,7 +135,6 @@ namespace FripShop.Controllers
                         if ((pageCurrentIndex < pageStartIndex) ||
                             (pageCurrentIndex >= page * pageSize))
                 {
-                    //pageCurrentIndex++;
                     pageCurrentIndex++;
                     continue;
                 }
