@@ -144,8 +144,7 @@ namespace UnitTestFripShop.ArticleTests
                 var max = Math.Max(_articlesMockList.Max(c => c.Id) + 1, _articlesMockList.Max(c => c.Id));
                 var user = DTOToDBO(articleModel);
                 user.Id = max;
-                
-                if (articleModel.Sex == null)
+                if (articleModel.Category == null || articleModel.Sex == null)
                     return null;
                 if (articleModel.Price == null || articleModel.Name == null)
                     return null;
