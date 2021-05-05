@@ -4,6 +4,9 @@ if (document.getElementById("previous_page"))
 if (document.getElementById("next_page"))
     document.getElementById("next_page").addEventListener("click", filter_next_page); 
 
+if (document.getElementById("filter_reset"))
+    document.getElementById("filter_reset").addEventListener("click", filter_reset);
+
 function filter() {
     paginated_filter(0);
 }
@@ -97,4 +100,33 @@ function paginated_filter(relative_page = 0) {
     console.log(href)
 
     window.location.href = href;
+}
+
+function filter_reset() {
+    document.getElementById('search').value = "";
+
+    document.getElementById('man').checked = false;
+    document.getElementById('woman').checked = false;
+    document.getElementById('unisex').checked = false;
+    document.getElementById('child').checked = false;
+
+    document.getElementById('top').checked = false;
+    document.getElementById('pants').checked = false;
+    document.getElementById('shoes').checked = false;
+    document.getElementById('accessories').checked = false;
+
+    document.getElementById('minPrice').value = null;
+    document.getElementById('maxPrice').value = null;
+
+    document.getElementById('conditionMin').value = null;
+
+    document.getElementById('date').checked = false;
+    document.getElementById('price').checked = false;
+    document.getElementById('rating').checked = false;
+    document.getElementById('condition').checked = false;
+
+    document.getElementById('ascending').checked = false;
+    document.getElementById('descending').checked = false;
+
+    document.getElementById('pageSize').value = null;
 }
