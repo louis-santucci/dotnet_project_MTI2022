@@ -1,14 +1,10 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
-using FripShop.DataAccess;
 using FripShop.DataAccess.EFModels;
 using FripShop.DataAccess.Interfaces;
 using FripShop.DTO;
-using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Moq;
 
 namespace UnitTestFripShop.UserTests
 {
