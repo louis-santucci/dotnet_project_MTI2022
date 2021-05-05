@@ -223,6 +223,9 @@ namespace UnitTestFripShop
 
         }
 
+        /// <summary>
+        /// Test for counting elements of a repo
+        /// </summary>
         [TestMethod]
         public void TestCount()
         {
@@ -230,6 +233,9 @@ namespace UnitTestFripShop
             Assert.AreEqual(7, count);
         }
 
+        /// <summary>
+        /// Test to get elements of a repo
+        /// </summary>
         [TestMethod]
         public void TestGet()
         {
@@ -237,6 +243,9 @@ namespace UnitTestFripShop
             Assert.AreEqual(7, users.Result.Count());
         }
 
+        /// <summary>
+        /// Test to get element with its id
+        /// </summary>
         [TestMethod]
         public void TestGetId()
         {
@@ -255,6 +264,9 @@ namespace UnitTestFripShop
             Assert.AreEqual(user, userExpect);
         }
 
+        /// <summary>
+        /// Test to get wrong id
+        /// </summary>
         [TestMethod]
         public void TestGetIdWrong()
         {
@@ -262,6 +274,9 @@ namespace UnitTestFripShop
             Assert.IsNull(user.Result);
         }
 
+        /// <summary>
+        /// Test to insert element
+        /// </summary>
         [TestMethod]
         public void TestInsertOk()
         {
@@ -284,6 +299,9 @@ namespace UnitTestFripShop
             Assert.AreEqual(8, count);
         }
 
+        /// <summary>
+        /// Test to wrong email insert 
+        /// </summary>
         [TestMethod]
         public void TestInsertWrongEmail()
         {
@@ -303,6 +321,9 @@ namespace UnitTestFripShop
             Assert.AreEqual(8, count.Result);
         }
 
+        /// <summary>
+        /// Test to wrong userName insert
+        /// </summary>
         [TestMethod]
         public void TestInsertWrongUserName()
         {
@@ -322,6 +343,9 @@ namespace UnitTestFripShop
             Assert.AreEqual(8, count);
         }
 
+        /// <summary>
+        /// Test to update element
+        /// </summary>
         [TestMethod]
         public void TestUpdateOk()
         {
@@ -335,6 +359,9 @@ namespace UnitTestFripShop
             Assert.AreEqual(updateUser, _mockRepo.GetById(updateUser.Id).Result);
         }
 
+        /// <summary>
+        /// Wrong ID testing update
+        /// </summary>
         [TestMethod]
         public void TestUpdateWrong()
         {
@@ -354,6 +381,9 @@ namespace UnitTestFripShop
             Assert.AreEqual(8, _mockRepo.Count().Result);
         }
 
+        /// <summary>
+        /// Delete element
+        /// </summary>
         [TestMethod]
         public void TestDeleteOk()
         {
@@ -364,6 +394,9 @@ namespace UnitTestFripShop
             Assert.AreEqual(7, count);
         }
 
+        /// <summary>
+        /// Wrong id to delete
+        /// </summary>
         [TestMethod]
         public void TestDeleteWrong()
         {
@@ -373,6 +406,9 @@ namespace UnitTestFripShop
             Assert.AreEqual(7, count);
         }
 
+        /// <summary>
+        /// Get user function of its email
+        /// </summary>
         [TestMethod]
         public void TestGetUserEmailOk()
         {
@@ -392,6 +428,9 @@ namespace UnitTestFripShop
             Assert.AreEqual(userTheorical, user);
         }
 
+        /// <summary>
+        /// Get user function of its email wrong email
+        /// </summary>
         [TestMethod]
         public void TestGetUserEmailWrong()
         {
@@ -399,6 +438,9 @@ namespace UnitTestFripShop
             Assert.IsNull(user);
         }
 
+        /// <summary>
+        /// Get user function of its username
+        /// </summary>
         [TestMethod]
         public void TestGetUserUserNameOk()
         {
@@ -418,6 +460,9 @@ namespace UnitTestFripShop
             Assert.AreEqual(userTheorical, user);
         }
 
+        /// <summary>
+        /// Get user function of its email wrong username
+        /// </summary>
         [TestMethod]
         public void TestGetUserUserNameWrong()
         {
