@@ -12,6 +12,8 @@
     filter.sortBy = queries["sortBy"];
     filter.ascending = queries["ascending"];
     filter.search = queries["search"];
+    filter.page = queries["page"];
+    filter.pageSize = queries["pageSize"];
 }
 
 @{ Html.RenderPartial("_Filter", filter); }
@@ -43,7 +45,7 @@
         @while (j < 3 && i < articles.Count())
         {
             <div class="card mt-3 mx-2">
-                <img class="card-img-top" src="{ @articles[i].ImageSource }" alt="Card image cap">
+                <img class="card-img-top" src="@articles[i].ImageSource" alt="Card image cap">
                 <div class="card-body">
                     <h5 class="card-title">@articles[i].Name</h5>
                     <p class="card-text"><small>Marque : </small><small class="text-muted">@articles[i].Brand</small></p>
