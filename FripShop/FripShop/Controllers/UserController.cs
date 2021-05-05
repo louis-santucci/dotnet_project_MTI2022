@@ -25,13 +25,15 @@ namespace FripShop.Controllers
         private readonly IUserRepo _userRepo;
         private readonly ILogger<UserController> _logger;
         private readonly ICartRepo _cartRepo;
+        private readonly ITransactionRepo _transactionRepo;
 
-        public UserController(ILogger<UserController> logger, IArticleRepo articleRepo, IUserRepo userRepo, ICartRepo cartRepo)
+        public UserController(ILogger<UserController> logger, IArticleRepo articleRepo, IUserRepo userRepo, ICartRepo cartRepo, ITransactionRepo transactionRepo)
         {
             this._userRepo = userRepo;
             this._articleRepo = articleRepo;
             this._logger = logger;
             this._cartRepo = cartRepo;
+            this._transactionRepo = transactionRepo;
         }
 
         public ActionResult Details(int id)
@@ -65,6 +67,25 @@ namespace FripShop.Controllers
             userToReturn.UserName = user.UserName;
             userToReturn.Address = user.Address;
             userToReturn.Gender = user.Gender;
+
+            var transactionList = new List<DTOArticle>();
+            var userTransactions = await _transactionRepo.GetTransactionByUserId(user.Id);
+            foreach (var transaction in userTransactions)
+            {
+                var toInsert = new DTOArticle();
+                var article = await _articleRepo.GetArticleFromId(transaction.ArticleId);
+                toInsert.Name = article.Name;
+                toInsert.State = article.State;
+                var sellerFromDb = await _userRepo.GetById(article.SellerId);
+                var sellerToInsert = new DTOUserPublic();
+                sellerToInsert.Name = sellerFromDb.Name;
+                sellerToInsert.UserName = sellerFromDb.UserName;
+                toInsert.User = sellerToInsert;
+                transactionList.Add(toInsert);
+            }
+
+
+            ViewData["transactionlist"] = transactionList;
             return View(userToReturn);
         }
 

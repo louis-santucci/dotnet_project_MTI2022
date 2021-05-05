@@ -2,6 +2,7 @@
 @{
     ViewBag.Title = "Index";
 }
+Mes Informations Personnelles
 <div>
     <div class="col-md-8">
         <div class="card mb-3">
@@ -52,5 +53,27 @@
                 </div>
             </div>
         </div>
+    </div>
+</div>
+Mes Achats
+<div style="padding-top:15px">
+    <div class="card-columns">
+        @{
+            if (ViewData["transactionlist"] != null)
+            {
+                foreach (var transaction in @ViewData["transactionlist"] as IEnumerable<FripShop.DTO.DTOArticle>)
+                {
+                    <div>
+                                <div class="card-body">
+                                    <h5 class="card-title">@transaction.Name</h5>
+                                    <p class="card-text"><small>SellerName : </small><small class="text-muted">@transaction.User.Name</small></p>
+                                    <p class="card-text"><small>SellerUserName : </small><small class="text-muted">@transaction.User.UserName</small></p>
+                                    <p class="card-text"><small>TransactionState : </small><small class="text-muted">@transaction.State</small></p>
+                                </div>
+                    </div>
+
+                }
+            }
+        }
     </div>
 </div>

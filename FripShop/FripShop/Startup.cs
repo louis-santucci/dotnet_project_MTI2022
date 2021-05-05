@@ -35,6 +35,7 @@ namespace FripShop
             services.AddTransient<DataAccess.Interfaces.IArticleRepo, DataAccess.ArticleRepository>();
             services.AddTransient<DataAccess.Interfaces.IUserRepo, DataAccess.UserRepository>();
             services.AddTransient<DataAccess.Interfaces.ICartRepo, DataAccess.CartRepository>();
+            services.AddTransient<DataAccess.Interfaces.ITransactionRepo, DataAccess.TransactionRepository>();
             services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
             .AddCookie(options =>
             {

@@ -314,8 +314,14 @@ namespace FripShop.Controllers
                 var imagePath = "wwwroot/ArticleImages/";
 
                 var newArticle = DTOArticleEditionToArticle(article, user);
-                var filename = Path.GetFileName(article.ImageFile.FileName);
-                var extension = Path.GetExtension(article.ImageFile.FileName);
+                string filename = null;
+                string extension = null;
+                if (article.ImageFile != null)
+                {
+                    filename = Path.GetFileName(article.ImageFile.FileName);
+                    extension = Path.GetExtension(article.ImageFile.FileName);
+                }
+                
                 if (filename == null || extension == null)
                     newArticle.ImageSource = null;
                 else
