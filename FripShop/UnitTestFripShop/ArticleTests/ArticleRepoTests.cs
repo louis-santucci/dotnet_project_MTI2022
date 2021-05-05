@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using FripShop.DataAccess;
 using FripShop.DataAccess.EFModels;
 using FripShop.DataAccess.Interfaces;
@@ -16,110 +17,44 @@ namespace UnitTestFripShop.ArticleTests
     class ArticleRepoTests
     {
 
-        /// <summary>
-        /// Our Mock Article Repository for use in testing
-        /// </summary>
-        public IArticleRepo _articleRepo;
-
-        public List<Article> _articleMockList;
-
-
-        /// <summary>
-        /// Constructor for the article CRUD unit tests
-        /// </summary>
-        public ArticleRepoTests()
+        public List<Article> articles = new List<Article>()
         {
-            _articleMockList = new List<Article>
+            new Article()
             {
-                
-            };
-
-            Mock<IArticleRepo> mockRepo = new Mock<IArticleRepo>();
-
-            // Mocks the function Get()
-            mockRepo.Setup(articleRepo => articleRepo.Get("")).ReturnsAsync();
-
-            // Mocks the function Insert()
-            mockRepo.Setup(articleRepo => articleRepo.Insert(It.IsAny<DTOUser>())).ReturnsAsync((DTOUser userModel) =>
+                Id = 1, ImageSource = null, SellerId = 1, State = "free", Name = "Joli haut", Description = "Joli haut tout bleu", Category = "top", Sex = "woman", Brand = "Converse", Condition = 10, CreatedAt = DateTime.Now
+            },
+            new Article()
             {
-                var max = Math.Max(_usersMockList.Max(c => c.Id) + 1, _usersMockList.Max(c => c.Id));
-                var user = DTOToDBO(userModel);
-                user.Id = max;
-                var users = _mockRepo.Get();
-                if (users.Result.Count(c => c.Email == userModel.Email || c.UserName == userModel.UserName) != 0)
-                    return null;
-                this._usersMockList.Add(user);
-                return DBOToDTO(user);
-            });
-
-            // Mocks the function Update()
-            mockRepo.Setup(articleRepo => articleRepo.Update(It.IsAny<DTOUser>())).ReturnsAsync((DTOUser userModel) =>
+                Id = 2, ImageSource = null, SellerId = 1, State = "free", Name = "Joli bas", Description = "Joli bas tout vert T36", Category = "pants", Sex = "man", Brand = "Levis", Condition = 3, CreatedAt = DateTime.Now
+            },
+            new Article()
             {
-                var user = _usersMockList.Single(c => c.Id == userModel.Id);
-                if (user == null)
-                    return null;
-                user.Address = userModel.Address;
-                user.Name = userModel.Name;
-                user.Gender = userModel.Gender;
-                user.Note = userModel.Note;
-                user.Password = userModel.Password;
-                user.UserName = userModel.UserName;
-                user.Email = userModel.Email;
-                return DBOToDTO(user);
-            });
-
-            // Mocks the function Delete()
-            mockRepo.Setup(articleRepo => articleRepo.Delete(It.IsAny<long>())).ReturnsAsync((long i) =>
+                Id = 3, ImageSource = null, SellerId = 1, State = "free", Name = "Joli veste", Description = "", Category = "top", Sex = "woman", Brand = "Adidas", Condition = 2, CreatedAt = DateTime.Now
+            },
+            new Article()
             {
-                var count = _usersMockList.Count(c => c.Id == i);
-                if (count == 1)
-                {
-                    _usersMockList.Remove(_usersMockList.Single(c => c.Id == i));
-                    return true;
-                }
-
-                return false;
-            });
-
-            // Mocks the function GetById()
-            mockRepo.Setup(articleRepo => articleRepo.GetById(It.IsAny<long>())).Returns((long i) =>
+                Id = 4, ImageSource = null, SellerId = 1, State = "free", Name = "Jolies chaussures", Description = "", Category = "shoes", Sex = "woman", Brand = "Converse", Condition = 10, CreatedAt = DateTime.Now
+            },
+            new Article()
             {
-                var count = _usersMockList.Count(c => c.Id == i);
-                if (count != 1)
-                {
-                    return null;
-                }
-                return DBOToDTOAsync(_usersMockList.Single(c => c.Id == i));
-            });
-
-            // Mocks the function Count()
-            mockRepo.Setup(articleRepo => articleRepo.Count()).ReturnsAsync(_usersMockList.Count());
-
-            // Mocks the function GetUserByEmail()
-            mockRepo.Setup(articleRepo => articleRepo.GetUserByEmail(It.IsAny<string>())).Returns((string email) =>
+                Id = 5, ImageSource = null, SellerId = 1, State = "free", Name = "pantalon", Description = "", Category = "pants", Sex = "woman", Brand = "Dickies", Condition = 9, CreatedAt = DateTime.Now
+            },
+            new Article()
             {
-                if (_usersMockList.Count(c => c.Email == email) == 0)
-                {
-                    return null;
-                }
-
-                return DBOToDTO(_usersMockList.Single(c => c.Email == email));
-            });
-
-            // Mocks the function GetUserByUserName()
-            mockRepo.Setup(articleRepo => articleRepo.GetUserByUserName(It.IsAny<string>())).Returns((string userName) =>
+                Id = 6, ImageSource = null, SellerId = 1, State = "free", Name = "pull kaki", Description = "", Category = "top", Sex = "woman", Brand = "Supreme", Condition = 8, CreatedAt = DateTime.Now
+            },
+            new Article()
             {
-                if (_usersMockList.Count(c => c.UserName == userName) == 0)
-                {
-                    return null;
-                }
+                Id = 7, ImageSource = null, SellerId = 1, State = "free", Name = "serviette verte", Description = "", Category = "accessories", Sex = "woman", Brand = "Nike", Condition = 6, CreatedAt = DateTime.Now
+            },
+            new Article()
+            {
+                Id = 8, ImageSource = null, SellerId = 1, State = "free", Name = "Lunettes noires", Description = "Ray Ban noires", Category = "accessories", Sex = "woman", Brand = "RayBan", Condition = 10, CreatedAt = DateTime.Now
+            },
 
-                return DBOToDTO(_usersMockList.Single(c => c.UserName == userName));
-            });
+        };
 
-            this._articleRepo = mockRepo.Object;
-        }
-    }
+        public ArticleMockRepo _articleRepo;
 
 
 
