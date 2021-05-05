@@ -1,12 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using FripShop.DataAccess;
 using FripShop.DataAccess.EFModels;
-using FripShop.DataAccess.Interfaces;
-using FripShop.DTO;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Moq;
 
 namespace UnitTestFripShop.ArticleTests
 {

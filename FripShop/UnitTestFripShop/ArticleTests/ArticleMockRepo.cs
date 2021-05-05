@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
 using FripShop.DataAccess.EFModels;
 using FripShop.DataAccess.Interfaces;
 using FripShop.DTO;
@@ -9,7 +10,6 @@ using Moq;
 
 namespace UnitTestFripShop.ArticleTests
 {
-    /*
     /// <summary>
     /// Our Mock Article Repository for use in testing
     /// </summary>
@@ -18,6 +18,112 @@ namespace UnitTestFripShop.ArticleTests
         public readonly IArticleRepo _articleRepo;
 
         public List<Article> _articlesMockList;
+
+        /// <summary>
+        /// Converts a database entity to a dto entity asynchronously
+        /// </summary>
+        /// <param name="user">The user to convert</param>
+        /// <returns>the converted user</returns>
+        public static async Task<DTOArticle> DBOToDTOAsync(Article articleModel)
+        {
+            var article = new DTOArticle();
+
+            article.Id = articleModel.Id;
+            article.ImageSource = articleModel.ImageSource;
+            article.SellerId = articleModel.SellerId;
+
+            article.Name = articleModel.Name;
+            article.Price = articleModel.Price;
+            article.Description = articleModel.Description;
+            article.Category = articleModel.Category;
+            article.Sex = articleModel.Sex;
+            article.Brand = articleModel.Brand;
+            article.Condition = articleModel.Condition;
+            article.CreatedAt = articleModel.CreatedAt;
+
+            return article;
+        }
+
+        /// <summary>
+        /// Converts a database entity to a dto entity
+        /// </summary>
+        /// <param name="user">The article to convert</param>
+        /// <returns>the converted article</returns>
+        public static DTOArticle DBOToDTO(Article articleModel)
+        {
+            var article = new DTOArticle();
+
+            article.Id = articleModel.Id;
+            article.ImageSource = articleModel.ImageSource;
+            article.SellerId = articleModel.SellerId;
+
+            article.Name = articleModel.Name;
+            article.Price = articleModel.Price;
+            article.Description = articleModel.Description;
+            article.Category = articleModel.Category;
+            article.Sex = articleModel.Sex;
+            article.Brand = articleModel.Brand;
+            article.Condition = articleModel.Condition;
+            article.CreatedAt = articleModel.CreatedAt;
+
+            return article;
+        }
+
+        /// <summary>
+        /// Converts a database entity to a dto entity
+        /// </summary>
+        /// <param name="user">The user to convert</param>
+        /// <returns>the converted user</returns>
+        public static Article DTOToDBO(DTOArticle articleModel)
+        {
+            var article = new Article();
+
+            article.Id = articleModel.Id;
+            article.ImageSource = articleModel.ImageSource;
+            article.SellerId = articleModel.SellerId;
+
+            article.Name = articleModel.Name;
+            article.Price = articleModel.Price;
+            article.Description = articleModel.Description;
+            article.Category = articleModel.Category;
+            article.Sex = articleModel.Sex;
+            article.Brand = articleModel.Brand;
+            article.Condition = articleModel.Condition;
+            article.CreatedAt = articleModel.CreatedAt;
+
+            return article;
+        }
+
+        /// <summary>
+        /// Converts a database entity to a dto entity list
+        /// </summary>
+        /// <param name="userModels">The user list to convert</param>
+        /// <returns>the converted user list</returns>
+        public static List<DTOArticle> DBOTODTOList(IEnumerable<Article> articleModels)
+        {
+            List<DTOArticle> result = new List<DTOArticle>();
+            foreach (var articleModel in articleModels)
+            {
+                var article = new DTOArticle();
+
+                article.Id = articleModel.Id;
+                article.ImageSource = articleModel.ImageSource;
+                article.SellerId = articleModel.SellerId;
+
+                article.Name = articleModel.Name;
+                article.Price = articleModel.Price;
+                article.Description = articleModel.Description;
+                article.Category = articleModel.Category;
+                article.Sex = articleModel.Sex;
+                article.Brand = articleModel.Brand;
+                article.Condition = articleModel.Condition;
+                article.CreatedAt = articleModel.CreatedAt;
+
+                result.Add(article);
+            }
+
+            return result;
+        }
 
         /// <summary>
         /// Public constructor for the mocked repository
@@ -30,35 +136,39 @@ namespace UnitTestFripShop.ArticleTests
             Mock<IArticleRepo> mockRepo = new Mock<IArticleRepo>();
 
             // Mocks the function Get()
-            mockRepo.Setup(articleRepo => articleRepo.Get("")).ReturnsAsync();
+            mockRepo.Setup(articleRepo => articleRepo.Get("")).ReturnsAsync(DBOTODTOList(_articlesMockList));
 
             // Mocks the function Insert()
-            mockRepo.Setup(articleRepo => articleRepo.Insert(It.IsAny<DTOArticle>())).ReturnsAsync((DTOArticle userModel) =>
+            mockRepo.Setup(articleRepo => articleRepo.Insert(It.IsAny<DTOArticle>())).ReturnsAsync((DTOArticle articleModel) =>
             {
                 var max = Math.Max(_articlesMockList.Max(c => c.Id) + 1, _articlesMockList.Max(c => c.Id));
-                var user = DTOToDBO(userModel);
+                var user = DTOToDBO(articleModel);
                 user.Id = max;
-                var users = _mockRepo.Get();
-                if (users.Result.Count(c => c.Email == userModel.Email || c.UserName == userModel.UserName) != 0)
+                
+                if (articleModel.Sex == null)
+                    return null;
+                if (articleModel.Price == null || articleModel.Name == null)
                     return null;
                 this._articlesMockList.Add(user);
                 return DBOToDTO(user);
             });
 
             // Mocks the function Update()
-            mockRepo.Setup(articleRepo => articleRepo.Update(It.IsAny<DTOArticle>())).ReturnsAsync((DTOArticle userModel) =>
+            mockRepo.Setup(articleRepo => articleRepo.Update(It.IsAny<DTOArticle>())).ReturnsAsync((DTOArticle articleModel) =>
             {
-                var user = _articlesMockList.Single(c => c.Id == userModel.Id);
-                if (user == null)
+                var result = _articlesMockList.Where(c => c.Id == articleModel.Id);
+                if (result.Count() != 1)
                     return null;
-                user.Address = userModel.Address;
-                user.Name = userModel.Name;
-                user.Gender = userModel.Gender;
-                user.Note = userModel.Note;
-                user.Password = userModel.Password;
-                user.UserName = userModel.UserName;
-                user.Email = userModel.Email;
-                return DBOToDTO(user);
+                var article = _articlesMockList.Find(c => c.Id == articleModel.Id);
+                article.ImageSource = articleModel.ImageSource;
+                article.Name = articleModel.Name;
+                article.Price = articleModel.Price;
+                article.Description = articleModel.Description;
+                article.Category = articleModel.Category;
+                article.Sex = articleModel.Sex;
+                article.Brand = articleModel.Brand;
+                article.Condition = articleModel.Condition;
+                return DBOToDTO(article);
             });
 
             // Mocks the function Delete()
@@ -89,29 +199,37 @@ namespace UnitTestFripShop.ArticleTests
             mockRepo.Setup(articleRepo => articleRepo.Count()).ReturnsAsync(_articlesMockList.Count());
 
             // Mocks the function GetUserByEmail()
-            mockRepo.Setup(articleRepo => articleRepo.GetUserByEmail(It.IsAny<string>())).Returns((string email) =>
+            mockRepo.Setup(articleRepo => articleRepo.GetArticleFromId(It.IsAny<long>())).Returns((long i) =>
             {
-                if (_articlesMockList.Count(c => c.Email == email) == 0)
+                if (_articlesMockList.Count(c => c.Id == i) == 0)
                 {
                     return null;
                 }
 
-                return DBOToDTO(_articlesMockList.Single(c => c.Email == email));
+                return DBOToDTOAsync(_articlesMockList.Single(c => c.Id == i));
             });
 
             // Mocks the function GetUserByUserName()
-            mockRepo.Setup(articleRepo => articleRepo.GetUserByUserName(It.IsAny<string>())).Returns((string userName) =>
+            mockRepo.Setup(articleRepo => articleRepo.GetUserFromId(It.IsAny<long>())).Returns((long i) =>
             {
-                if (_articlesMockList.Count(c => c.UserName == userName) == 0)
+                if (_articlesMockList.Count(c => c.Id == i) == 0)
                 {
                     return null;
                 }
 
-                return DBOToDTO(_articlesMockList.Single(c => c.UserName == userName));
+                var user = new DTOUser();
+                user.Id = 1;
+                user.Email = "test@GetUserFromId.fr";
+                user.Address = "3B Rue de La Poste 69110 FRANCHEVILLE";
+                user.Gender = "man";
+                user.Name = "Louis SANTOS";
+                user.Note = 10;
+                user.UserName = "santoss";
+
+                return user;
             });
 
             this._articleRepo = mockRepo.Object;
         }
     }
-    */
 }
