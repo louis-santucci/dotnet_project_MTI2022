@@ -158,9 +158,9 @@ namespace FripShop.Controllers
             {
                 if (ModelState.IsValid)
                 {
-                    if ( _userRepo.GetUserByEmail(userModel.Email) != null)
+                    if (_userRepo.GetUserByEmail(userModel.Email) != null)
                         return BadRequest(userModel);
-                    if ( _userRepo.GetUserByUserName(userModel.UserName) != null)
+                    if (_userRepo.GetUserByUserName(userModel.UserName) != null)
                         return BadRequest(userModel);
                     userModel.Password = HashPassword(userModel.Password);
                     var result = await _userRepo.Insert(DtoUserEditionToDtoUser(userModel));
@@ -185,7 +185,7 @@ namespace FripShop.Controllers
             {
                 if (ModelState.IsValid)
                 {
-                    if ( _userRepo.GetUserByEmail(userModel.Email) == null)
+                    if (_userRepo.GetUserByEmail(userModel.Email) == null)
                         return BadRequest(userModel);
                     string typedPassword = userModel.Password;
                     var user = _userRepo.GetUserByEmail(userModel.Email);
@@ -338,6 +338,43 @@ namespace FripShop.Controllers
         }
 
 
-    }
 
+
+        [Authorize]
+        [HttpPost]
+        public async Task<IActionResult> NoteUser()
+        {
+            var userName = Request.Form["id"].ToString();
+            var user =  _userRepo.GetUserByUserName(userName);
+            var note = Convert.ToDouble(Request.Form["note"]);
+            user.NbNoteReceived += 1;
+            user.Note = FindNoteAverage(note, user.NbNoteReceived);
+            var test = await _userRepo.Update(user);
+            if (test == null)
+            {
+                View("Cart", "Failed");
+            }
+            return RedirectToAction("Profile");
+        }
+
+
+        public double FindNoteAverage(double note, double nbNote)
+        {
+            double val;
+            var email = HttpContext.User.Identity.Name;
+            var user = _userRepo.GetUserByEmail(email);
+            if(nbNote == 0)
+            {
+                return note;
+            }
+            else
+            {
+                var currUserNote = user.Note;
+                double pond = currUserNote * nbNote;
+                val = (pond + note) / (nbNote + 1);
+
+            }
+            return val;
+        }
+    }
 }
