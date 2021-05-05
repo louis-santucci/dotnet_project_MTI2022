@@ -13,8 +13,6 @@
     <EmbeddedResource Remove="Views\NewFolder\**" />
     <EmbeddedResource Remove="wwwroot\ArticleImages\**" />
     <None Remove="Views\NewFolder\**" />
-    <None Remove="wwwroot\ArticleImages\**" />
-    <None Include="wwwroot\ArticleImages\" />
   </ItemGroup>
 
   <ItemGroup>
