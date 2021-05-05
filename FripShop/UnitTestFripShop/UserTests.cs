@@ -18,12 +18,6 @@ namespace UnitTestFripShop
     {
 
         /// <summary>
-        /// Gets or sets the test context which provides
-        /// information about and functionality for the current test run.
-        ///</summary>
-        public TestContext TestContext { get; set; }
-
-        /// <summary>
         /// Our Mock User Repository for use in testing
         /// </summary>
         public readonly IUserRepo _mockRepo;
