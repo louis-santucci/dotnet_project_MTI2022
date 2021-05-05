@@ -18,7 +18,12 @@ namespace UnitTestFripShop.CartTests
 
         public List<Cart> _carts = new List<Cart>
         {
+            new Cart()
+            {
+                Id = 1,
+                Quantity = 1,
 
+            }
         }
     }
 }
