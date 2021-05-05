@@ -55,6 +55,14 @@ Mes Informations Personnelles
         </div>
     </div>
 </div>
+@using (Html.BeginForm("SecondAuth", "User", FormMethod.Post))
+{
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <input type="submit" value="Mettre à jour" id="Submit" class="btn btn-default" />
+        </div>
+    </div>
+}
 Mes Achats
 <div style="padding-top:15px">
     <div class="card-columns">
@@ -63,13 +71,13 @@ Mes Achats
             {
                 foreach (var transaction in @ViewData["transactionlist"] as IEnumerable<FripShop.DTO.DTOArticle>)
                 {
-                    <div>
-                                <div class="card-body">
-                                    <h5 class="card-title">@transaction.Name</h5>
-                                    <p class="card-text"><small>SellerName : </small><small class="text-muted">@transaction.User.Name</small></p>
-                                    <p class="card-text"><small>SellerUserName : </small><small class="text-muted">@transaction.User.UserName</small></p>
-                                    <p class="card-text"><small>TransactionState : </small><small class="text-muted">@transaction.State</small></p>
-                                </div>
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">@transaction.Name</h5>
+                            <p class="card-text"><small>SellerName : </small><small class="text-muted">@transaction.User.Name</small></p>
+                            <p class="card-text"><small>SellerUserName : </small><small class="text-muted">@transaction.User.UserName</small></p>
+                            <p class="card-text"><small>TransactionState : </small><small class="text-muted">@transaction.State</small></p>
+                        </div>
                     </div>
 
                 }
