@@ -18,7 +18,7 @@ namespace UnitTestFripShop.UserTests
         public void RegisterFirstValidUser()
         { 
             var userMockRepo = new UserMockRepo()._mockRepo;
-            //var userController = new UserController(_logger, userMockRepo);
+            //var userController = new UserController(_logger, userMockRepo, cartMockRepo);
         }
     }
 }
