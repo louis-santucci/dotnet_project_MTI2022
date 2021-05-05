@@ -3,7 +3,7 @@ using FripShop.DataAccess.Interfaces;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 
-namespace UnitTestFripShop
+namespace UnitTestFripShop.ArticleTests
 {
     [TestClass]
     class ArticleRepoTests

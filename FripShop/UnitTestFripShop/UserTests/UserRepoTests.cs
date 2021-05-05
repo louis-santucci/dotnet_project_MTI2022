@@ -10,7 +10,7 @@ using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 
-namespace UnitTestFripShop
+namespace UnitTestFripShop.UserTests
 {
     /// <summary>
     /// Class for user CRUD unit testing
