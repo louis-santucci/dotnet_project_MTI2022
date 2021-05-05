@@ -143,7 +143,7 @@ namespace FripShop.Controllers
             }
             catch(Exception ex)
             {
-                _logger.LogError("CONTROLLER USER -- DeleteUserCart() -- Error on Controller: ", ex);
+                _logger.LogError("CONTROLLER CART -- DeleteUserCart() -- Error on Controller: ", ex);
                 return BadRequest();
             }
         }
@@ -230,7 +230,7 @@ namespace FripShop.Controllers
             }
             catch (Exception ex)
             {
-                _logger.LogError("CONTROLLER USER -- Confirm() -- Error on Controller : ", ex);
+                _logger.LogError("CONTROLLER CART -- Confirm() -- Error on Controller : ", ex);
                 return BadRequest();
             }
             return View("ShowCart");
