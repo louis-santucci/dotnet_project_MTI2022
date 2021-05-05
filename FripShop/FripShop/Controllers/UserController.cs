@@ -90,7 +90,7 @@ namespace FripShop.Controllers
             return View(userToReturn);
         }
 
-        
+        [Authorize]
         public async Task<IActionResult> AddArticle(int articleID)
         {
             try
