@@ -10,13 +10,13 @@ using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 
-namespace UnitTestFripShop
+namespace UnitTestFripShop.UserTests
 {
     /// <summary>
     /// Class for user CRUD unit testing
     /// </summary>
     [TestClass]
-    public class UserTests
+    public class UserRepoTests
     {
 
         /// <summary>
@@ -25,12 +25,6 @@ namespace UnitTestFripShop
         public readonly IUserRepo _mockRepo;
 
         public List<User> _usersMockList;
-
-        /// <summary>
-        /// Gets or sets the test context which provides
-        /// information about and functionality for the current test run.
-        ///</summary>
-        public TestContext TestContext { get; set; }
 
         /// <summary>
         /// Converts a database entity to a dto entity asynchronously
@@ -125,7 +119,7 @@ namespace UnitTestFripShop
         /// <summary>
         /// Constructor for the user CRUD unit tests
         /// </summary>
-        public UserTests()
+        public UserRepoTests()
         {
             _usersMockList = new List<User>
             {
