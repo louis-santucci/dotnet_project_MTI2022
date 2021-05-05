@@ -25,7 +25,7 @@ namespace FripShop.DataAccess
             }
             catch (Exception ex)
             {
-                _logger.LogError($"REPOSITORY {typeof(DTOUserPublic)} -- Get() -- Error on db : ", ex);
+                _logger.LogError($"REPOSITORY Article -- GetArticleFromId() -- Error : ", ex.Message);
                 return null;
             }
         }
@@ -38,7 +38,7 @@ namespace FripShop.DataAccess
             }
             catch (Exception ex)
             {
-                _logger.LogError($"REPOSITORY {typeof(DTOUserPublic)} -- Get() -- Error on db : ", ex);
+                _logger.LogError($"REPOSITORY {typeof(DTOUserPublic)} -- GetUserFromId() -- Error : ", ex.Message);
                 return null;
             }
         }

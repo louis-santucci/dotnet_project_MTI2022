@@ -28,7 +28,7 @@ namespace FripShop.DataAccess
             }
             catch (Exception ex)
             {
-                _logger.LogError($"REPOSITORY {typeof(DTOUserPublic)} -- GetCartByUserId() -- Error on db : ", ex);
+                _logger.LogError($"REPOSITORY Cart -- GetCartByUserId() -- Error : ", ex.Message);
                 return null;
             }
         }
@@ -46,7 +46,7 @@ namespace FripShop.DataAccess
             }
             catch (Exception ex)
             {   
-                _logger.LogError($"REPOSITORY {typeof(DTOUserPublic)} -- Get() -- Error on db : ", ex);
+                _logger.LogError($"REPOSITORY Cart -- GetCartItemByArticleId() -- Error : ", ex.Message);
                 return null;
             }
         }
@@ -65,7 +65,7 @@ namespace FripShop.DataAccess
             catch (Exception ex)
             {
 
-                _logger.LogError($"REPOSITORY {typeof(DTOUserPublic)} -- Get() -- Error on db : ", ex);
+                _logger.LogError($"REPOSITORY Cart -- UseCartAlreadyContains() -- Error : ", ex);
                 return true;
             };
         }

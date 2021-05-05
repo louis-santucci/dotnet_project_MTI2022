@@ -93,7 +93,7 @@ namespace FripShop.Controllers
             }
             catch (Exception ex)
             {
-                _logger.LogError("CONTROLLER USER -- AddArticle() -- Error on db : ", ex);
+                _logger.LogError("CONTROLLER USER -- AddArticle() -- Error : ", ex);
                 return BadRequest();
             }
 
@@ -148,7 +148,7 @@ namespace FripShop.Controllers
             }
             catch (Exception ex)
             {
-                _logger.LogError("CONTROLLER USER -- Register() -- Error on db : ", ex);
+                _logger.LogError("CONTROLLER USER -- Register() -- Error : ", ex);
                 return BadRequest();
             }
             return View();
@@ -184,7 +184,7 @@ namespace FripShop.Controllers
             }
             catch (Exception ex)
             {
-                _logger.LogError("CONTROLLER USER -- Login() -- Error on db : ", ex);
+                _logger.LogError("CONTROLLER USER -- Login() -- Error : ", ex);
                 return BadRequest();
             }
             return BadRequest();
@@ -219,7 +219,7 @@ namespace FripShop.Controllers
             }
             catch (Exception ex)
             {
-                _logger.LogError("CONTROLLER USER -- Get() -- Error on db : ", ex);
+                _logger.LogError("CONTROLLER USER -- Get() -- Error : ", ex);
             }
             return NotFound();
         }
@@ -235,7 +235,7 @@ namespace FripShop.Controllers
             }
             catch (Exception ex)
             {
-                _logger.LogError("CONTROLLER USER -- GetPublic() -- Error on db : ", ex);
+                _logger.LogError("CONTROLLER USER -- GetPublic() -- Error : ", ex);
             }
             return NotFound();
         }
@@ -265,7 +265,7 @@ namespace FripShop.Controllers
             }
             catch (Exception ex)
             {
-                _logger.LogError("CONTROLLER USER -- Edit() -- Error on db : ", ex);
+                _logger.LogError("CONTROLLER USER -- Edit() -- Error : ", ex);
                 return BadRequest();
             }
 
@@ -283,7 +283,7 @@ namespace FripShop.Controllers
             }
             catch (Exception ex)
             {
-                _logger.LogError("CONTROLLER USER -- Delete() -- Error on db : ", ex);
+                _logger.LogError("CONTROLLER USER -- Delete() -- Error : ", ex);
                 return BadRequest();
             }
 
@@ -308,7 +308,7 @@ namespace FripShop.Controllers
             }
             catch (Exception ex)
             {
-                _logger.LogError("CONTROLLER USER -- GetArticlesFromId() -- Error on db : ", ex);
+                _logger.LogError("CONTROLLER USER -- GetArticlesFromId() -- Error : ", ex);
                 return BadRequest();
             }
 

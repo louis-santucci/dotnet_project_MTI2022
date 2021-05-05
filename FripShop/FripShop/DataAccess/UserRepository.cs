@@ -21,22 +21,40 @@ namespace FripShop.DataAccess
 
         public DTOUser GetUserByEmail(string email)
         {
-            if (_set.Any() == false)
+            try
+            {
+                if (_set.Any() == false)
+                    return null;
+                var result = this._set.Where(c => c.Email == email);
+                if (result.Any())
+                    return _mapper.Map<DTOUser>(result.Single());
                 return null;
-            var result = this._set.Where(c => c.Email == email);
-            if (result.Any())
-                return _mapper.Map<DTOUser>(result.Single());
-            return null;
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError($"REPOSITORY User -- GetUserByEmail() -- Error : ", ex.Message);
+                return null;
+            }
+
         }
 
         public DTOUser GetUserByUserName(string userName)
         {
-            if (_set.Any() == false)
+            try
+            {
+                if (_set.Any() == false)
+                    return null;
+                var result = this._set.Where(c => c.UserName == userName);
+                if (result.Any())
+                    return _mapper.Map<DTOUser>(result.Single());
                 return null;
-            var result = this._set.Where(c => c.UserName == userName);
-            if (result.Any())
-                return _mapper.Map<DTOUser>(result.Single());
-            return null;
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError($"REPOSITORY User -- GetUserByUserName() -- Error : ", ex.Message);
+                return null;
+            }
+
         }
     }
 }
