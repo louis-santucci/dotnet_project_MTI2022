@@ -69,6 +69,7 @@ namespace FripShop.Controllers
             userToReturn.Gender = user.Gender;
 
             var transactionList = new List<DTOArticle>();
+
             var userTransactions = await _transactionRepo.GetTransactionByUserId(user.Id);
             foreach (var transaction in userTransactions)
             {
@@ -89,7 +90,7 @@ namespace FripShop.Controllers
             return View(userToReturn);
         }
 
-
+        
         public async Task<IActionResult> AddArticle(int articleID)
         {
             try

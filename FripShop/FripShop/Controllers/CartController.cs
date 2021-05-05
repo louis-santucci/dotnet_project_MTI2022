@@ -19,13 +19,15 @@ namespace FripShop.Controllers
         private readonly IUserRepo _userRepo;
         private readonly ILogger<UserController> _logger;
         private readonly ICartRepo _cartRepo;
+        private readonly ITransactionRepo _transactionRepo;
 
-        public CartController(ILogger<UserController> logger, IArticleRepo articleRepo, IUserRepo userRepo, ICartRepo cartRepo)
+        public CartController(ILogger<UserController> logger, IArticleRepo articleRepo, IUserRepo userRepo, ICartRepo cartRepo, ITransactionRepo transactionRepo)
         {
             this._userRepo = userRepo;
             this._articleRepo = articleRepo;
             this._logger = logger;
             this._cartRepo = cartRepo;
+            this._transactionRepo = transactionRepo;
         }
 
         public IUserRepo UserRepo => _userRepo;
@@ -37,6 +39,8 @@ namespace FripShop.Controllers
         /// ViewData[] transfers infos to the .cshtml
         /// </summary>
         /// <returns> View du Cart </returns>
+        /// 
+        [Authorize]
         public async Task<IActionResult> Index()
         {
             var cart = await GetCurrentUserCart();
@@ -58,6 +62,7 @@ namespace FripShop.Controllers
         /// Get the cart of the connected account
         /// </summary>
         /// <returns> Liste de DTOCart</returns>
+        [Authorize]
         public async Task<IEnumerable<DTOCart>> GetCurrentUserCart()
         {
                 var res = new List<DTOArticle>();
@@ -196,7 +201,6 @@ namespace FripShop.Controllers
             {
                 var email = HttpContext.User.Identity.Name;
                 var user = _userRepo.GetUserByEmail(email);
-
                 var cart = await GetCurrentUserCart();
                 var list = new List<DTOArticle>();
                 foreach (var elem in cart)
@@ -207,7 +211,14 @@ namespace FripShop.Controllers
                     {
                         curr.State = "sold";
                         var test = _articleRepo.Update(curr);
+                        DTOTransaction CurrTrans = new DTOTransaction();
+                        CurrTrans.ArticleId = curr.Id;
+                        CurrTrans.BuyerId = user.Id;
+                        CurrTrans.TransactionState = "sold";
+                        CurrTrans.LastUpdateAt = DateTime.Today;
+                        var adding = _transactionRepo.Insert(CurrTrans);
                     }
+                    
                 }
 
 
