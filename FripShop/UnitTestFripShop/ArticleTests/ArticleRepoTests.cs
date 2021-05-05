@@ -54,8 +54,6 @@ namespace UnitTestFripShop.ArticleTests
 
         };
 
-        public ArticleMockRepo _articleRepo;
-
 
 
         [TestMethod]

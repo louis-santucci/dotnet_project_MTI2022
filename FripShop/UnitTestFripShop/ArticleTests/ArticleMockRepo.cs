@@ -9,6 +9,7 @@ using Moq;
 
 namespace UnitTestFripShop.ArticleTests
 {
+    /*
     /// <summary>
     /// Our Mock Article Repository for use in testing
     /// </summary>
@@ -112,4 +113,5 @@ namespace UnitTestFripShop.ArticleTests
             this._articleRepo = mockRepo.Object;
         }
     }
+    */
 }
