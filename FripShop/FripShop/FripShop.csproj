@@ -7,13 +7,14 @@
 
   <ItemGroup>
     <Compile Remove="Views\NewFolder\**" />
+    <Compile Remove="wwwroot\ArticleImages\**" />
     <Content Remove="Views\NewFolder\**" />
+    <Content Remove="wwwroot\ArticleImages\**" />
     <EmbeddedResource Remove="Views\NewFolder\**" />
+    <EmbeddedResource Remove="wwwroot\ArticleImages\**" />
     <None Remove="Views\NewFolder\**" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <None Include="wwwroot\ArticleImages\0nz15lcn.nu4.png" />
+    <None Remove="wwwroot\ArticleImages\**" />
+    <None Include="wwwroot\ArticleImages\" />
   </ItemGroup>
 
   <ItemGroup>
