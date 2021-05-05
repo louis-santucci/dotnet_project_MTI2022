@@ -10,10 +10,27 @@ using Microsoft.Extensions.Logging;
 
 namespace FripShop.DataAccess
 {
+    /// <summary>
+    /// Class for article repository
+    /// </summary>
     public class ArticleRepository : Repository<Article, DTOArticle>, IArticleRepo
     {
         public ArticleRepository(FripShopContext context, ILogger<ArticleRepository> logger, IMapper mapper) : base(context, logger, mapper) {}
-        public async Task<DTOUser> GetUserFromId(long id)
+
+        public async Task<DTOArticle> GetArticleFromId(long articleId)
+        {
+            try
+            {
+                return _mapper.Map<DTOArticle>(_context.Articles.Find(articleId));
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError($"REPOSITORY Article -- GetArticleFromId() -- Error : ", ex.Message);
+                return null;
+            }
+        }
+
+        public DTOUser GetUserFromId(long id)
         {
             try
             {
@@ -21,7 +38,7 @@ namespace FripShop.DataAccess
             }
             catch (Exception ex)
             {
-                _logger.LogError($"REPOSITORY {typeof(DTOUserPublic)} -- Get() -- Error on db : ", ex);
+                _logger.LogError($"REPOSITORY Article -- GetUserFromId() -- Error : ", ex.Message);
                 return null;
             }
         }

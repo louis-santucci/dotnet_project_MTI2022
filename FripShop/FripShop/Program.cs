@@ -9,6 +9,9 @@ using System.Threading.Tasks;
 
 namespace FripShop
 {
+    /// <summary>
+    /// Program main file to create the application
+    /// </summary>
     public class Program
     {
         public static void Main(string[] args)

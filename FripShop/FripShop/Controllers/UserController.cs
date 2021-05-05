@@ -9,6 +9,13 @@ using FripShop.DataAccess.EFModels;
 using FripShop.DataAccess.Interfaces;
 using FripShop.DTO;
 using Microsoft.Extensions.Logging;
+using Microsoft.EntityFrameworkCore;
+using System.Security.Cryptography;
+using System.Text;
+using System.Security.Claims;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authorization;
 
 namespace FripShop.Controllers
 {
@@ -17,12 +24,14 @@ namespace FripShop.Controllers
         private readonly IArticleRepo _articleRepo;
         private readonly IUserRepo _userRepo;
         private readonly ILogger<UserController> _logger;
+        private readonly ICartRepo _cartRepo;
 
-        public UserController(ILogger<UserController> logger, IArticleRepo articleRepo, IUserRepo userRepo)
+        public UserController(ILogger<UserController> logger, IArticleRepo articleRepo, IUserRepo userRepo, ICartRepo cartRepo)
         {
             this._userRepo = userRepo;
             this._articleRepo = articleRepo;
             this._logger = logger;
+            this._cartRepo = cartRepo;
         }
 
         public ActionResult Details(int id)
@@ -34,6 +43,64 @@ namespace FripShop.Controllers
         {
             return View();
         }
+
+        public IActionResult RegisterPage()
+        {
+            return View("Register");
+        }
+
+        public IActionResult LoginPage()
+        {
+            return View("Login");
+        }
+
+        [Authorize]
+        public async Task<IActionResult> Profile()
+        {
+            var email = HttpContext.User.Identity.Name;
+            var user = _userRepo.GetUserByEmail(email);
+            DTOLoginUser userToReturn = new DTOLoginUser();
+            userToReturn.Name = user.Name;
+            userToReturn.Email = user.Email;
+            userToReturn.UserName = user.UserName;
+            userToReturn.Address = user.Address;
+            userToReturn.Gender = user.Gender;
+            return View(userToReturn);
+        }
+
+
+        public async Task<IActionResult> AddArticle(int articleID)
+        {
+            try
+            {
+                DTOCart cart = new DTOCart();
+                var email = HttpContext.User.Identity.Name;
+                var user = _userRepo.GetUserByEmail(email);
+                var test = await _cartRepo.UserCartAlreadyContains(articleID, user.Id);
+                if (test == false)
+                {
+                    cart.ArticleId = articleID;
+                    cart.BuyerId = user.Id;
+                    cart.Quantity = 1;
+                    cart.Article = null;
+                    cart.Buyer = null;
+                    var result = await _cartRepo.Insert(cart);
+                    if (result != null)
+                    {
+                        return View();
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError("CONTROLLER USER -- AddArticle() -- Error : ", ex);
+                return BadRequest();
+            }
+
+            return RedirectToAction("Index", "Article");
+        }
+
+
 
         public static DTOUser DtoUserEditionToDtoUser(DTOUserEdition userModel)
         {
@@ -62,30 +129,82 @@ namespace FripShop.Controllers
             return userPublic;
         }
 
-        /// API Calls
-        [HttpPost("/api/users/register")]
-        [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Register([FromBody] DTOUserEdition userModel)
+        [HttpPost]
+        public async Task<ActionResult> Register(DTOUserEdition userModel)
         {
             try
             {
                 if (ModelState.IsValid)
                 {
-                    if (_userRepo.GetUserByEmail(userModel.Email) != null)
+                    if ( _userRepo.GetUserByEmail(userModel.Email) != null)
                         return BadRequest(userModel);
-                    if (_userRepo.GetUserByUserName(userModel.UserName) != null)
+                    if ( _userRepo.GetUserByUserName(userModel.UserName) != null)
                         return BadRequest(userModel);
+                    userModel.Password = HashPassword(userModel.Password);
                     var result = await _userRepo.Insert(DtoUserEditionToDtoUser(userModel));
                     if (result != null)
-                        return Created(result.Id.ToString(), result);
+                        return View("Success");
                 }
             }
             catch (Exception ex)
             {
-                _logger.LogError("CONTROLLER USER -- Register() -- Error on db : ", ex);
+                _logger.LogError("CONTROLLER USER -- Register() -- Error : ", ex);
+                return BadRequest();
+            }
+            return View();
+        }
+
+        /// API Calls
+
+        [HttpPost]
+        public async Task<ActionResult> Login(DTOLoginUser userModel)
+        {
+            try
+            {
+                if (ModelState.IsValid)
+                {
+                    if ( _userRepo.GetUserByEmail(userModel.Email) == null)
+                        return BadRequest(userModel);
+                    string typedPassword = userModel.Password;
+                    var user = _userRepo.GetUserByEmail(userModel.Email);
+                    if (HashPassword(typedPassword) == user.Password)
+                    {
+                        var claims = new List<Claim>
+                        {
+                            new Claim(ClaimTypes.Name, userModel.Email)
+                        };
+                        var claimsIdentity = new ClaimsIdentity(claims, "Login");
+
+                        await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, new ClaimsPrincipal(claimsIdentity));
+                        return Redirect("/Home");
+                    }
+                    else
+                        throw new Exception();
+                }
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError("CONTROLLER USER -- Login() -- Error : ", ex);
                 return BadRequest();
             }
             return BadRequest();
+        }
+
+        private string HashPassword(string password)
+        {
+            MD5 md5 = new MD5CryptoServiceProvider();
+
+            md5.ComputeHash(ASCIIEncoding.ASCII.GetBytes(password));
+
+            byte[] result = md5.Hash;
+
+            StringBuilder strBuilder = new StringBuilder();
+            for (int i = 0; i < result.Length; i++)
+            {
+                strBuilder.Append(result[i].ToString("x2"));
+            }
+
+            return strBuilder.ToString();
         }
 
         [HttpGet("/api/users/{userId}")]
@@ -100,7 +219,7 @@ namespace FripShop.Controllers
             }
             catch (Exception ex)
             {
-                _logger.LogError("CONTROLLER USER -- Get() -- Error on db : ", ex);
+                _logger.LogError("CONTROLLER USER -- Get() -- Error : ", ex);
             }
             return NotFound();
         }
@@ -116,7 +235,7 @@ namespace FripShop.Controllers
             }
             catch (Exception ex)
             {
-                _logger.LogError("CONTROLLER USER -- GetPublic() -- Error on db : ", ex);
+                _logger.LogError("CONTROLLER USER -- GetPublic() -- Error : ", ex);
             }
             return NotFound();
         }
@@ -146,7 +265,7 @@ namespace FripShop.Controllers
             }
             catch (Exception ex)
             {
-                _logger.LogError("CONTROLLER USER -- Edit() -- Error on db : ", ex);
+                _logger.LogError("CONTROLLER USER -- Edit() -- Error : ", ex);
                 return BadRequest();
             }
 
@@ -164,7 +283,7 @@ namespace FripShop.Controllers
             }
             catch (Exception ex)
             {
-                _logger.LogError("CONTROLLER USER -- Delete() -- Error on db : ", ex);
+                _logger.LogError("CONTROLLER USER -- Delete() -- Error : ", ex);
                 return BadRequest();
             }
 
@@ -189,11 +308,14 @@ namespace FripShop.Controllers
             }
             catch (Exception ex)
             {
-                _logger.LogError("CONTROLLER USER -- GetArticlesFromId() -- Error on db : ", ex);
+                _logger.LogError("CONTROLLER USER -- GetArticlesFromId() -- Error : ", ex);
                 return BadRequest();
             }
 
             return NotFound(userId);
         }
+
+
     }
+
 }

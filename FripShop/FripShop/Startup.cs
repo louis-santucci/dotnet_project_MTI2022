@@ -1,3 +1,4 @@
+using System;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -6,9 +7,13 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.EntityFrameworkCore;
 using AutoMapper;
+using Microsoft.AspNetCore.Authentication.Cookies;
 
 namespace FripShop
 {
+    /// <summary>
+    /// Startup file for configuration of services and the routing
+    /// </summary>
     public class Startup
     {
         private string _connectionString;
@@ -29,6 +34,17 @@ namespace FripShop
             services.AddControllersWithViews().AddRazorRuntimeCompilation();
             services.AddTransient<DataAccess.Interfaces.IArticleRepo, DataAccess.ArticleRepository>();
             services.AddTransient<DataAccess.Interfaces.IUserRepo, DataAccess.UserRepository>();
+            services.AddTransient<DataAccess.Interfaces.ICartRepo, DataAccess.CartRepository>();
+            services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+            .AddCookie(options =>
+            {
+                options.LoginPath = "/User/LoginPage";
+                options.Cookie.HttpOnly = false;
+                options.ExpireTimeSpan = TimeSpan.FromMinutes(60);
+                options.Cookie.IsEssential = true;
+
+            });
+            services.AddControllersWithViews();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -50,13 +66,14 @@ namespace FripShop
 
             app.UseRouting();
 
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute(
                     name: "default",
-                    pattern: "{controller=Home}/{action=Index}/{id?}");
+                    pattern: "{controller=Home}/{action=Index}/{gender?}");
             });
         }
     }

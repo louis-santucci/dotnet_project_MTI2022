@@ -2,6 +2,9 @@
 
 namespace FripShop.DTO
 {
+    /// <summary>
+    /// Class for DTO cart model
+    /// </summary>
     public class DTOCart : IDTO
     {
         [Key]

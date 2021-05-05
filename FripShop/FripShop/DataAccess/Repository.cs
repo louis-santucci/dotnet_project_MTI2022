@@ -11,6 +11,11 @@ using Microsoft.Extensions.Logging;
 
 namespace FripShop.DataAccess
 {
+    /// <summary>
+    /// Generic class for repositories
+    /// </summary>
+    /// <typeparam name="DbEntity"></typeparam>
+    /// <typeparam name="ModelEntity"></typeparam>
     public class Repository<DbEntity, ModelEntity> : IRepo<DbEntity, ModelEntity>
         where DbEntity : class, new()
         where ModelEntity : class, IDTO, new()
@@ -47,7 +52,7 @@ namespace FripShop.DataAccess
             }
             catch (Exception ex)
             {
-                _logger.LogError($"REPOSITORY {typeof(ModelEntity)} -- Get() -- Error on db : ", ex);
+                _logger.LogError($"REPOSITORY {typeof(ModelEntity)} -- Get() -- Error : ", ex.Message);
                 return null;
             }
         }
@@ -64,7 +69,7 @@ namespace FripShop.DataAccess
             }
             catch (Exception ex)
             {
-                _logger.LogError($"REPOSITORY {typeof(ModelEntity)} -- Insert() -- Error on db : ", ex);
+                _logger.LogError($"REPOSITORY {typeof(ModelEntity)} -- Insert() -- Error : ", ex.Message);
                 return null;
             }
 
@@ -90,7 +95,7 @@ namespace FripShop.DataAccess
             }
             catch (Exception ex)
             {
-                _logger.LogError($"REPOSITORY {typeof(ModelEntity)} -- Update() -- Error on db : ", ex);
+                _logger.LogError($"REPOSITORY {typeof(ModelEntity)} -- Update() -- Error : ", ex.Message);
 
                 return null;
             }
@@ -115,7 +120,7 @@ namespace FripShop.DataAccess
             }
             catch (Exception ex)
             {
-                _logger.LogError($"REPOSITORY {typeof(ModelEntity)} -- Delete() -- Error on db : ", ex);
+                _logger.LogError($"REPOSITORY {typeof(ModelEntity)} -- Delete() -- Error : ", ex.Message);
                 return false;
             }
         }
@@ -130,7 +135,7 @@ namespace FripShop.DataAccess
             }
             catch (Exception ex)
             {
-                _logger.LogError($"REPOSITORY {typeof(ModelEntity)} -- GetById() -- Error on db : ", ex);
+                _logger.LogError($"REPOSITORY {typeof(ModelEntity)} -- GetById() -- Error : ", ex.Message);
                 return null;
             }
 
@@ -145,7 +150,7 @@ namespace FripShop.DataAccess
             }
             catch (Exception ex)
             {
-                _logger.LogError($"REPOSITORY {typeof(ModelEntity)} -- Count() -- Error on db : ", ex);
+                _logger.LogError($"REPOSITORY {typeof(ModelEntity)} -- Count() -- Error : ", ex.Message);
                 return null;
             }
         }

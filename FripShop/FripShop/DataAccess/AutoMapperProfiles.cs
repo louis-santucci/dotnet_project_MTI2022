@@ -3,6 +3,9 @@ using FripShop.DTO;
 
 namespace FripShop.DataAccess
 {
+    /// <summary>
+    /// Class of mappings for AutoMapper
+    /// </summary>
     public class AutoMapperProfiles : Profile
     {
         public AutoMapperProfiles()

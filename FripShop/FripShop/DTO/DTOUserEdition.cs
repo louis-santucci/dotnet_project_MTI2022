@@ -2,12 +2,15 @@
 
 namespace FripShop.DTO
 {
+    /// <summary>
+    /// Class for DTO user edition model
+    /// </summary>
     public class DTOUserEdition : IDTO
     {
         [Key]
         public long Id { get; set; }
 
-        [Required(ErrorMessage = "Please enter your username..")]
+        [Required(ErrorMessage = "Please enter your username...")]
         [DataType(DataType.Text)]
         [Display(Name = "UserName")]
         public string UserName { get; set; }

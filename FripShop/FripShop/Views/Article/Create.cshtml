@@ -1,0 +1,100 @@
+﻿@model FripShop.DTO.DTOArticleEdition
+@{
+    ViewBag.Title = "Vendre un nouvel article";
+}
+
+<div>
+    @using (Html.BeginForm("CreateArticle", "Article", FormMethod.Post, new { enctype = "multipart/form-data"}))
+    {
+        @Html.AntiForgeryToken()
+    <div class="form-horizontal">
+        <h4>Vendre un nouvel article</h4>
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        
+        <div class="form-group px-3 row">
+            <label class="control-label col-md-2">Nom de l'article</label>
+            @Html.LabelFor(model => model.Name, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        
+        <div class-="form-group px-3 row">
+            @Html.LabelFor(model => model.ImageFile, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                <input asp-for="ImageFile" accept="image/*"/>
+            </div>
+        </div>
+
+        <label class="control-label col-md-2">Sexe</label>
+        <div class="col-md-10">
+            @Html.RadioButtonFor(model => model.Sex, "man", new { @id = "man" }) @Html.Label("Homme")
+            @Html.RadioButtonFor(model => model.Sex, "woman", new { @id = "woman" }) @Html.Label("Femme")
+            @Html.RadioButtonFor(model => model.Sex, "unisex", new { @id = "unisex" }) @Html.Label("Unisexe")
+            @Html.RadioButtonFor(model => model.Sex, "child", new { @id = "child" }) @Html.Label("Enfant")
+            @Html.ValidationMessageFor(model => model.Sex, "", new { @class = "text-danger" })
+        </div>
+
+        <div class="form-group px-3 row">
+            <label class="control-label col-2">Prix (en €)</label>
+            <div class="col-4">
+                @Html.EditorFor(model => model.Price, new { htmlAttributes = new { @class = "form-control", @type = "number", @min = "0", @step = "1" } })
+                @Html.ValidationMessageFor(model => model.Price, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group row px-3">
+            <label class="control-label col-md-2">Catégorie</label>
+            <div class="col-md-10">
+                @Html.RadioButtonFor(model => model.Category, "top", new { @id = "top" }) @Html.Label("Hauts")
+                @Html.RadioButtonFor(model => model.Category, "pants", new { @id = "pants" }) @Html.Label("Bas")
+                @Html.RadioButtonFor(model => model.Category, "shoes", new { @id = "shoes" }) @Html.Label("Chaussures")
+                @Html.RadioButtonFor(model => model.Category, "accessories", new { @id = "accessories" }) @Html.Label("Accessoires")
+                @Html.ValidationMessageFor(model => model.Category, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group row px-3">
+            <label class="control-label col-md-2">Condition</label>
+            <div class="col-md-10">
+                @Html.RadioButtonFor(model => model.Condition, "0", new { @id = "cond_0" }) @Html.Label("0")
+                @Html.RadioButtonFor(model => model.Condition, "1", new { @id = "cond_1" }) @Html.Label("1")
+                @Html.RadioButtonFor(model => model.Condition, "2", new { @id = "cond_2" }) @Html.Label("2")
+                @Html.RadioButtonFor(model => model.Condition, "3", new { @id = "cond_3" }) @Html.Label("3")
+                @Html.RadioButtonFor(model => model.Condition, "4", new { @id = "cond_4" }) @Html.Label("4")
+                @Html.RadioButtonFor(model => model.Condition, "5", new { @id = "cond_5" }) @Html.Label("5")
+                @Html.RadioButtonFor(model => model.Condition, "6", new { @id = "cond_6" }) @Html.Label("6")
+                @Html.RadioButtonFor(model => model.Condition, "7", new { @id = "cond_7" }) @Html.Label("7")
+                @Html.RadioButtonFor(model => model.Condition, "8", new { @id = "cond_8" }) @Html.Label("8")
+                @Html.RadioButtonFor(model => model.Condition, "9", new { @id = "cond_9" }) @Html.Label("9")
+                @Html.RadioButtonFor(model => model.Condition, "10", new { @id = "cond_10" }) @Html.Label("10")
+                @Html.ValidationMessageFor(model => model.Condition, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        
+        <div>
+            <label class="control-label col-md-2">Marque</label>
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Brand, new { htmlAttributes = new { @class = "form-control"}})
+                @Html.ValidationMessageFor(model => model.Brand, "", new {@class = "text-danger"})
+            </div>
+        </div>
+        
+        <div class="form-group row px-3">
+            <label class="control-label col-md-2">Description</label>
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Description, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="CreateArticle" id="Submit" class="btn btn-default" />
+            </div>
+        </div>
+    </div>
+    }
+</div>

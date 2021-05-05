@@ -5,7 +5,10 @@ using System.Collections.Generic;
 
 namespace FripShop.DataAccess.EFModels
 {
-    public partial class Rating
+    /// <summary>
+    /// Class for EntityFrameworkCore rating model
+    /// </summary>
+    public class Rating
     {
         public long ArticleId { get; set; }
         public long BuyerId { get; set; }

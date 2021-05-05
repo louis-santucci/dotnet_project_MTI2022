@@ -1,29 +1,64 @@
-﻿@model FripShop.Views.Article.IndexModel
-
+﻿@model IEnumerable<FripShop.DTO.DTOArticle>
 @{
     ViewBag.Title = "Articles";
+
+    var queries = this.Context.Request.Query;
+    _Filter filter = new _Filter();
+    filter.gender = queries["gender"];
+    filter.category = queries["category"];
+    filter.minPrice = queries["minPrice"];
+    filter.maxPrice = queries["maxPrice"];
+    filter.conditionMin = queries["condition"];
+    filter.sortBy = queries["sortBy"];
+    filter.ascending = queries["ascending"];
+    filter.search = queries["search"];
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <div>
+@{ Html.RenderPartial("_Filter", filter); }
 
-        @if (Model != null)
+<hr class="mb-0 mx-3"/>
+
+<div>
+    @{ var articles = Model.ToList();
+        var i = 0; }
+
+    @if (articles.Count() == 0)
+    {
+    <div class="card-deck mx-2">
+        <div class="card text-white bg-info mt-3 mx-2 text-center">
+            <div class="card-header">Information</div>
+            <div class="card-body">
+                <h5 class="card-title">Cette page est vide</h5>
+                <p class="card-text">La page que vous consultez actuellement est vide. Il est possible que votre recherche n'ait pas porté ses fruits, ou que vous avez dépassé la dernière page d'articles disponibles.</p>
+            </div>
+        </div>
+    </div>
+    }
+
+    @while (i < articles.Count())
+    {
+    <div class="card-deck mx-2">
+
+        @{ var j = 0; }
+        @while (j < 3 && i < articles.Count())
         {
-            foreach (var article in Model.DboArticles)
-            {
-                <div class="border box-shadow">
-                    <h1>
-                        @Html.DisplayFor(modelItem => article.Name);
-                    </h1>
-                    <p>
-                        @Html.DisplayFor(modelItem => article.Description);
-                    </p>
-                    <p>
-                        @Html.DisplayFor(modelItem => article.Price);
-                    </p>
+            <div class="card mt-3 mx-2">
+                <img class="card-img-top" src="{ @articles[i].ImageSource }" alt="Card image cap">
+                <div class="card-body">
+                    <h5 class="card-title">@articles[i].Name</h5>
+                    <p class="card-text"><small>Marque : </small><small class="text-muted">@articles[i].Brand</small></p>
+                    <p class="card-text"><small>Condition : </small><small class="text-muted">@articles[i].Condition / 10</small></p>
+                    <p class="card-text">@articles[i].Description</p>
                 </div>
-            }
+                <div class="card-footer text-center">
+                    <span class="text-success font-weight-bolder">@articles[i].Price €</span>
+                    <a class="card-text" asp-area="" asp-controller="User" asp-action="AddArticle" asp-route-articleID="@articles[i].Id">Add To Cart</a>
+                </div>
+            </div>
+
+            i++;
+            j++;
         }
     </div>
-</div>
+    }
+        </div>

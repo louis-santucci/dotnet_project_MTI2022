@@ -5,7 +5,10 @@ using System.Collections.Generic;
 
 namespace FripShop.DataAccess.EFModels
 {
-    public partial class Cart
+    /// <summary>
+    /// Class for EntityFrameworkCore cart model
+    /// </summary>
+    public class Cart
     {
         public long Id { get; set; }
         public long BuyerId { get; set; }

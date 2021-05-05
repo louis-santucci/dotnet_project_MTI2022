@@ -5,7 +5,10 @@ using System.Collections.Generic;
 
 namespace FripShop.DataAccess.EFModels
 {
-    public partial class Transaction
+    /// <summary>
+    /// Class for EntityFrameworkCore transaction model
+    /// </summary>
+    public class Transaction
     {
         public long Id { get; set; }
         public long ArticleId { get; set; }

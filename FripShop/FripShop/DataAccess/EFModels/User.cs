@@ -5,8 +5,14 @@ using System.Collections.Generic;
 
 namespace FripShop.DataAccess.EFModels
 {
-    public partial class User
+    /// <summary>
+    /// Class for EntityFrameworkCore user model
+    /// </summary>
+    public class User
     {
+        /// <summary>
+        /// Public constructor for EntityFrameworkCore user model
+        /// </summary>
         public User()
         {
             Articles = new HashSet<Article>();
