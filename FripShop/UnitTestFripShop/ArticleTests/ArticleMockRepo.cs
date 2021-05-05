@@ -171,10 +171,10 @@ namespace UnitTestFripShop.ArticleTests
             // Mocks the function Delete()
             mockRepo.Setup(articleRepo => articleRepo.Delete(It.IsAny<long>())).ReturnsAsync((long i) =>
             {
-                var count = _articlesMockList.Count(c => c.Id == i);
-                if (count == 1)
+                var articles = _articlesMockList.Where(c => c.Id == i);
+                if (articles.Count() == 1)
                 {
-                    _articlesMockList.Remove(_articlesMockList.Single(c => c.Id == i));
+                    _articlesMockList.Remove(articles.First());
                     return true;
                 }
 
