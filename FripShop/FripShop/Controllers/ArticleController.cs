@@ -245,6 +245,18 @@ namespace FripShop.Controllers
             return View("Create");
         }
 
+        public string GetImage(string path)
+        {
+            var full_path = Path.Combine("~/wwwroot/ArticleImages/", path);
+
+            if (System.IO.File.Exists(full_path))
+            {
+                return full_path;
+            }
+
+            return "";
+        }
+
         /// API Calls
         [HttpGet("/api/articles/")]
         public async Task<ActionResult> GetAll()
