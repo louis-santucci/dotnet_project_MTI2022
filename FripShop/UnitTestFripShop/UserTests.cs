@@ -168,6 +168,9 @@ namespace UnitTestFripShop
                 var max = Math.Max(usersMockList.Max(c => c.Id) + 1, usersMockList.Max(c => c.Id));
                 var user = DTOToDBO(userModel);
                 user.Id = max;
+                var users = _mockRepo.Get();
+                if (users.Result.Count(c => c.Email == userModel.Email || c.UserName == userModel.UserName) != 0)
+                    return null;
                 usersMockList.Add(user);
                 return DBOToDTO(user);
             });
@@ -202,23 +205,224 @@ namespace UnitTestFripShop
             });
 
             // Mo0cks the function GetById()
-            mockRepo.Setup(users => users.GetById(It.IsAny<int>())).Returns((int i) => DBOToDTOAsync( usersMockList.Single(c => c.Id == i)));
+            mockRepo.Setup(users => users.GetById(It.IsAny<int>()))
+                .Returns((int i) => DBOToDTOAsync(usersMockList.Single(c => c.Id == i)));
 
             // Mocks the function Count()
             mockRepo.Setup(users => users.Count()).ReturnsAsync(usersMockList.Count());
 
             // Mocks the function GetUserByEmail()
-            mockRepo.Setup(users => users.GetUserByEmail(It.IsAny<string>())).Returns((string email) => DBOToDTO(usersMockList.Single(c => c.Email == email)));
+            mockRepo.Setup(users => users.GetUserByEmail(It.IsAny<string>())).Returns((string email) =>
+                DBOToDTO(usersMockList.Single(c => c.Email == email)));
 
             // Mocks the function GetUserByUserName()
-            mockRepo.Setup(users => users.GetUserByUserName(It.IsAny<string>())).Returns((string userName) => DBOToDTO(usersMockList.Single(c => c.Email == userName))); ;
+            mockRepo.Setup(users => users.GetUserByUserName(It.IsAny<string>())).Returns((string userName) =>
+                DBOToDTO(usersMockList.Single(c => c.Email == userName)));
+            ;
 
 
         }
-        
+
         [TestMethod]
-        public void TestMethod1()
+        public void TestCount()
         {
+            var count = this._mockRepo.Count();
+            Assert.AreEqual(7, count);
+        }
+
+        [TestMethod]
+        public void TestGet()
+        {
+            var users = _mockRepo.Get();
+            Assert.AreEqual(7, users.Result.Count());
+        }
+
+        [TestMethod]
+        public void TestGetId()
+        {
+            var user = _mockRepo.GetById(4);
+            var userExpect = new DTOUser()
+            {
+                Id = 4,
+                UserName = "test4",
+                Email = "test5@valid.fr",
+                Password = "pswd4",
+                Name = "Test 4",
+                Address = "Test 4\nNew York",
+                Gender = "woman",
+                Note = 10
+            };
+            Assert.AreEqual(user, userExpect);
+        }
+
+        [TestMethod]
+        public void TestGetIdWrong()
+        {
+            var user = _mockRepo.GetById(10);
+            Assert.IsNull(user.Result);
+        }
+
+        [TestMethod]
+        public void TestInsertOk()
+        {
+            var user8 = new DTOUser()
+            {
+                Id = 8,
+                UserName = "test8",
+                Email = "test8@valid.fr",
+                Password = "pswd8",
+                Name = "Test 8",
+                Address = "Test 8\nNew York",
+                Gender = "woman",
+                Note = 10
+            };
+
+            var result = _mockRepo.Insert(user8);
+            Assert.IsNotNull(result);
+            Assert.AreEqual(user8, result.Result);
+            var count = this._mockRepo.Count();
+            Assert.AreEqual(8, count);
+        }
+
+        [TestMethod]
+        public void TestInsertWrongEmail()
+        {
+            var user8 = new DTOUser()
+            {
+                Id = 9,
+                UserName = "test9",
+                Email = "test8@valid.fr",
+                Password = "pswd9",
+                Name = "Test 9",
+                Address = "Test 9\nNew York",
+                Gender = "woman",
+                Note = 10
+            };
+            _mockRepo.Insert(user8);
+            var count = this._mockRepo.Count();
+            Assert.AreEqual(8, count.Result);
+        }
+
+        [TestMethod]
+        public void TestInsertWrongUserName()
+        {
+            var user9 = new DTOUser()
+            {
+                Id = 9,
+                UserName = "test8",
+                Email = "test9@valid.fr",
+                Password = "pswd9",
+                Name = "Test 9",
+                Address = "Test 9\nNew York",
+                Gender = "woman",
+                Note = 10
+            };
+            _mockRepo.Insert(user9);
+            var count = this._mockRepo.Count();
+            Assert.AreEqual(8, count);
+        }
+
+        [TestMethod]
+        public void TestUpdateOk()
+        {
+            var updateUser = new DTOUser
+            {
+                Id = 1, UserName = "toto", Email = "toto@valid.fr", Password = "password", Name = "Test 1 Updated",
+                Address = "Test 1\nNew York City", Gender = "woman", Note = 10
+            };
+            var result = _mockRepo.Update(updateUser);
+            Assert.IsNotNull(result.Result);
+            Assert.AreEqual(updateUser, _mockRepo.GetById(updateUser.Id).Result);
+        }
+
+        [TestMethod]
+        public void TestUpdateWrong()
+        {
+            var updateUser = new DTOUser
+            {
+                Id = 15,
+                UserName = "toto",
+                Email = "toto@valid.fr",
+                Password = "password",
+                Name = "Test 1 Updated",
+                Address = "Test 1\nNew York City",
+                Gender = "woman",
+                Note = 10
+            };
+            var result = _mockRepo.Update(updateUser);
+            Assert.IsNull(result);
+            Assert.AreEqual(8, _mockRepo.Count().Result);
+        }
+
+        [TestMethod]
+        public void TestDeleteOk()
+        {
+            _mockRepo.Delete(8);
+            var search = _mockRepo.GetById(8);
+            Assert.IsNull(search);
+            var count = this._mockRepo.Count();
+            Assert.AreEqual(7, count);
+        }
+
+        [TestMethod]
+        public void TestDeleteWrong()
+        {
+            var result = _mockRepo.Delete(8);
+            Assert.IsFalse(result.Result);
+            var count = this._mockRepo.Count();
+            Assert.AreEqual(7, count);
+        }
+
+        [TestMethod]
+        public void TestGetUserEmailOk()
+        {
+            var userTheorical = new DTOUser
+            {
+                Id = 2,
+                UserName = "test2",
+                Email = "test3@valid.fr",
+                Password = "pswd2",
+                Name = "Test 2",
+                Address = "Test 2\nParis",
+                Gender = "woman",
+                Note = 10
+            };
+            var user = _mockRepo.GetUserByEmail(userTheorical.Email);
+            Assert.IsNotNull(user);
+            Assert.AreEqual(userTheorical, user);
+        }
+
+        [TestMethod]
+        public void TestGetUserEmailWrong()
+        {
+            var user = _mockRepo.GetUserByEmail("test666@valid.fr");
+            Assert.IsNull(user);
+        }
+
+        [TestMethod]
+        public void TestGetUserUserNameOk()
+        {
+            var userTheorical = new DTOUser
+            {
+                Id = 1,
+                UserName = "toto",
+                Email = "toto@valid.fr",
+                Password = "password",
+                Name = "Test 1 Updated",
+                Address = "Test 1\nNew York City",
+                Gender = "woman",
+                Note = 10
+            };
+            var user = _mockRepo.GetUserByUserName(userTheorical.UserName);
+            Assert.IsNotNull(user);
+            Assert.AreEqual(userTheorical, user);
+        }
+
+        [TestMethod]
+        public void TestGetUserUserNameWrong()
+        {
+            var user = _mockRepo.GetUserByEmail("unknown_username");
+            Assert.IsNull(user);
         }
     }
 }
