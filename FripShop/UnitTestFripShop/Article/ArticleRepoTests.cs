@@ -6,7 +6,7 @@ using Moq;
 namespace UnitTestFripShop
 {
     [TestClass]
-    class ArticleTest
+    class ArticleRepoTests
     {
         public IArticleRepo _articleRepo;
 

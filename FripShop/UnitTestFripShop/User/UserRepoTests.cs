@@ -16,7 +16,7 @@ namespace UnitTestFripShop
     /// Class for user CRUD unit testing
     /// </summary>
     [TestClass]
-    public class UserTests
+    public class UserRepoTests
     {
 
         /// <summary>
@@ -125,7 +125,7 @@ namespace UnitTestFripShop
         /// <summary>
         /// Constructor for the user CRUD unit tests
         /// </summary>
-        public UserTests()
+        public UserRepoTests()
         {
             _usersMockList = new List<User>
             {
