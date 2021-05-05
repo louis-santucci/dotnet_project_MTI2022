@@ -31,7 +31,7 @@ namespace UnitTestFripShop.ArticleTests
             article.Id = articleModel.Id;
             article.ImageSource = articleModel.ImageSource;
             article.SellerId = articleModel.SellerId;
-
+            article.State = articleModel.State;
             article.Name = articleModel.Name;
             article.Price = articleModel.Price;
             article.Description = articleModel.Description;
@@ -56,7 +56,7 @@ namespace UnitTestFripShop.ArticleTests
             article.Id = articleModel.Id;
             article.ImageSource = articleModel.ImageSource;
             article.SellerId = articleModel.SellerId;
-
+            article.State = articleModel.State;
             article.Name = articleModel.Name;
             article.Price = articleModel.Price;
             article.Description = articleModel.Description;
@@ -81,7 +81,7 @@ namespace UnitTestFripShop.ArticleTests
             article.Id = articleModel.Id;
             article.ImageSource = articleModel.ImageSource;
             article.SellerId = articleModel.SellerId;
-
+            article.State = articleModel.State;
             article.Name = articleModel.Name;
             article.Price = articleModel.Price;
             article.Description = articleModel.Description;
@@ -109,7 +109,7 @@ namespace UnitTestFripShop.ArticleTests
                 article.Id = articleModel.Id;
                 article.ImageSource = articleModel.ImageSource;
                 article.SellerId = articleModel.SellerId;
-
+                article.State = articleModel.State;
                 article.Name = articleModel.Name;
                 article.Price = articleModel.Price;
                 article.Description = articleModel.Description;
@@ -142,12 +142,14 @@ namespace UnitTestFripShop.ArticleTests
             mockRepo.Setup(articleRepo => articleRepo.Insert(It.IsAny<DTOArticle>())).ReturnsAsync((DTOArticle articleModel) =>
             {
                 var max = Math.Max(_articlesMockList.Max(c => c.Id) + 1, _articlesMockList.Max(c => c.Id));
-                var user = DTOToDBO(articleModel);
-                user.Id = max;
+                if (articleModel.Id > max)
+                    return null;
+                var article = DTOToDBO(articleModel);
+                article.Id = max;
                 if (articleModel.Name == null)
                     return null;
-                this._articlesMockList.Add(user);
-                return DBOToDTO(user);
+                this._articlesMockList.Add(article);
+                return DBOToDTO(article);
             });
 
             // Mocks the function Update()
@@ -191,22 +193,13 @@ namespace UnitTestFripShop.ArticleTests
                 {
                     return null;
                 }
-                return DBOToDTOAsync(_articlesMockList.Single(c => c.Id == i));
+
+                var article = _articlesMockList.Single(c => c.Id == i);
+                return DBOToDTOAsync(article);
             });
 
             // Mocks the function Count()
             mockRepo.Setup(articleRepo => articleRepo.Count()).ReturnsAsync(_articlesMockList.Count());
-
-            // Mocks the function GetUserByEmail()
-            mockRepo.Setup(articleRepo => articleRepo.GetArticleFromId(It.IsAny<long>())).Returns((long i) =>
-            {
-                if (_articlesMockList.Count(c => c.Id == i) == 0)
-                {
-                    return null;
-                }
-
-                return DBOToDTOAsync(_articlesMockList.Single(c => c.Id == i));
-            });
 
             // Mocks the function GetUserByUserName()
             mockRepo.Setup(articleRepo => articleRepo.GetUserFromId(It.IsAny<long>())).Returns((long i) =>

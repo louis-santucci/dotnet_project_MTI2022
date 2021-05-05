@@ -165,7 +165,7 @@ namespace UnitTestFripShop.ArticleTests
         {
             var article = new DTOArticle()
             {
-                Id = 6,
+                Id = 15,
                 ImageSource = null,
                 SellerId = 1,
                 State = "free",
@@ -186,13 +186,13 @@ namespace UnitTestFripShop.ArticleTests
         /// Test to wrong userName insert
         /// </summary>
         [TestMethod]
-        public void TestInsertWrongName()
+        public void TestInsertWrongUserId()
         {
             var article = new DTOArticle()
             {
-                Id = 10,
+                Id = 6,
                 ImageSource = null,
-                SellerId = 1,
+                SellerId = 2,
                 State = "free",
                 Name = null,
                 Description = "joli pantalon militaire",
@@ -204,7 +204,7 @@ namespace UnitTestFripShop.ArticleTests
             var result = _mockRepo.Insert(article).Result;
             Assert.IsNull(result);
             var count = this._mockRepo.Count();
-            Assert.AreEqual(7, count.Result);
+            Assert.AreEqual(8, count.Result);
         }
 
         /// <summary>
@@ -238,7 +238,6 @@ namespace UnitTestFripShop.ArticleTests
         /// Wrong ID testing update
         /// </summary>
         [TestMethod]
-        [ExpectedException(typeof(InvalidOperationException))]
         public void TestUpdateWrongSellerId()
         {
             var updateUser = new DTOArticle
@@ -291,8 +290,8 @@ namespace UnitTestFripShop.ArticleTests
             Assert.IsTrue(result.Result);
             var search = _mockRepo.GetById(7);
             Assert.IsNull(search);
-            var count = this._mockRepo.Count();
-            Assert.AreEqual(7, count.Result);
+            var count = _articles.Count();
+            Assert.AreEqual(7, count);
         }
 
         /// <summary>
@@ -301,10 +300,33 @@ namespace UnitTestFripShop.ArticleTests
         [TestMethod]
         public void TestDeleteWrong()
         {
-            var result = _mockRepo.Delete(8);
+            var result = _mockRepo.Delete(9);
             Assert.IsFalse(result.Result);
             var count = this._mockRepo.Count();
             Assert.AreEqual(8, count.Result);
+        }
+
+        [TestMethod]
+        public void TestGetUserFromId()
+        {
+            var userTheorical = new DTOUser();
+            userTheorical.Id = 1;
+            userTheorical.Email = "test@GetUserFromId.fr";
+            userTheorical.Address = "3B Rue de La Poste 69110 FRANCHEVILLE";
+            userTheorical.Gender = "man";
+            userTheorical.Name = "Louis SANTOS";
+            userTheorical.Note = 10;
+            userTheorical.UserName = "santoss";
+
+            var user = _mockRepo.GetUserFromId(1);
+            Assert.AreEqual(userTheorical.Id, user.Id);
+            Assert.AreEqual(userTheorical.UserName, user.UserName);
+            Assert.AreEqual(userTheorical.Email, user.Email);
+            Assert.AreEqual(userTheorical.Password, user.Password);
+            Assert.AreEqual(userTheorical.Name, user.Name);
+            Assert.AreEqual(userTheorical.Note, user.Note);
+            Assert.AreEqual(userTheorical.Gender, user.Gender);
+            Assert.AreEqual(userTheorical.Address, user.Address);
         }
     }
 }
