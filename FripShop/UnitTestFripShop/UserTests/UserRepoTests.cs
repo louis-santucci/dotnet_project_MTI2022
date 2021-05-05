@@ -27,12 +27,6 @@ namespace UnitTestFripShop.UserTests
         public List<User> _usersMockList;
 
         /// <summary>
-        /// Gets or sets the test context which provides
-        /// information about and functionality for the current test run.
-        ///</summary>
-        public TestContext TestContext { get; set; }
-
-        /// <summary>
         /// Converts a database entity to a dto entity asynchronously
         /// </summary>
         /// <param name="user">The user to convert</param>
