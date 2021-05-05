@@ -156,7 +156,7 @@ namespace UnitTestFripShop.ArticleTests
                 var result = _articlesMockList.Where(c => c.Id == articleModel.Id);
                 if (result.Count() != 1)
                     return null;
-                var article = _articlesMockList.Find(c => c.Id == articleModel.Id);
+                var article = result.First();
                 article.ImageSource = articleModel.ImageSource;
                 article.Name = articleModel.Name;
                 article.Price = articleModel.Price;
