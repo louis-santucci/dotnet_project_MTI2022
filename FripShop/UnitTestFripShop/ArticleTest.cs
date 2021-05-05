@@ -1,13 +1,14 @@
 ﻿using FripShop.DataAccess;
+using FripShop.DataAccess.Interfaces;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 
 namespace UnitTestFripShop
 {
     [TestClass]
-    class ArticleControllerTest
+    class ArticleTest
     {
-        public ArticleRepository articleRepo;
+        public IArticleRepo _articleRepo;
 
         [TestMethod]
         public void Test()
