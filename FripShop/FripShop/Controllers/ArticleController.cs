@@ -311,7 +311,7 @@ namespace FripShop.Controllers
                 var claimsUserEmail = HttpContext.User.Identity.Name;
 
                 var user = _userRepo.GetUserByEmail(claimsUserEmail);
-                var imagePath = "~/wwwroot/ArticleImages/";
+                var imagePath = "wwwroot/ArticleImages/";
 
                 var newArticle = DTOArticleEditionToArticle(article, user);
                 var filename = Path.GetFileName(article.ImageFile.FileName);
@@ -337,7 +337,7 @@ namespace FripShop.Controllers
                         await article.ImageFile.CopyToAsync(fileStream);
                     }
 
-                    newArticle.ImageSource = path;
+                    newArticle.ImageSource = "./ArticleImages/" + newFilename;
 
                 }
                 var result = await _articleRepo.Insert(newArticle);
