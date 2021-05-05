@@ -157,6 +157,8 @@ namespace UnitTestFripShop.ArticleTests
                 if (result.Count() != 1)
                     return null;
                 var article = result.First();
+                if (article.SellerId != articleModel.SellerId)
+                    return null;
                 article.ImageSource = articleModel.ImageSource;
                 article.Name = articleModel.Name;
                 article.Price = articleModel.Price;
