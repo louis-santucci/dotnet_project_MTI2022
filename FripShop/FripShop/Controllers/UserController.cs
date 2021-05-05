@@ -197,8 +197,8 @@ namespace FripShop.Controllers
             {
                 if (ModelState.IsValid)
                 {
-                    if ( _userRepo.GetUserByEmail(userModel.Email) == null)
-                        return BadRequest(userModel);
+                    if (_userRepo.GetUserByEmail(userModel.Email) == null)
+                        throw new Exception();
                     string typedPassword = userModel.Password;
                     var user = _userRepo.GetUserByEmail(userModel.Email);
                     if (HashPassword(typedPassword) == user.Password)
@@ -219,9 +219,8 @@ namespace FripShop.Controllers
             catch (Exception ex)
             {
                 _logger.LogError("CONTROLLER USER -- Login() -- Error : ", ex);
-                return BadRequest();
             }
-            return BadRequest();
+            return View("Error", new ErrorViewModel());
         }
 
         [HttpPost]
@@ -232,7 +231,7 @@ namespace FripShop.Controllers
                 if (ModelState.IsValid)
                 {
                     if (_userRepo.GetUserByEmail(userModel.Email) == null)
-                        return BadRequest(userModel);
+                        throw new Exception();
                     string typedPassword = userModel.Password;
                     var user = _userRepo.GetUserByEmail(userModel.Email);
                     if (HashPassword(typedPassword) == user.Password)
@@ -253,9 +252,8 @@ namespace FripShop.Controllers
             catch (Exception ex)
             {
                 _logger.LogError("CONTROLLER USER -- Login() -- Error : ", ex);
-                return BadRequest();
             }
-            return BadRequest();
+            return View("Error", new ErrorViewModel());
         }
 
         private string HashPassword(string password)
