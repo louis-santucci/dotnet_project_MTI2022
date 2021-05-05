@@ -299,7 +299,7 @@ namespace FripShop.Controllers
                 var claimsUserEmail = HttpContext.User.Identity.Name;
 
                 var user = _userRepo.GetUserByEmail(claimsUserEmail);
-                var imagePath = "~/ArticleImages/";
+                var imagePath = "~/wwwroot/ArticleImages/";
 
                 var newArticle = DTOArticleEditionToArticle(article, user);
                 var filename = Path.GetFileName(article.ImageFile.FileName);
@@ -309,15 +309,15 @@ namespace FripShop.Controllers
                 else
                 {
                     var newFilename = Path.GetRandomFileName() + extension;
-                    string path = Path.Combine("./ArticleImages/", newFilename);
-                    if (!Directory.Exists("./ArticleImages/"))
+                    string path = Path.Combine(imagePath, newFilename);
+                    if (!Directory.Exists(imagePath))
                     {
-                        Directory.CreateDirectory("./ArticleImages");
+                        Directory.CreateDirectory(imagePath);
                     }
                     while (System.IO.File.Exists(path))
                     {
                         newFilename = Path.Combine(Path.GetRandomFileName(), extension);
-                        path = Path.Combine("./ArticleImages/", newFilename);
+                        path = Path.Combine(imagePath, newFilename);
                     }
 
                     using (var fileStream = new FileStream(path, FileMode.Create))
