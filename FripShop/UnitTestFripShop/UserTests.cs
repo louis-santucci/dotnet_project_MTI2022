@@ -169,10 +169,10 @@ namespace UnitTestFripShop
             Mock<IUserRepo> mockRepo = new Mock<IUserRepo>();
 
             // Mocks the function Get()
-            mockRepo.Setup(user => user.Get("")).ReturnsAsync(DBOTODTOList(_usersMockList));
+            mockRepo.Setup(userRepo => userRepo.Get("")).ReturnsAsync(DBOTODTOList(_usersMockList));
 
             // Mocks the function Insert()
-            mockRepo.Setup(users => users.Insert(It.IsAny<DTOUser>())).ReturnsAsync((DTOUser userModel) =>
+            mockRepo.Setup(userRepo => userRepo.Insert(It.IsAny<DTOUser>())).ReturnsAsync((DTOUser userModel) =>
             {
                 var max = Math.Max(_usersMockList.Max(c => c.Id) + 1, _usersMockList.Max(c => c.Id));
                 var user = DTOToDBO(userModel);
@@ -185,7 +185,7 @@ namespace UnitTestFripShop
             });
 
             // Mocks the function Update()
-            mockRepo.Setup(users => users.Update(It.IsAny<DTOUser>())).ReturnsAsync((DTOUser userModel) =>
+            mockRepo.Setup(userRepo => userRepo.Update(It.IsAny<DTOUser>())).ReturnsAsync((DTOUser userModel) =>
             {
                 var user = _usersMockList.Single(c => c.Id == userModel.Id);
                 if (user == null)
@@ -201,7 +201,7 @@ namespace UnitTestFripShop
             });
 
             // Mocks the function Delete()
-            mockRepo.Setup(users => users.Delete(It.IsAny<long>())).ReturnsAsync((long i) =>
+            mockRepo.Setup(userRepo => userRepo.Delete(It.IsAny<long>())).ReturnsAsync((long i) =>
             {
                 var count = _usersMockList.Count(c => c.Id == i);
                 if (count == 1)
@@ -214,7 +214,7 @@ namespace UnitTestFripShop
             });
 
             // Mocks the function GetById()
-            mockRepo.Setup(users => users.GetById(It.IsAny<long>())).Returns((long i) =>
+            mockRepo.Setup(userRepo => userRepo.GetById(It.IsAny<long>())).Returns((long i) =>
             {
                 var count = _usersMockList.Count(c => c.Id == i);
                 if (count != 1)
@@ -225,10 +225,10 @@ namespace UnitTestFripShop
             });
 
             // Mocks the function Count()
-            mockRepo.Setup(users => users.Count()).ReturnsAsync(_usersMockList.Count());
+            mockRepo.Setup(userRepo => userRepo.Count()).ReturnsAsync(_usersMockList.Count());
 
             // Mocks the function GetUserByEmail()
-            mockRepo.Setup(users => users.GetUserByEmail(It.IsAny<string>())).Returns((string email) =>
+            mockRepo.Setup(userRepo => userRepo.GetUserByEmail(It.IsAny<string>())).Returns((string email) =>
             {
                 if (_usersMockList.Count(c => c.Email == email) == 0)
                 {
@@ -239,7 +239,7 @@ namespace UnitTestFripShop
             });
 
             // Mocks the function GetUserByUserName()
-            mockRepo.Setup(users => users.GetUserByUserName(It.IsAny<string>())).Returns((string userName) =>
+            mockRepo.Setup(userRepo => userRepo.GetUserByUserName(It.IsAny<string>())).Returns((string userName) =>
             {
                 if (_usersMockList.Count(c => c.UserName == userName) == 0)
                 {
