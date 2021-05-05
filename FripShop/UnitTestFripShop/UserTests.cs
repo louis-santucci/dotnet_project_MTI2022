@@ -1,6 +1,10 @@
+using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 using FripShop.DataAccess.EFModels;
 using FripShop.DataAccess.Interfaces;
+using FripShop.DTO;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 
@@ -20,16 +24,101 @@ namespace UnitTestFripShop
         public TestContext TestContext { get; set; }
 
         /// <summary>
-        /// Our Mock Products Repository for use in testing
+        /// Our Mock User Repository for use in testing
         /// </summary>
         public readonly IUserRepo _mockRepo;
+
+        /// <summary>
+        /// Converts a database entity to a dto entity asynchronously
+        /// </summary>
+        /// <param name="user">The user to convert</param>
+        /// <returns>the converted user</returns>
+        public static async Task<DTOUser> DBOToDTOAsync(User userModel)
+        {
+            var user = new DTOUser();
+
+            user.Id = userModel.Id;
+            user.Email = userModel.Email;
+            user.Address = userModel.Address;
+            user.Name = userModel.Name;
+            user.Password = userModel.Password;
+            user.UserName = userModel.UserName;
+            user.Gender = userModel.Gender;
+            user.Note = userModel.Note;
+
+            return user;
+        }
+
+        /// <summary>
+        /// Converts a database entity to a dto entity
+        /// </summary>
+        /// <param name="user">The user to convert</param>
+        /// <returns>the converted user</returns>
+        public static DTOUser DBOToDTO(User userModel)
+        {
+            var user = new DTOUser();
+
+            user.Id = userModel.Id;
+            user.Email = userModel.Email;
+            user.Address = userModel.Address;
+            user.Name = userModel.Name;
+            user.Password = userModel.Password;
+            user.UserName = userModel.UserName;
+            user.Gender = userModel.Gender;
+            user.Note = userModel.Note;
+
+            return user;
+        }
+
+        /// <summary>
+        /// Converts a database entity to a dto entity
+        /// </summary>
+        /// <param name="user">The user to convert</param>
+        /// <returns>the converted user</returns>
+        public static User DTOToDBO(DTOUser userModel)
+        {
+            var user = new User();
+
+            user.Id = userModel.Id;
+            user.Email = userModel.Email;
+            user.Address = userModel.Address;
+            user.Name = userModel.Name;
+            user.Password = userModel.Password;
+            user.UserName = userModel.UserName;
+            user.Gender = userModel.Gender;
+            user.Note = userModel.Note;
+
+            return user;
+        }
+
+        public static List<DTOUser> DBOTODTOList(IEnumerable<User> userModels)
+        {
+            List<DTOUser> result = new List<DTOUser>();
+            foreach (var userModel in userModels)
+            {
+                var user = new DTOUser();
+
+                user.Id = userModel.Id;
+                user.Email = userModel.Email;
+                user.Address = userModel.Address;
+                user.Name = userModel.Name;
+                user.Password = userModel.Password;
+                user.UserName = userModel.UserName;
+                user.Gender = userModel.Gender;
+                user.Note = userModel.Note;
+
+                result.Add(user);
+            }
+
+            return result;
+        }
 
         /// <summary>
         /// Constructor for the user CRUD unit tests
         /// </summary>
         public UserTests()
         {
-            IEnumerable<User> users = new List<User>
+            IList<User> usersMockList = new List<User>
             {
                 new User
                 {
@@ -69,6 +158,62 @@ namespace UnitTestFripShop
             };
 
             Mock<IUserRepo> mockRepo = new Mock<IUserRepo>();
+
+            // Mocks the function Get()
+            mockRepo.Setup(user => user.Get("")).ReturnsAsync(DBOTODTOList(usersMockList));
+
+            // Mocks the function Insert()
+            mockRepo.Setup(users => users.Insert(It.IsAny<DTOUser>())).ReturnsAsync((DTOUser userModel) =>
+            {
+                var max = Math.Max(usersMockList.Max(c => c.Id) + 1, usersMockList.Max(c => c.Id));
+                var user = DTOToDBO(userModel);
+                user.Id = max;
+                usersMockList.Add(user);
+                return DBOToDTO(user);
+            });
+
+            // Mocks the function Update()
+            mockRepo.Setup(users => users.Update(It.IsAny<DTOUser>())).ReturnsAsync((DTOUser userModel) =>
+            {
+                var user = usersMockList.Single(c => c.Id == userModel.Id);
+                if (user == null)
+                    return null;
+                user.Address = userModel.Address;
+                user.Name = userModel.Name;
+                user.Gender = userModel.Gender;
+                user.Note = userModel.Note;
+                user.Password = userModel.Password;
+                user.UserName = userModel.UserName;
+                user.Email = userModel.Email;
+                return DBOToDTO(user);
+            });
+
+            // Mocks the function Delete()
+            mockRepo.Setup(users => users.Delete(It.IsAny<int>())).ReturnsAsync((int i) =>
+            {
+                var user = usersMockList.ToList().Single(c => c.Id == i);
+                if (user != null)
+                {
+                    usersMockList.ToList().Remove(user);
+                    return true;
+                }
+
+                return false;
+            });
+
+            // Mo0cks the function GetById()
+            mockRepo.Setup(users => users.GetById(It.IsAny<int>())).Returns((int i) => DBOToDTOAsync( usersMockList.Single(c => c.Id == i)));
+
+            // Mocks the function Count()
+            mockRepo.Setup(users => users.Count()).ReturnsAsync(usersMockList.Count());
+
+            // Mocks the function GetUserByEmail()
+            mockRepo.Setup(users => users.GetUserByEmail(It.IsAny<string>())).Returns((string email) => DBOToDTO(usersMockList.Single(c => c.Email == email)));
+
+            // Mocks the function GetUserByUserName()
+            mockRepo.Setup(users => users.GetUserByUserName(It.IsAny<string>())).Returns((string userName) => DBOToDTO(usersMockList.Single(c => c.Email == userName))); ;
+
+
         }
         
         [TestMethod]
