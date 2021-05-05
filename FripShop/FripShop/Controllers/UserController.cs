@@ -198,11 +198,7 @@ namespace FripShop.Controllers
                 if (ModelState.IsValid)
                 {
                     if (_userRepo.GetUserByEmail(userModel.Email) == null)
-<<<<<<< HEAD
-                        return BadRequest(userModel);
-=======
                         throw new Exception();
->>>>>>> 41f46a6ba40ee5815210922d8b9f11d36d5e98e9
                     string typedPassword = userModel.Password;
                     var user = _userRepo.GetUserByEmail(userModel.Email);
                     if (HashPassword(typedPassword) == user.Password)
