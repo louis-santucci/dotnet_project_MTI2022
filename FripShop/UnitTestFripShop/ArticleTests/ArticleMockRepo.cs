@@ -201,7 +201,7 @@ namespace UnitTestFripShop.ArticleTests
             // Mocks the function Count()
             mockRepo.Setup(articleRepo => articleRepo.Count()).ReturnsAsync(_articlesMockList.Count());
 
-            // Mocks the function GetUserByUserName()
+            // Mocks the function GetUserFromId()
             mockRepo.Setup(articleRepo => articleRepo.GetUserFromId(It.IsAny<long>())).Returns((long i) =>
             {
                 if (_articlesMockList.Count(c => c.Id == i) == 0)
