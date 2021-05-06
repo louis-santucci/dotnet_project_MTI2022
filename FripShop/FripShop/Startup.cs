@@ -18,6 +18,10 @@ namespace FripShop
     {
         private string _connectionString;
 
+        /// <summary>
+        /// Startup constructor
+        /// </summary>
+        /// <param name="configuration"></param>
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
