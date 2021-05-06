@@ -17,7 +17,7 @@ namespace UnitTestFripShop.ArticleTests
     {
         public readonly IArticleRepo _articleRepo;
 
-        public List<Article> _articlesMockList = new List<Article>;
+        public List<Article> _articlesMockList = new List<Article>();
 
         /// <summary>
         /// Converts a database entity to a dto entity asynchronously
