@@ -13,6 +13,9 @@ using System.Web;
 
 namespace FripShop.Controllers
 {
+    /// <summary>
+    /// Controller for the cart
+    /// </summary>
     public class CartController : Controller
     {
         private readonly IArticleRepo _articleRepo;
@@ -21,6 +24,14 @@ namespace FripShop.Controllers
         private readonly ICartRepo _cartRepo;
         private readonly ITransactionRepo _transactionRepo;
 
+        /// <summary>
+        /// Controller constructor
+        /// </summary>
+        /// <param name="logger"></param>
+        /// <param name="articleRepo"></param>
+        /// <param name="userRepo"></param>
+        /// <param name="cartRepo"></param>
+        /// <param name="transactionRepo"></param>
         public CartController(ILogger<UserController> logger, IArticleRepo articleRepo, IUserRepo userRepo, ICartRepo cartRepo, ITransactionRepo transactionRepo)
         {
             this._userRepo = userRepo;
