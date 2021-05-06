@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace FripShop.DTO
 {
@@ -24,5 +25,8 @@ namespace FripShop.DTO
         public DateTime CreatedAt { get; set; }
 
         public DTOUserPublic User { get; set; }
+
+        [NotMapped]
+        public DTOTransaction Transaction { get; set; }
     }
 }

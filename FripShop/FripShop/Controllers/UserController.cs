@@ -89,6 +89,15 @@ namespace FripShop.Controllers
                 var article = await _articleRepo.GetArticleFromId(transaction.ArticleId);
                 toInsert.Name = article.Name;
                 toInsert.State = article.State;
+                toInsert.Id = article.Id;
+
+                if (toInsert.Transaction == null)
+                {
+                    toInsert.Transaction = new DTOTransaction();
+                    toInsert.Transaction.TransactionState = transaction.TransactionState;
+                }
+
+
                 var sellerFromDb = await _userRepo.GetById(article.SellerId);
                 var sellerToInsert = new DTOUserPublic();
                 sellerToInsert.Name = sellerFromDb.Name;
@@ -407,23 +416,124 @@ namespace FripShop.Controllers
 
 
 
-
         [Authorize]
         [HttpPost]
         public async Task<IActionResult> NoteUser()
         {
-            var userName = Request.Form["id"].ToString();
-            var user =  _userRepo.GetUserByUserName(userName);
-            var note = Convert.ToDouble(Request.Form["note"]);
-            user.NbNoteReceived += 1;
-            user.Note = FindNoteAverage(note, user.NbNoteReceived);
-            var test = await _userRepo.Update(user);
-            if (test == null)
+            var email = HttpContext.User.Identity.Name;
+            var Buyer = _userRepo.GetUserByEmail(email);
+         
+
+            var transactionList = new List<DTOArticle>();
+            var SellerName = Request.Form["id"].ToString();
+            var Seller = _userRepo.GetUserByUserName(SellerName);
+            var BuyerTransactions = await _transactionRepo.GetTransactionByUserId(Buyer.Id);
+            var articleId = (long)Convert.ToDouble(Request.Form["articleId"].ToString());
+
+            foreach (var transaction in BuyerTransactions)
             {
-                View("Cart", "Failed");
+                var toInsert = new DTOArticle();
+                var currentArticle = await _articleRepo.GetArticleFromId(transaction.ArticleId);
+                toInsert.Name = currentArticle.Name;
+                toInsert.State = currentArticle.State;
+                toInsert.Id = currentArticle.Id;
+
+                if (toInsert.Transaction == null)
+                {
+                    toInsert.Transaction = new DTOTransaction();
+                }
+                var sellerToInsert = new DTOUserPublic();
+                sellerToInsert.Name = Seller.Name;
+                sellerToInsert.UserName = Seller.UserName;
+                toInsert.User = sellerToInsert;
+
+                if (currentArticle.Id == articleId)
+                {
+
+                    toInsert.Transaction = transaction;
+
+                    if (transaction.TransactionState == "sold")
+                    {
+                        toInsert.Transaction.TransactionState = "Sold and Noted";
+                        transaction.TransactionState = "Sold and Noted";
+                    }
+                    var upt = await _transactionRepo.Update(transaction);
+
+                    var note = Convert.ToDouble(Request.Form["note"]);
+                    Seller.NbNoteReceived += 1;
+                    Seller.Note = FindNoteAverage(note, Seller.NbNoteReceived);
+                    var test = await _userRepo.Update(Seller);
+                    if (test == null)
+                    {
+                        View("Cart", "Failed");
+                    }
+
+                }
+                else
+                {
+                    toInsert.Transaction.TransactionState = transaction.TransactionState;
+                }
+
+
+                transactionList.Add(toInsert);
             }
-            return RedirectToAction("Profile");
+
+            ViewData["transactionlist"] = transactionList;
+
+            return RedirectToAction("secondPageManager", new { CurrentarticleId = articleId, sellername = SellerName });
         }
+
+
+        public async Task<IActionResult> secondPageManager(long CurrentarticleId, string sellername)
+        {
+            var email = HttpContext.User.Identity.Name;
+            var Buyer = _userRepo.GetUserByEmail(email);
+
+            var transactionList = new List<DTOArticle>();
+            var Seller = _userRepo.GetUserByUserName(sellername);
+            var BuyerTransactions = await _transactionRepo.GetTransactionByUserId(Buyer.Id);
+
+            foreach (var transaction in BuyerTransactions)
+            {
+                var toInsert = new DTOArticle();
+                var currentArticle = await _articleRepo.GetArticleFromId(transaction.ArticleId);
+                toInsert.Name = currentArticle.Name;
+                toInsert.State = currentArticle.State;
+                toInsert.Id = currentArticle.Id;
+                if (toInsert.Transaction == null)
+                {
+                    toInsert.Transaction = new DTOTransaction();
+                }
+                var sellerToInsert = new DTOUserPublic();
+                sellerToInsert.Name = Seller.Name;
+                sellerToInsert.UserName = Seller.UserName;
+                toInsert.User = sellerToInsert;
+
+                if (currentArticle.Id == CurrentarticleId)
+                {
+
+                    toInsert.Transaction = transaction;
+
+                    if (transaction.TransactionState == "sold")
+                    {
+                        toInsert.Transaction.TransactionState = "Sold and Noted";
+                        transaction.TransactionState = "Sold and Noted";
+                    }
+                    var upt = await _transactionRepo.Update(transaction);
+                }
+                else
+                {
+                    toInsert.Transaction.TransactionState = transaction.TransactionState;
+                }
+
+                transactionList.Add(toInsert);
+            }
+
+            ViewData["transactionlist"] = transactionList;
+
+            return View("Profile_secondPage");
+        }
+
 
 
         public double FindNoteAverage(double note, double nbNote)
@@ -431,7 +541,7 @@ namespace FripShop.Controllers
             double val;
             var email = HttpContext.User.Identity.Name;
             var user = _userRepo.GetUserByEmail(email);
-            if(nbNote == 0)
+            if(nbNote == 1)
             {
                 return note;
             }

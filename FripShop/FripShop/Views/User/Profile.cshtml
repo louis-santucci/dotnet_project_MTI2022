@@ -85,42 +85,55 @@ Mes Achats
                 foreach (var transaction in @ViewData["transactionlist"] as IEnumerable<FripShop.DTO.DTOArticle>)
                 {
                     <div class="card">
-                        <div class="card-body">
-                            <h5 class="card-title">@transaction.Name</h5>
-                            <p class="card-text"><small>SellerName : </small><small class="text-muted">@transaction.User.Name</small></p>
-                            <p class="card-text"><small>SellerUserName : </small><small class="text-muted">@transaction.User.UserName</small></p>
-                            <p class="card-text"><small>TransactionState : </small><small class="text-muted">@transaction.State</small></p>
-                        </div>
+                                <div class="card-body">
+                                    <h5 class="card-title">@transaction.Name</h5>
+                                    <p class="card-text"><small>SellerName : </small><small class="text-muted">@transaction.User.Name</small></p>
+                                    <p class="card-text"><small>SellerUserName : </small><small class="text-muted">@transaction.User.UserName</small></p>
+                                    <p class="card-text"><small>TransactionState : </small><small class="text-muted">@transaction.State</small></p>
+                                    <p class="card-text"><small>article ID : </small><small class="text-muted">@transaction.Id</small></p>
+                                </div>
 
                         <div class="card-footer text-center">
-                            @using (Html.BeginForm("NoteUser", "User"))
-                             {
-                                <div class="form-group row px-3">
+                            @{ var CurrentTransactionState = transaction.Transaction.TransactionState;}
+                            @{ if (CurrentTransactionState == null || CurrentTransactionState != "Sold and Noted")
+                                @using (Html.BeginForm("NoteUser", "User"))
+                                 {
+                                    <div class="form-group row px-3">
 
-                                    <label class="card-text">Note @transaction.User.Name</label>
-                                    <div class="card-text">
-                                        @Html.RadioButtonFor(model => model.Note, "0", new { @id = "cond_0" }) @Html.Label("0")
-                                        @Html.RadioButtonFor(model => model.Note, "1", new { @id = "cond_1" }) @Html.Label("1")
-                                        @Html.RadioButtonFor(model => model.Note, "2", new { @id = "cond_2" }) @Html.Label("2")
-                                        @Html.RadioButtonFor(model => model.Note, "3", new { @id = "cond_3" }) @Html.Label("3")
-                                        @Html.RadioButtonFor(model => model.Note, "4", new { @id = "cond_4" }) @Html.Label("4")
-                                        @Html.RadioButtonFor(model => model.Note, "5", new { @id = "cond_5" }) @Html.Label("5")
-                                        @Html.RadioButtonFor(model => model.Note, "6", new { @id = "cond_6" }) @Html.Label("6")
-                                        @Html.RadioButtonFor(model => model.Note, "7", new { @id = "cond_7" }) @Html.Label("7")
-                                        @Html.RadioButtonFor(model => model.Note, "8", new { @id = "cond_8" }) @Html.Label("8")
-                                        @Html.RadioButtonFor(model => model.Note, "9", new { @id = "cond_9" }) @Html.Label("9")
-                                        @Html.RadioButtonFor(model => model.Note, "10", new { @id = "cond_10" }) @Html.Label("10")
-                                        @Html.Hidden("id", transaction.User.UserName);
+                                        <label class="card-text">Note @transaction.User.Name</label>
+                                        <div class="card-text">
+                                            @Html.RadioButtonFor(model => model.Note, "0", new { @id = "cond_0" }) @Html.Label("0")
+                                            @Html.RadioButtonFor(model => model.Note, "1", new { @id = "cond_1" }) @Html.Label("1")
+                                            @Html.RadioButtonFor(model => model.Note, "2", new { @id = "cond_2" }) @Html.Label("2")
+                                            @Html.RadioButtonFor(model => model.Note, "3", new { @id = "cond_3" }) @Html.Label("3")
+                                            @Html.RadioButtonFor(model => model.Note, "4", new { @id = "cond_4" }) @Html.Label("4")
+                                            @Html.RadioButtonFor(model => model.Note, "5", new { @id = "cond_5" }) @Html.Label("5")
+                                            @Html.RadioButtonFor(model => model.Note, "6", new { @id = "cond_6" }) @Html.Label("6")
+                                            @Html.RadioButtonFor(model => model.Note, "7", new { @id = "cond_7" }) @Html.Label("7")
+                                            @Html.RadioButtonFor(model => model.Note, "8", new { @id = "cond_8" }) @Html.Label("8")
+                                            @Html.RadioButtonFor(model => model.Note, "9", new { @id = "cond_9" }) @Html.Label("9")
+                                            @Html.RadioButtonFor(model => model.Note, "10", new { @id = "cond_10" }) @Html.Label("10")
+                                            @Html.Hidden("id", transaction.User.UserName)
+                                            @Html.Hidden("Buyerid", transaction.User.Id)
+                                            @Html.Hidden("articleId", transaction.Id)
+    
 
-                                        @Html.ValidationMessageFor(model => model.Note, "", new { @class = "text-danger" })
+                                            @Html.ValidationMessageFor(model => model.Note, "", new { @class = "text-danger" })
+
+                                        </div>
+
+
+                                        <div>
+                                            <button type="submit" value="note" id="Submit" class="btn btn-success btn-block">send</button>
+                                        </div>
                                     </div>
-
-
-                                    <div>
-                                        <button type="submit" value="note" id="Submit" class="btn btn-success btn-block">send</button>
+                                 }
+                                else {
+                                    <div class="form-group row px-3">
+                                        <label class="card-text">Cette transaction avec @transaction.User.Name à déjà été noté</label>
                                     </div>
-                                </div>
-                             }
+                                }
+                            }
 
                         </div>
                     </div>
