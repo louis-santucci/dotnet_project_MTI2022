@@ -26,7 +26,11 @@ namespace FripShop.DataAccess.EFModels
         {
             if (!optionsBuilder.IsConfigured)
             {
-                optionsBuilder.UseSqlServer("Data Source=DESKTOP-4MS830T\\MTI;Initial Catalog=FripShop;Trusted_Connection=True;");
+                // ANTOINE : "Data Source=LAPTOP-BTRL9E5B;Initial Catalog=fripshop;Integrated Security=True"
+                // LOUIS : 
+                // LEO : 
+                // ROBIN : 
+                optionsBuilder.UseSqlServer("Data Source=LAPTOP-BTRL9E5B;Initial Catalog=fripshop;Integrated Security=True");
             }
         }
 
