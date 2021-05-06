@@ -24,6 +24,6 @@ namespace UnitTestFripShop.CartTests
                 Quantity = 1,
 
             }
-        }
+        };
     }
 }
