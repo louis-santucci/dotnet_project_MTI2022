@@ -156,7 +156,8 @@ namespace FripShop.Controllers
             user.Password = userModel.Password;
             user.UserName = userModel.UserName;
             user.Gender = userModel.Gender;
-            user.Note = 10;
+            user.Note = userModel.Note;
+            user.NbNotes = userModel.NbNotes;
 
             return user;
         }
@@ -169,6 +170,7 @@ namespace FripShop.Controllers
             userPublic.UserName = userModel.UserName;
             userPublic.Note = userModel.Note;
             userPublic.Gender = userModel.Gender;
+            userPublic.NbNotes = userModel.NbNotes;
             return userPublic;
         }
 
@@ -302,7 +304,7 @@ namespace FripShop.Controllers
             }
             catch (Exception ex)
             {
-                _logger.LogError("CONTROLLER USER -- EdiUserInfos() -- Error : ", ex);
+                _logger.LogError("CONTROLLER USER -- EditUserInfos() -- Error : ", ex);
             }
             await HttpContext.SignOutAsync();
             return Redirect("/Home");

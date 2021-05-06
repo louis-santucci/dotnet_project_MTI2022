@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace FripShop.DTO
 {
@@ -38,5 +39,11 @@ namespace FripShop.DTO
         [DataType(DataType.Text)]
         [Display(Name = "Gender")]
         public string Gender { get; set; }
+
+        [NotMapped]
+        public double Note { get; set; }
+        
+        [NotMapped]
+        public long NbNotes { get; set; }
     }
 }

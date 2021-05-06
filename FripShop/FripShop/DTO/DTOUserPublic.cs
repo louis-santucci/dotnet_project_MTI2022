@@ -16,5 +16,6 @@ namespace FripShop.DTO
         public string Name { get; set; }
         public string Gender { get; set; }
         public double Note { get; set; }
+        public long NbNotes { get; set; }
     }
 }
