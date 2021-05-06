@@ -1,5 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Runtime.InteropServices;
+using AutoMapper;
 
 #nullable disable
 
@@ -30,8 +33,11 @@ namespace FripShop.DataAccess.EFModels
         public double Note { get; set; }
         public long NbNotes { get; set; }
 
+        [IgnoreMap]
         public virtual ICollection<Article> Articles { get; set; }
+        [IgnoreMap]
         public virtual ICollection<Cart> Carts { get; set; }
+        [IgnoreMap]
         public virtual ICollection<Transaction> Transactions { get; set; }
     }
 }

@@ -7,10 +7,12 @@
     [address]  NVARCHAR (100) NOT NULL,
     [gender]   NVARCHAR (10)  NOT NULL,
     [note]     FLOAT (53)     NOT NULL,
-    [nbNotes]  BIGINT         NOT NULL,
+    [nbNotes]  BIGINT         CONSTRAINT [DF_User_nbNotes] DEFAULT ((0)) NULL,
     CONSTRAINT [PK_User] PRIMARY KEY CLUSTERED ([id] ASC),
     CONSTRAINT [IX_User] UNIQUE NONCLUSTERED ([id] ASC)
 );
+
+
 
 
 

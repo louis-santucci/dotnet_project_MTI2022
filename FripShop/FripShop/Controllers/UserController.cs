@@ -79,6 +79,8 @@ namespace FripShop.Controllers
             userToReturn.UserName = user.UserName;
             userToReturn.Address = user.Address;
             userToReturn.Gender = user.Gender;
+            userToReturn.Note = user.Note;
+            userToReturn.NbNotes = user.NbNotes;
 
             var transactionList = new List<DTOArticle>();
 
@@ -157,7 +159,8 @@ namespace FripShop.Controllers
             user.Password = userModel.Password;
             user.UserName = userModel.UserName;
             user.Gender = userModel.Gender;
-            user.Note = 10;
+            user.Note = userModel.Note;
+            user.NbNotes = userModel.NbNotes;
 
             return user;
         }
@@ -170,6 +173,7 @@ namespace FripShop.Controllers
             userPublic.UserName = userModel.UserName;
             userPublic.Note = userModel.Note;
             userPublic.Gender = userModel.Gender;
+            userPublic.NbNotes = userModel.NbNotes;
             return userPublic;
         }
 
@@ -303,7 +307,7 @@ namespace FripShop.Controllers
             }
             catch (Exception ex)
             {
-                _logger.LogError("CONTROLLER USER -- EdiUserInfos() -- Error : ", ex);
+                _logger.LogError("CONTROLLER USER -- EditUserInfos() -- Error : ", ex);
             }
             await HttpContext.SignOutAsync();
             return Redirect("/Home");
@@ -463,8 +467,8 @@ namespace FripShop.Controllers
                     var upt = await _transactionRepo.Update(transaction);
 
                     var note = Convert.ToDouble(Request.Form["note"]);
-                    Seller.NbNoteReceived += 1;
-                    Seller.Note = FindNoteAverage(note, Seller.NbNoteReceived);
+                    Seller.NbNotes += 1;
+                    Seller.Note = FindNoteAverage(note, Seller.NbNotes);
                     var test = await _userRepo.Update(Seller);
                     if (test == null)
                     {

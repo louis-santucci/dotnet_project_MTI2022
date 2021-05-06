@@ -197,7 +197,7 @@ namespace FripShop.DataAccess.EFModels
 
                 entity.Property(e => e.NbNotes)
                     .HasDefaultValue(0)
-                    .HasColumnName("nbNote");
+                    .HasColumnName("nbNotes");
             });
 
             OnModelCreatingPartial(modelBuilder);

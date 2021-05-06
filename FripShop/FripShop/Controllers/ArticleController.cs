@@ -252,7 +252,7 @@ namespace FripShop.Controllers
             var email = HttpContext.User.Identity.Name;
             var user = _userRepo.GetUserByEmail(email);
 
-            var userArticleList = await _articleRepo.GetAllArticlesFromUserId(user.Id);
+            var userArticleList = await _articleRepo.GetById(user.Id);
 
             ViewData["UserArticleList"] = userArticleList;
         
@@ -263,7 +263,7 @@ namespace FripShop.Controllers
         [Authorize]
         public async Task<ActionResult> ModifyArticle(long articleId)
         {
-            var articleToModify = await _articleRepo.GetArticleFromId(articleId);
+            var articleToModify = await _articleRepo.GetById(articleId);
 
             ViewData["ArticleToModify"] = articleToModify;
             ViewData["imageSource"] = articleToModify.ImageSource;
@@ -284,7 +284,7 @@ namespace FripShop.Controllers
         public async Task<ActionResult> EditArticle()
         {
             var articleId = Request.Form["id"].ToString();
-            var articleToModify = await _articleRepo.GetArticleFromId((long)Convert.ToDouble(articleId));
+            var articleToModify = await _articleRepo.GetById((long)Convert.ToDouble(articleId));
             ViewData["ArticleToModify"] = articleToModify;
 
             var name = Request.Form["name"].ToString();

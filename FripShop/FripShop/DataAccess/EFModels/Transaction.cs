@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
+using AutoMapper;
 
 #nullable disable
 
@@ -16,7 +18,9 @@ namespace FripShop.DataAccess.EFModels
         public string TransactionState { get; set; }
         public DateTime LastUpdateAt { get; set; }
 
+        [IgnoreMap]
         public virtual Article Article { get; set; }
+        [IgnoreMap]
         public virtual User Buyer { get; set; }
     }
 }

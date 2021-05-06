@@ -16,9 +16,6 @@ namespace FripShop.DataAccess
             CreateMap<DTOCart, EFModels.Cart>();
             CreateMap<EFModels.Cart, DTOCart>();
 
-            CreateMap<DTORating, EFModels.Rating>();
-            CreateMap<EFModels.Rating, DTORating>();
-
             CreateMap<DTOTransaction, EFModels.Transaction>();
             CreateMap<EFModels.Transaction, DTOTransaction>();
 
