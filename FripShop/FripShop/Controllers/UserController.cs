@@ -462,8 +462,8 @@ namespace FripShop.Controllers
                     var upt = await _transactionRepo.Update(transaction);
 
                     var note = Convert.ToDouble(Request.Form["note"]);
-                    Seller.NbNoteReceived += 1;
-                    Seller.Note = FindNoteAverage(note, Seller.NbNoteReceived);
+                    Seller.NbNotes += 1;
+                    Seller.Note = FindNoteAverage(note, Seller.NbNotes);
                     var test = await _userRepo.Update(Seller);
                     if (test == null)
                     {
