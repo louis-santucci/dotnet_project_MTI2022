@@ -10,10 +10,24 @@ using System.Threading.Tasks;
 
 namespace FripShop.DataAccess
 {
+    /// <summary>
+    /// Repository for cart
+    /// </summary>
     public class CartRepository : Repository<Cart, DTOCart>, ICartRepo
     {
+        /// <summary>
+        /// Repository constructor
+        /// </summary>
+        /// <param name="context"></param>
+        /// <param name="logger"></param>
+        /// <param name="mapper"></param>
         public CartRepository(FripShopContext context, ILogger<CartRepository> logger, IMapper mapper) : base(context, logger, mapper) { }
 
+        /// <summary>
+        /// Get cart from user id
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns>Cart</returns>
         public async Task<IEnumerable<DTOCart>> GetCartByUserId(long id)
         {
             try
@@ -33,8 +47,11 @@ namespace FripShop.DataAccess
             }
         }
 
-
-
+        /// <summary>
+        /// Get cart by article id
+        /// </summary>
+        /// <param name="articleId"></param>
+        /// <returns>Cart</returns>
         public async Task<DTOCart> GetCartItemByArticleId(long articleId)
         {
             try
@@ -51,6 +68,12 @@ namespace FripShop.DataAccess
             }
         }
 
+        /// <summary>
+        /// Checks if this specific carts exists (same user and article)
+        /// </summary>
+        /// <param name="articleId"></param>
+        /// <param name="userId"></param>
+        /// <returns>Bool</returns>
         public async Task<bool> UserCartAlreadyContains(long articleId, long userId)
         {
             try

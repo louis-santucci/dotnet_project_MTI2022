@@ -10,9 +10,24 @@ using System.Threading.Tasks;
 
 namespace FripShop.DataAccess
 {
+    /// <summary>
+    /// Repository from Transaction
+    /// </summary>
     public class TransactionRepository : Repository<Transaction, DTOTransaction>, ITransactionRepo
     {
+        /// <summary>
+        /// Repository constructor
+        /// </summary>
+        /// <param name="context"></param>
+        /// <param name="logger"></param>
+        /// <param name="mapper"></param>
         public TransactionRepository(FripShopContext context, ILogger<TransactionRepository> logger, IMapper mapper) : base(context, logger, mapper) { }
+        
+        /// <summary>
+        /// Get a transaction from a user id
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns>Transaction</returns>
         public async Task<IEnumerable<DTOTransaction>> GetTransactionByUserId(long id)
         {
             try

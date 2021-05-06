@@ -19,6 +19,9 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace FripShop.Controllers
 {
+    /// <summary>
+    /// Controller for users
+    /// </summary>
     public class UserController : Controller
     {
         private readonly IArticleRepo _articleRepo;
@@ -27,6 +30,14 @@ namespace FripShop.Controllers
         private readonly ICartRepo _cartRepo;
         private readonly ITransactionRepo _transactionRepo;
 
+        /// <summary>
+        /// Controller constructor
+        /// </summary>
+        /// <param name="logger"></param>
+        /// <param name="articleRepo"></param>
+        /// <param name="userRepo"></param>
+        /// <param name="cartRepo"></param>
+        /// <param name="transactionRepo"></param>
         public UserController(ILogger<UserController> logger, IArticleRepo articleRepo, IUserRepo userRepo, ICartRepo cartRepo, ITransactionRepo transactionRepo)
         {
             this._userRepo = userRepo;
@@ -36,38 +47,67 @@ namespace FripShop.Controllers
             this._transactionRepo = transactionRepo;
         }
 
+        /// <summary>
+        /// Get user details
+        /// </summary>
+        /// <param name="id">user id</param>
+        /// <returns></returns>
         public ActionResult Details(int id)
         {
             return View();
         }
 
+        /// <summary>
+        /// Get create user view
+        /// </summary>
+        /// <returns></returns>
         public ActionResult Create()
         {
             return View();
         }
 
+        /// <summary>
+        /// Get register page view
+        /// </summary>
+        /// <returns></returns>
         public IActionResult RegisterPage()
         {
             return View("Register");
         }
 
+        /// <summary>
+        /// Get login view
+        /// </summary>
+        /// <returns></returns>
         public IActionResult LoginPage()
         {
             return View("Login");
         }
 
+        /// <summary>
+        /// Get edit profile view
+        /// </summary>
+        /// <returns></returns>
         [Authorize]
         public IActionResult EditProfile()
         {
             return View("EditProfile");
         }
 
+        /// <summary>
+        /// Get second auth view
+        /// </summary>
+        /// <returns></returns>
         [Authorize]
         public IActionResult SecondAuth()
         {
             return View("SecondAuth");
         }
 
+        /// <summary>
+        /// Get profile view
+        /// </summary>
+        /// <returns></returns>
         [Authorize]
         public async Task<IActionResult> Profile()
         {
@@ -113,6 +153,12 @@ namespace FripShop.Controllers
             return View(userToReturn);
         }
 
+        /// <summary>
+        /// Add an article to a user cart
+        /// </summary>
+        /// <param name="articleID">Article id</param>
+        /// <param name="email">User to add article to cart</param>
+        /// <returns>Article view or error</returns>
         [Authorize]
         public async Task<IActionResult> AddArticle(int articleID, string email = null)
         {
@@ -146,8 +192,11 @@ namespace FripShop.Controllers
             return RedirectToAction("Index", "Article");
         }
 
-
-
+        /// <summary>
+        /// Converter
+        /// </summary>
+        /// <param name="userModel"></param>
+        /// <returns></returns>
         public static DTOUser DtoUserEditionToDtoUser(DTOUserEdition userModel)
         {
             var user = new DTOUser();
@@ -165,6 +214,11 @@ namespace FripShop.Controllers
             return user;
         }
 
+        /// <summary>
+        /// Converter
+        /// </summary>
+        /// <param name="userModel"></param>
+        /// <returns></returns>
         public static DTOUserPublic DtoUserToDtoUserPublic(DTOUser userModel)
         {
             DTOUserPublic userPublic = new DTOUserPublic();
@@ -177,6 +231,11 @@ namespace FripShop.Controllers
             return userPublic;
         }
 
+        /// <summary>
+        /// Converter
+        /// </summary>
+        /// <param name="userModel"></param>
+        /// <returns></returns>
         [HttpPost]
         public async Task<ActionResult> Register(DTOUserEdition userModel)
         {
@@ -204,8 +263,11 @@ namespace FripShop.Controllers
             return View();
         }
 
-        /// API Calls
-
+        /// <summary>
+        /// API Login
+        /// </summary>
+        /// <param name="userModel"></param>
+        /// <returns></returns>
         [HttpPost]
         public async Task<ActionResult> Login(DTOLoginUser userModel)
         {
@@ -239,6 +301,11 @@ namespace FripShop.Controllers
             return View("Error", new ErrorViewModel());
         }
 
+        /// <summary>
+        /// API Second login
+        /// </summary>
+        /// <param name="userModel"></param>
+        /// <returns></returns>
         [HttpPost]
         public async Task<ActionResult> SecondLogin(DTOLoginUser userModel)
         {
@@ -272,6 +339,11 @@ namespace FripShop.Controllers
             return View("Error", new ErrorViewModel());
         }
 
+        /// <summary>
+        /// Hash a password
+        /// </summary>
+        /// <param name="password"></param>
+        /// <returns>Hash</returns>
         private string HashPassword(string password)
         {
             MD5 md5 = new MD5CryptoServiceProvider();
@@ -289,6 +361,11 @@ namespace FripShop.Controllers
             return strBuilder.ToString();
         }
 
+        /// <summary>
+        /// Edit user info
+        /// </summary>
+        /// <param name="newUserInfos"></param>
+        /// <returns></returns>
         [HttpPost]
         public async Task<ActionResult> EditUserInfos(DTOUserEdition newUserInfos)
         {
@@ -313,6 +390,11 @@ namespace FripShop.Controllers
             return Redirect("/Home");
         }
 
+        /// <summary>
+        /// API get user details
+        /// </summary>
+        /// <param name="userId"></param>
+        /// <returns></returns>
         [HttpGet("/api/users/{userId}")]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Get(int userId)
@@ -330,6 +412,11 @@ namespace FripShop.Controllers
             return NotFound();
         }
 
+        /// <summary>
+        /// API get public user details
+        /// </summary>
+        /// <param name="userId"></param>
+        /// <returns></returns>
         [HttpGet("/api/users/{userId}/public")]
         public async Task<ActionResult> GetPublic(int userId)
         {
@@ -346,6 +433,11 @@ namespace FripShop.Controllers
             return NotFound();
         }
 
+        /// <summary>
+        /// API Edit user
+        /// </summary>
+        /// <param name="userModel"></param>
+        /// <returns></returns>
         [HttpPost("/api/users/editUser")]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Edit([FromBody] DTOUserEdition userModel)
@@ -378,6 +470,11 @@ namespace FripShop.Controllers
             return BadRequest();
         }
 
+        /// <summary>
+        /// API Delete user
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [HttpPost("/api/users/delete")]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Delete([FromBody] long id)
@@ -396,6 +493,11 @@ namespace FripShop.Controllers
             return Ok(id);
         }
 
+        /// <summary>
+        /// API Get user articles
+        /// </summary>
+        /// <param name="userId">user id</param>
+        /// <returns></returns>
         [HttpGet("/api/users/{userId}/getArticles")]
         public async Task<ActionResult> GetArticlesFromId(long userId)
         {
@@ -422,7 +524,10 @@ namespace FripShop.Controllers
         }
 
 
-
+        /// <summary>
+        /// Note a user
+        /// </summary>
+        /// <returns></returns>
         [Authorize]
         [HttpPost]
         public async Task<IActionResult> NoteUser()
@@ -490,7 +595,6 @@ namespace FripShop.Controllers
             return RedirectToAction("secondPageManager", new { CurrentarticleId = articleId, sellername = SellerName });
         }
 
-
         public async Task<IActionResult> secondPageManager(long CurrentarticleId, string sellername)
         {
             var email = HttpContext.User.Identity.Name;
@@ -541,8 +645,12 @@ namespace FripShop.Controllers
             return View("Profile_secondPage");
         }
 
-
-
+        /// <summary>
+        /// Compute note average
+        /// </summary>
+        /// <param name="note"></param>
+        /// <param name="nbNote"></param>
+        /// <returns></returns>
         public double FindNoteAverage(double note, double nbNote)
         {
             double val;
