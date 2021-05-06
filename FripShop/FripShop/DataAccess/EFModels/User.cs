@@ -28,6 +28,7 @@ namespace FripShop.DataAccess.EFModels
         public string Address { get; set; }
         public string Gender { get; set; }
         public double Note { get; set; }
+        public long NbNotes { get; set; }
 
         public virtual ICollection<Article> Articles { get; set; }
         public virtual ICollection<Cart> Carts { get; set; }

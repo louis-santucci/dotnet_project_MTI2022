@@ -194,6 +194,10 @@ namespace FripShop.DataAccess.EFModels
                     .IsRequired()
                     .HasMaxLength(50)
                     .HasColumnName("userName");
+
+                entity.Property(e => e.NbNotes)
+                    .HasDefaultValue(0)
+                    .HasColumnName("nbNote");
             });
 
             OnModelCreatingPartial(modelBuilder);

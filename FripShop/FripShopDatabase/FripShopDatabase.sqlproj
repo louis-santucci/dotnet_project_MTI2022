@@ -62,7 +62,6 @@
   <ItemGroup>
     <Build Include="dbo\Tables\User.sql" />
     <Build Include="dbo\Tables\Transaction.sql" />
-    <Build Include="dbo\Tables\Rating.sql" />
     <Build Include="dbo\Tables\Cart.sql" />
     <Build Include="dbo\Tables\Article.sql" />
   </ItemGroup>
