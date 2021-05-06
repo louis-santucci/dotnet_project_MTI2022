@@ -184,7 +184,9 @@ namespace FripShop.Controllers
                     if (_userRepo.GetUserByUserName(userModel.UserName) != null)
                         return BadRequest(userModel);
                     userModel.Password = HashPassword(userModel.Password);
-                    var result = await _userRepo.Insert(DtoUserEditionToDtoUser(userModel));
+                    var newUser = DtoUserEditionToDtoUser(userModel);
+                    newUser.NbNotes = 0;
+                    var result = await _userRepo.Insert(newUser);
                     if (result != null)
                         return View("Success");
                 }

@@ -25,7 +25,6 @@ namespace FripShop.DTO
 
         public double Note { get; set; }
 
-        [NotMapped]
-        public double NbNoteReceived { get; set; }
+        public long NbNotes { get; set; }
     }
 }
