@@ -48,7 +48,7 @@ namespace FripShop.Controllers
             double total = 0;
             foreach(var elem in cart)
             {
-                var article = await _articleRepo.GetArticleFromId(elem.ArticleId);
+                var article = await _articleRepo.GetById(elem.ArticleId);
                 list.Add(article);
                 total += article.Price;
             }
@@ -86,7 +86,7 @@ namespace FripShop.Controllers
             var list = new List<DTOArticle>();
             foreach (var elem in cart)
             {
-                var curr = await _articleRepo.GetArticleFromId(elem.ArticleId);
+                var curr = await _articleRepo.GetById(elem.ArticleId);
                 if (curr.Id != articleId)
                 {
                     list.Add(curr);
@@ -205,7 +205,7 @@ namespace FripShop.Controllers
                 var list = new List<DTOArticle>();
                 foreach (var elem in cart)
                 {
-                    var curr = await _articleRepo.GetArticleFromId(elem.ArticleId);
+                    var curr = await _articleRepo.GetById(elem.ArticleId);
                     list.Add(curr);
                     if (curr != null)
                     {

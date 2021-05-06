@@ -86,7 +86,7 @@ namespace FripShop.Controllers
             foreach (var transaction in userTransactions)
             {
                 var toInsert = new DTOArticle();
-                var article = await _articleRepo.GetArticleFromId(transaction.ArticleId);
+                var article = await _articleRepo.GetById(transaction.ArticleId);
                 toInsert.Name = article.Name;
                 toInsert.State = article.State;
                 toInsert.Id = article.Id;
@@ -433,7 +433,7 @@ namespace FripShop.Controllers
             foreach (var transaction in BuyerTransactions)
             {
                 var toInsert = new DTOArticle();
-                var currentArticle = await _articleRepo.GetArticleFromId(transaction.ArticleId);
+                var currentArticle = await _articleRepo.GetById(transaction.ArticleId);
                 toInsert.Name = currentArticle.Name;
                 toInsert.State = currentArticle.State;
                 toInsert.Id = currentArticle.Id;
@@ -496,7 +496,7 @@ namespace FripShop.Controllers
             foreach (var transaction in BuyerTransactions)
             {
                 var toInsert = new DTOArticle();
-                var currentArticle = await _articleRepo.GetArticleFromId(transaction.ArticleId);
+                var currentArticle = await _articleRepo.GetById(transaction.ArticleId);
                 toInsert.Name = currentArticle.Name;
                 toInsert.State = currentArticle.State;
                 toInsert.Id = currentArticle.Id;
