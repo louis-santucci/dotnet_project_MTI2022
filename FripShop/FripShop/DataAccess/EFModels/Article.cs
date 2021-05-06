@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
+using AutoMapper;
 
 #nullable disable
 
@@ -32,8 +34,11 @@ namespace FripShop.DataAccess.EFModels
         public int Condition { get; set; }
         public DateTime CreatedAt { get; set; }
 
+        [IgnoreMap]
         public virtual User Seller { get; set; }
+        [IgnoreMap]
         public virtual ICollection<Cart> Carts { get; set; }
+        [IgnoreMap]
         public virtual ICollection<Transaction> Transactions { get; set; }
     }
 }

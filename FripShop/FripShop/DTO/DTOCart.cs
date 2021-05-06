@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace FripShop.DTO
 {
@@ -13,7 +14,9 @@ namespace FripShop.DTO
         public long ArticleId { get; set; }
         public int Quantity { get; set; }
 
+        [NotMapped]
         public virtual DTOArticle Article { get; set; }
+        [NotMapped]
         public virtual DTOUserPublic Buyer { get; set; }
     }
 }
