@@ -173,11 +173,12 @@ namespace UnitTestFripShop.UserTests
 
         public readonly IUserRepo _mockRepo;
 
-        public UserMockRepo()
+        public UserMockRepo(List<User> users = null)
         {
+            if (users != null)
+                _usersMockList = users;
+
             var mockRepo = new Mock<IUserRepo>();
-
-
 
             // Mocks the function Get()
             mockRepo.Setup(userRepo => userRepo.Get("")).ReturnsAsync(DBOTODTOList(_usersMockList));
@@ -185,7 +186,9 @@ namespace UnitTestFripShop.UserTests
             // Mocks the function Insert()
             mockRepo.Setup(userRepo => userRepo.Insert(It.IsAny<DTOUser>())).ReturnsAsync((DTOUser userModel) =>
             {
-                var max = Math.Max(_usersMockList.Max(c => c.Id) + 1, _usersMockList.Max(c => c.Id));
+                long max = 1;
+                if (_usersMockList.Count != 0)
+                    max = Math.Max(_usersMockList.Max(c => c.Id) + 1, _usersMockList.Max(c => c.Id));
                 var user = DTOToDBO(userModel);
                 user.Id = max;
                 var users = _mockRepo.Get();
