@@ -29,5 +29,20 @@ namespace FripShop.DataAccess
                 return null;
             }
         }
+
+        public async Task<DTOArticle> GetArticleById(long articleId)
+        {
+            try
+            {
+                var test =  _context.Articles.Where(a => a.Id == articleId).FirstOrDefault();
+                return _mapper.Map<DTOArticle>(test);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError($"REPOSITORY Cart -- GetCartItemByArticleId() -- Error : ", ex.Message);
+                return null;
+            }
+        }
+
     }
 }

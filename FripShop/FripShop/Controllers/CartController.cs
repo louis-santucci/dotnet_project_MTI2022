@@ -203,20 +203,22 @@ namespace FripShop.Controllers
                 var user = _userRepo.GetUserByEmail(email);
                 var cart = await GetCurrentUserCart();
                 var list = new List<DTOArticle>();
+             
+
                 foreach (var elem in cart)
                 {
-                    var curr = await _articleRepo.GetById(elem.ArticleId);
+                    var curr= await _articleRepo.GetArticleById(elem.ArticleId);
                     list.Add(curr);
                     if (curr != null)
                     {
                         curr.State = "sold";
-                        var test = _articleRepo.Update(curr);
+                        var test =  await _articleRepo.Update(curr);
                         DTOTransaction CurrTrans = new DTOTransaction();
                         CurrTrans.ArticleId = curr.Id;
                         CurrTrans.BuyerId = user.Id;
                         CurrTrans.TransactionState = "sold";
                         CurrTrans.LastUpdateAt = DateTime.Today;
-                        var adding = _transactionRepo.Insert(CurrTrans);
+                        var adding = await _transactionRepo.Insert(CurrTrans);
                     }
                     
                 }
