@@ -1,0 +1,99 @@
+﻿<div style="padding-top:15px">
+    <h3>Article en cours de modification</h3>
+    <div class="card-columns">
+        @{
+            if (ViewData["ArticleToModify"] != null)
+            {
+                var item = ViewData["ArticleToModify"] as FripShop.DTO.DTOArticle;
+
+                <div class="card">
+                    <img class="card-img-top" src="{ @item.ImageSource }" alt="Card image cap">
+                    <div class="card-body">
+                        <h5 class="card-title">@item.Name</h5>
+                        <p class="card-text"><small>Marque : </small><small class="text-muted">@item.Brand</small></p>
+                        <p class="card-text"><small>Condition : </small><small class="text-muted">@item.Condition / 5</small></p>
+                        <p class="card-text">@item.Description</p>
+                    </div>
+                    <div class="card-footer text-center">
+                        <span class="text-success font-weight-bolder">@item.Price €</span>
+                    </div>
+                </div>
+
+                
+            }
+        }
+    </div>
+    <div>
+        <h3>Entrez les informations de l'article à modifier</h3>
+        <h3 style="color:red;">Attention ! L'image de l'article n'est pas modifiable</h3>
+        @using (Html.BeginForm("EditArticle", "Article", FormMethod.Post, new { enctype = "multipart/form-data" }))
+        {
+            @Html.AntiForgeryToken()
+    <div class="form-horizontal">
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+        <div class="form-group px-3 row">
+            <label class="control-label col-md-2">Nom de l'article</label>
+            <div class="col-md-10">
+                @Html.Editor("name", ViewData["name"])
+                @Html.ValidationMessage("name", new { @class = "text-danger" })
+                @Html.Hidden("id", ViewData["id"]);
+            </div>
+        </div>
+
+        <div class="form-group px-3 row">
+            <label class="control-label col-md-2">Sexe</label>
+            <div class="col-md-10">
+                @Html.Editor("sex", ViewData["sex"])
+                @Html.ValidationMessage("sex", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group px-3 row">
+            <label class="control-label col-2">Prix (en €)</label>
+            <div class="col-4">
+                @Html.Editor("price", ViewData["price"])
+                @Html.ValidationMessage("price", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group row px-3">
+            <label class="control-label col-md-2">Catégorie</label>
+            <div class="col-md-10">
+                @Html.Editor("category", ViewData["category"])
+                @Html.ValidationMessage("category", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group row px-3">
+            <label class="control-label col-md-2">Condition</label>
+            <div class="col-md-10">
+                @Html.Editor("condition", ViewData["condition"])
+                @Html.ValidationMessage("condition", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group row px-3">
+            <label class="control-label col-md-2">Marque</label>
+            <div class="col-md-10">
+                @Html.Editor("brand", ViewData["brand"])
+                @Html.ValidationMessage("brand", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group row px-3">
+            <label class="control-label col-md-2">Description</label>
+            <div class="col-md-10">
+                @Html.Editor("description", ViewData["description"])
+                @Html.ValidationMessage("description", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="mx-3 mb-0">
+            <button type="submit" value="EditArticle" id="Submit" class="btn btn-success btn-block">Modifier</button>
+        </div>
+    </div>
+    }
+    </div>
+</div>

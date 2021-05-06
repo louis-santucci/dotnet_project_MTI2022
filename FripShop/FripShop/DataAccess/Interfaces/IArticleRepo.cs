@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 using FripShop.DataAccess.EFModels;
 using FripShop.DTO;
 
@@ -22,5 +23,8 @@ namespace FripShop.DataAccess.Interfaces
         /// <param name="articleId">The ID of the wanted DTO article</param>
         /// <returns></returns>
         public Task<DTOArticle> GetArticleFromId(long articleId);
+
+
+        public Task<IEnumerable<DTOArticle>> GetAllArticlesFromUserId(long userId);
     }
 }

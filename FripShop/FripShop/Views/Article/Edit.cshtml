@@ -1,0 +1,30 @@
+﻿
+<div style="padding-top:15px">
+    <h3>Article en vente actuellement</h3>
+    <h3>Cliquer sur "Modifier Article" sous l'article correspondant :</h3>
+    <div class="card-columns">
+        @{
+            if (ViewData["UserArticleList"] != null)
+            {
+                foreach (var item in @ViewData["UserArticleList"] as IEnumerable<FripShop.DTO.DTOArticle>)
+                {
+                <div class="card">
+                    <img class="card-img-top" src="{ @item.ImageSource }" alt="Card image cap">
+                    <div class="card-body">
+                        <h5 class="card-title">@item.Name</h5>
+                        <p class="card-text"><small>Marque : </small><small class="text-muted">@item.Brand</small></p>
+                        <p class="card-text"><small>Condition : </small><small class="text-muted">@item.Condition / 5</small></p>
+                        <p class="card-text">@item.Description</p>
+                    </div>
+                    <div class="card-footer text-center">
+                        <span class="text-success font-weight-bolder">@item.Price €</span>
+                    </div>
+                    <a class="nav-link text-dark" asp-area="" asp-controller="Article" asp-action="ModifyArticle" asp-route-articleId="@item.Id">Modifier Article</a>
+                </div>
+
+                }
+            }
+        }
+    </div>
+ 
+</div>

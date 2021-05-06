@@ -42,5 +42,18 @@ namespace FripShop.DataAccess
                 return null;
             }
         }
+
+        public async Task<IEnumerable<DTOArticle>> GetAllArticlesFromUserId(long userId)
+        {
+            try
+            {
+                return _mapper.Map<IEnumerable<DTOArticle>>(_context.Articles.Where(art => art.SellerId == userId));
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError($"REPOSITORY Article -- GetArticleFromId() -- Error : ", ex.Message);
+                return null;
+            }
+        }
     }
 }

@@ -245,6 +245,75 @@ namespace FripShop.Controllers
             return View("Create");
         }
 
+        [Authorize]
+        [HttpGet]
+        public async Task<ActionResult> EditArticleView(DTOArticleEdition article)
+        {
+            var email = HttpContext.User.Identity.Name;
+            var user = _userRepo.GetUserByEmail(email);
+
+            var userArticleList = await _articleRepo.GetAllArticlesFromUserId(user.Id);
+
+            ViewData["UserArticleList"] = userArticleList;
+        
+
+            return View("Edit");
+        }
+
+        [Authorize]
+        public async Task<ActionResult> ModifyArticle(long articleId)
+        {
+            var articleToModify = await _articleRepo.GetArticleFromId(articleId);
+
+            ViewData["ArticleToModify"] = articleToModify;
+            ViewData["imageSource"] = articleToModify.ImageSource;
+            ViewData["state"] = articleToModify.State;
+            ViewData["name"] = articleToModify.Name;
+            ViewData["price"] = articleToModify.Price;
+            ViewData["description"] = articleToModify.Description;
+            ViewData["category"] = articleToModify.Category;
+            ViewData["sex"] = articleToModify.Sex;
+            ViewData["brand"] = articleToModify.Brand;
+            ViewData["condition"] = articleToModify.Condition;
+            ViewData["id"] = articleToModify.Id;
+
+            return View("Edit_secondPage");
+        }
+
+        [Authorize]
+        public async Task<ActionResult> EditArticle()
+        {
+            var articleId = Request.Form["id"].ToString();
+            var articleToModify = await _articleRepo.GetArticleFromId((long)Convert.ToDouble(articleId));
+            ViewData["ArticleToModify"] = articleToModify;
+
+            var name = Request.Form["name"].ToString();
+        //    var imageSource = Request.Form["imageSource"].ToString();
+            var sex = Request.Form["sex"].ToString();
+            var price = Request.Form["price"].ToString();
+            var category = Request.Form["category"].ToString();
+            var condition = Request.Form["condition"].ToString();
+            var brand = Request.Form["brand"].ToString();
+            var description = Request.Form["description"].ToString();
+
+            articleToModify.Name = name;
+    //        articleToModify.ImageSource = articleToModify.ImageSource;
+            articleToModify.Sex = sex;
+            articleToModify.Price = Convert.ToDouble(price);
+            articleToModify.Category = category;
+            articleToModify.Condition = Convert.ToInt32(condition);
+            articleToModify.Brand = brand;
+            articleToModify.Description = description;
+
+            var test = _articleRepo.Update(articleToModify);
+            if (test == null)
+            {
+                View();
+            }
+
+            return View("Edit_thirdpage");
+        }
+
         public string GetImage(string path)
         {
             var full_path = Path.Combine("~/wwwroot/ArticleImages/", path);
