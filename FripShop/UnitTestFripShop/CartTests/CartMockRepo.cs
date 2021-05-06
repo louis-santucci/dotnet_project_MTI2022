@@ -196,6 +196,8 @@ namespace UnitTestFripShop.CartTests
 
                 return true;
             });
+
+            this._mockRepo = mockRepo.Object;
         }
     }
 }
