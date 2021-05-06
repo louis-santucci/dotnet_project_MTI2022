@@ -79,6 +79,8 @@ namespace FripShop.Controllers
             userToReturn.UserName = user.UserName;
             userToReturn.Address = user.Address;
             userToReturn.Gender = user.Gender;
+            userToReturn.Note = user.Note;
+            userToReturn.NbNotes = user.NbNotes;
 
             var transactionList = new List<DTOArticle>();
 
