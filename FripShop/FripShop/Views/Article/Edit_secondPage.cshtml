@@ -45,9 +45,9 @@
         <div class="form-group px-3 row">
             <label class="control-label col-md-2">Sexe</label>
             <div class="col-md-10">
-                @Html.RadioButton("sex", "man", ViewData["sex"] == "man" ? new { @checked = "checked" } : null) @Html.Label("Homme")
-                @Html.RadioButton("sex", "woman", ViewData["sex"] == "woman" ? new { @checked = "checked" } : null) @Html.Label("Femme")
-                @Html.RadioButton("sex", "unisex", ViewData["sex"] == "unisexe" ? new { @checked = "checked" } : null) @Html.Label("Unisexe")
+                @Html.RadioButton("sex", "man", (string)ViewData["sex"] == "man" ? new { @checked = "checked" } : null) @Html.Label("Homme")
+                @Html.RadioButton("sex", "woman", (string)ViewData["sex"] == "woman" ? new { @checked = "checked" } : null) @Html.Label("Femme")
+                @Html.RadioButton("sex", "unisex", (string)ViewData["sex"] == "unisexe" ? new { @checked = "checked" } : null) @Html.Label("Unisexe")
             </div>
         </div>
 
@@ -62,27 +62,27 @@
         <div class="form-group row px-3">
             <label class="control-label col-md-2">Catégorie</label>
             <div class="col-md-10">
-                @Html.RadioButton("category", "top", ViewData["category"] == "top" ? new { @checked = "checked" } : null) @Html.Label("top")
-                @Html.RadioButton("category", "pants", ViewData["category"] == "pants" ? new { @checked = "checked" } : null) @Html.Label("pants")
-                @Html.RadioButton("category", "shoes", ViewData["category"] == "shoes" ? new { @checked = "checked" } : null) @Html.Label("shoes")
-                @Html.RadioButton("category", "accessories", ViewData["category"] == "accessories" ? new { @checked = "checked" } : null) @Html.Label("accessories")
+                @Html.RadioButton("category", "top", (string)ViewData["category"] == "top" ? new { @checked = "checked" } : null) @Html.Label("top")
+                @Html.RadioButton("category", "pants", (string)ViewData["category"] == "pants" ? new { @checked = "checked" } : null) @Html.Label("pants")
+                @Html.RadioButton("category", "shoes", (string)ViewData["category"] == "shoes" ? new { @checked = "checked" } : null) @Html.Label("shoes")
+                @Html.RadioButton("category", "accessories", (string)ViewData["category"] == "accessories" ? new { @checked = "checked" } : null) @Html.Label("accessories")
             </div>
         </div>
 
         <div class="form-group row px-3">
             <label class="control-label col-md-2">Condition</label>
             <div class="col-md-10">
-                @Html.RadioButton("condition", "0", ViewData["condition"] == "0" ? new { @checked = "checked" } : null) @Html.Label("0")
-                @Html.RadioButton("condition", "1", ViewData["condition"] == "1" ? new { @checked = "checked" } : null) @Html.Label("1")
-                @Html.RadioButton("condition", "2", ViewData["condition"] == "2" ? new { @checked = "checked" } : null) @Html.Label("2")
-                @Html.RadioButton("condition", "3", ViewData["condition"] == "3" ? new { @checked = "checked" } : null) @Html.Label("3")
-                @Html.RadioButton("condition", "4", ViewData["condition"] == "4" ? new { @checked = "checked" } : null) @Html.Label("4")
-                @Html.RadioButton("condition", "5", ViewData["condition"] == "5" ? new { @checked = "checked" } : null) @Html.Label("5")
-                @Html.RadioButton("condition", "6", ViewData["condition"] == "6" ? new { @checked = "checked" } : null) @Html.Label("6")
-                @Html.RadioButton("condition", "7", ViewData["condition"] == "7" ? new { @checked = "checked" } : null) @Html.Label("7")
-                @Html.RadioButton("condition", "8", ViewData["condition"] == "8" ? new { @checked = "checked" } : null) @Html.Label("8")
-                @Html.RadioButton("condition", "9", ViewData["condition"] == "9" ? new { @checked = "checked" } : null) @Html.Label("9")
-                @Html.RadioButton("condition", "10", ViewData["condition"] == "10" ? new { @checked = "checked" } : null) @Html.Label("10")
+                @Html.RadioButton("condition", "0", (string)ViewData["condition"] == "0" ? new { @checked = "checked" } : null) @Html.Label("0")
+                @Html.RadioButton("condition", "1", (string)ViewData["condition"] == "1" ? new { @checked = "checked" } : null) @Html.Label("1")
+                @Html.RadioButton("condition", "2", (string)ViewData["condition"] == "2" ? new { @checked = "checked" } : null) @Html.Label("2")
+                @Html.RadioButton("condition", "3", (string)ViewData["condition"] == "3" ? new { @checked = "checked" } : null) @Html.Label("3")
+                @Html.RadioButton("condition", "4", (string)ViewData["condition"] == "4" ? new { @checked = "checked" } : null) @Html.Label("4")
+                @Html.RadioButton("condition", "5", (string)ViewData["condition"] == "5" ? new { @checked = "checked" } : null) @Html.Label("5")
+                @Html.RadioButton("condition", "6", (string)ViewData["condition"] == "6" ? new { @checked = "checked" } : null) @Html.Label("6")
+                @Html.RadioButton("condition", "7", (string)ViewData["condition"] == "7" ? new { @checked = "checked" } : null) @Html.Label("7")
+                @Html.RadioButton("condition", "8", (string)ViewData["condition"] == "8" ? new { @checked = "checked" } : null) @Html.Label("8")
+                @Html.RadioButton("condition", "9", (string)ViewData["condition"] == "9" ? new { @checked = "checked" } : null) @Html.Label("9")
+                @Html.RadioButton("condition", "10", (string)ViewData["condition"] == "10" ? new { @checked = "checked" } : null) @Html.Label("10")
             </div>
         </div>
 
