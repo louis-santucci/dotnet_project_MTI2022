@@ -19,6 +19,12 @@ namespace FripShop.Views.Article
         private readonly DataAccess.Interfaces.IArticleRepo _articleRepo;
         private readonly DataAccess.Interfaces.IUserRepo _userRepo;
 
+        /// <summary>
+        /// IndexModel constructor
+        /// </summary>
+        /// <param name="logger"></param>
+        /// <param name="articleRepo"></param>
+        /// <param name="userRepo"></param>
         public IndexModel(ILogger<IndexModel> logger, DataAccess.Interfaces.IArticleRepo articleRepo, IUserRepo userRepo)
         {
             _logger = logger;

@@ -15,8 +15,19 @@ namespace FripShop.DataAccess
     /// </summary>
     public class ArticleRepository : Repository<Article, DTOArticle>, IArticleRepo
     {
+        /// <summary>
+        /// Repository constructor
+        /// </summary>
+        /// <param name="context"></param>
+        /// <param name="logger"></param>
+        /// <param name="mapper"></param>
         public ArticleRepository(FripShopContext context, ILogger<ArticleRepository> logger, IMapper mapper) : base(context, logger, mapper) {}
 
+        /// <summary>
+        /// Get user from user id
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns>Concerned id</returns>
         public DTOUser GetUserFromId(long id)
         {
             try
@@ -29,5 +40,25 @@ namespace FripShop.DataAccess
                 return null;
             }
         }
+
+        /// <summary>
+        /// Gets an Article by the ArticleId
+        /// </summary>
+        /// <param name="articleId"></param>
+        /// <returns>Concerned Article </returns>
+        public async Task<DTOArticle> GetArticleById(long articleId)
+        {
+            try
+            {
+                var test =  _context.Articles.Where(a => a.Id == articleId).FirstOrDefault();
+                return _mapper.Map<DTOArticle>(test);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError($"REPOSITORY Cart -- GetCartItemByArticleId() -- Error : ", ex.Message);
+                return null;
+            }
+        }
+
     }
 }

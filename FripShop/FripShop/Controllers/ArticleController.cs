@@ -33,6 +33,20 @@ namespace FripShop.Controllers
             _logger = logger;
         }
 
+        /// <summary>
+        /// Index of /Article/, parameters are URL parameters (ex ?gender=man)
+        /// </summary>
+        /// <param name="gender"></param>
+        /// <param name="category"></param>
+        /// <param name="minPrice"></param>
+        /// <param name="maxPrice"></param>
+        /// <param name="conditionMin"></param>
+        /// <param name="sortBy"></param>
+        /// <param name="ascending"></param>
+        /// <param name="search"></param>
+        /// <param name="page"></param>
+        /// <param name="pageSize"></param>
+        /// <returns>Article list view</returns>
         public async Task<ActionResult> Index(string gender = null, string category = null,
                                                 string minPrice = null, string maxPrice = null, string conditionMin = null,
                                                 string sortBy = null, string ascending = null, string search = null,
@@ -101,6 +115,7 @@ namespace FripShop.Controllers
 
         /// Controller functions
 
+        /// Comparison enum
         public enum Comparison
         {
             Date,
@@ -209,6 +224,11 @@ namespace FripShop.Controllers
             return res;
         }
 
+        /// <summary>
+        /// Converter
+        /// </summary>
+        /// <param name="userModel"></param>
+        /// <returns></returns>
         public static DTOUserPublic DtoUserToDtoUserPublic(DTOUser userModel)
         {
             DTOUserPublic userPublic = new DTOUserPublic();
@@ -220,6 +240,12 @@ namespace FripShop.Controllers
             return userPublic;
         }
 
+        /// <summary>
+        /// converter
+        /// </summary>
+        /// <param name="article"></param>
+        /// <param name="user"></param>
+        /// <returns></returns>
         public static DTOArticle DTOArticleEditionToArticle(DTOArticleEdition article, DTOUser user)
         {
             var newArticle = new DTOArticle();
@@ -238,6 +264,10 @@ namespace FripShop.Controllers
             return newArticle;
         }
 
+        /// <summary>
+        /// Get the article creation view
+        /// </summary>
+        /// <returns></returns>
         [Authorize]
         [HttpGet]
         public async Task<ActionResult> CreateArticleView()
@@ -245,6 +275,11 @@ namespace FripShop.Controllers
             return View("Create");
         }
 
+        /// <summary>
+        /// get the article edition view
+        /// </summary>
+        /// <param name="article"></param>
+        /// <returns></returns>
         [Authorize]
         [HttpGet]
         public async Task<ActionResult> EditArticleView(DTOArticleEdition article)
@@ -260,6 +295,11 @@ namespace FripShop.Controllers
             return View("Edit");
         }
 
+        /// <summary>
+        /// get edition article second page
+        /// </summary>
+        /// <param name="articleId"></param>
+        /// <returns></returns>
         [Authorize]
         public async Task<ActionResult> ModifyArticle(long articleId)
         {
@@ -280,6 +320,11 @@ namespace FripShop.Controllers
             return View("Edit_secondPage");
         }
 
+        /// <summary>
+        /// get edition article third page
+        /// </summary>
+        /// <param name="articleId"></param>
+        /// <returns></returns>
         [Authorize]
         public async Task<ActionResult> EditArticle()
         {
@@ -314,6 +359,11 @@ namespace FripShop.Controllers
             return View("Edit_thirdpage");
         }
 
+        /// <summary>
+        /// get the image
+        /// </summary>
+        /// <param name="path"></param>
+        /// <returns></returns>
         public string GetImage(string path)
         {
             var full_path = Path.Combine("~/wwwroot/ArticleImages/", path);
@@ -326,7 +376,10 @@ namespace FripShop.Controllers
             return "";
         }
 
-        /// API Calls
+        /// <summary>
+        /// API Get all articles
+        /// </summary>
+        /// <returns></returns>
         [HttpGet("/api/articles/")]
         public async Task<ActionResult> GetAll()
         {
@@ -347,6 +400,11 @@ namespace FripShop.Controllers
             }
         }
     
+        /// <summary>
+        /// API Get article details
+        /// </summary>
+        /// <param name="articleId"></param>
+        /// <returns></returns>
         [HttpGet("/api/articles/{articleId}")]
         public async Task<ActionResult> GetId(long articleId)
         {
@@ -362,6 +420,11 @@ namespace FripShop.Controllers
             return NotFound();
         }
 
+        /// <summary>
+        /// API Get article user
+        /// </summary>
+        /// <param name="articleId"></param>
+        /// <returns></returns>
         [HttpGet("/api/articles/{articleId}/getUser")]
         public ActionResult GetUserFromArticle(long articleId)
         {
@@ -371,6 +434,11 @@ namespace FripShop.Controllers
             return NotFound();
         }
 
+        /// <summary>
+        /// API Create article
+        /// </summary>
+        /// <param name="article"></param>
+        /// <returns></returns>
         [Authorize]
         [HttpPost]
         public async Task<ActionResult> CreateArticle(DTOArticleEdition article)

@@ -13,6 +13,9 @@ using System.Web;
 
 namespace FripShop.Controllers
 {
+    /// <summary>
+    /// Controller for the cart
+    /// </summary>
     public class CartController : Controller
     {
         private readonly IArticleRepo _articleRepo;
@@ -21,6 +24,14 @@ namespace FripShop.Controllers
         private readonly ICartRepo _cartRepo;
         private readonly ITransactionRepo _transactionRepo;
 
+        /// <summary>
+        /// Controller constructor
+        /// </summary>
+        /// <param name="logger"></param>
+        /// <param name="articleRepo"></param>
+        /// <param name="userRepo"></param>
+        /// <param name="cartRepo"></param>
+        /// <param name="transactionRepo"></param>
         public CartController(ILogger<UserController> logger, IArticleRepo articleRepo, IUserRepo userRepo, ICartRepo cartRepo, ITransactionRepo transactionRepo)
         {
             this._userRepo = userRepo;
@@ -203,20 +214,22 @@ namespace FripShop.Controllers
                 var user = _userRepo.GetUserByEmail(email);
                 var cart = await GetCurrentUserCart();
                 var list = new List<DTOArticle>();
+             
+
                 foreach (var elem in cart)
                 {
-                    var curr = await _articleRepo.GetById(elem.ArticleId);
+                    var curr= await _articleRepo.GetArticleById(elem.ArticleId);
                     list.Add(curr);
                     if (curr != null)
                     {
                         curr.State = "sold";
-                        var test = _articleRepo.Update(curr);
+                        var test =  await _articleRepo.Update(curr);
                         DTOTransaction CurrTrans = new DTOTransaction();
                         CurrTrans.ArticleId = curr.Id;
                         CurrTrans.BuyerId = user.Id;
                         CurrTrans.TransactionState = "sold";
                         CurrTrans.LastUpdateAt = DateTime.Today;
-                        var adding = _transactionRepo.Insert(CurrTrans);
+                        var adding = await _transactionRepo.Insert(CurrTrans);
                     }
                     
                 }
