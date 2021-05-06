@@ -8,6 +8,9 @@ namespace FripShop.DataAccess
     /// </summary>
     public class AutoMapperProfiles : Profile
     {
+        /// <summary>
+        /// Constructor
+        /// </summary>
         public AutoMapperProfiles()
         {
             CreateMap<DTOArticle, EFModels.Article>();
