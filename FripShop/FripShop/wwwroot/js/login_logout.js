@@ -1,6 +1,6 @@
 ﻿
 function dynamicLogButton() {
-    cookie = document.cookie;
+    var cookie = document.cookie;
     if (cookie != null && cookie != "") {
         var loginButton = document.getElementById("loginButton");
         var registerButton = document.getElementById("registerButton");
@@ -8,7 +8,7 @@ function dynamicLogButton() {
         registerButton.style.display = "none";
 
     } else {
-        var logoutButton = document.getElementById("Submit");
+        var logoutButton = document.getElementById("logout_submit");
         logoutButton.style.display = "none";
     }
 }

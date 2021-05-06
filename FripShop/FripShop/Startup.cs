@@ -28,6 +28,7 @@ namespace FripShop
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            this._connectionString = Configuration.GetConnectionString("FripShop");
             services.AddEntityFrameworkSqlServer()
                 .AddDbContext<DataAccess.EFModels.FripShopContext>(options => options.UseSqlServer(_connectionString));
             services.AddAutoMapper(typeof(DataAccess.AutoMapperProfiles));
