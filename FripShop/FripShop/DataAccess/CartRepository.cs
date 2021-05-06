@@ -55,8 +55,8 @@ namespace FripShop.DataAccess
         {
             try
             {
-                var test = _context.Carts.Where(a => (a.ArticleId == articleId && a.BuyerId == userId)).FirstOrDefault();
-                if (test == null)
+                var test = _context.Carts.Where(a => (a.ArticleId == articleId && a.BuyerId == userId)).ToList();
+                if (test.Count == 0 )
                 {
                     return false;
                 }
