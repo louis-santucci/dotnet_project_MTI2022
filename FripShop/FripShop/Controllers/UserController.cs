@@ -69,12 +69,13 @@ namespace FripShop.Controllers
         }
 
 
-        public async Task<IActionResult> AddArticle(int articleID)
+        public async Task<IActionResult> AddArticle(int articleID, string email = null)
         {
+            if (email == null)
+                email = HttpContext.User.Identity.Name;
             try
             {
                 DTOCart cart = new DTOCart();
-                var email = HttpContext.User.Identity.Name;
                 var user = _userRepo.GetUserByEmail(email);
                 var test = await _cartRepo.UserCartAlreadyContains(articleID, user.Id);
                 if (test == false)
