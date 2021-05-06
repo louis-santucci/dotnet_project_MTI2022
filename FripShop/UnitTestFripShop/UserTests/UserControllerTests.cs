@@ -296,5 +296,107 @@ namespace UnitTestFripShop.UserTests
                 Assert.Fail();
             }
         }
+
+        [TestMethod]
+        public void DeleteNoUser()
+        {
+            var userMockRepo = new UserMockRepo(new List<User>());
+            var articleMockRepo = new ArticleMockRepo();
+            var cartMockRepo = new CartMockRepo();
+            var userController = new UserController(_loggerMock.Object, articleMockRepo._articleRepo, userMockRepo._mockRepo, cartMockRepo._mockRepo, null);
+
+            var preCount = userMockRepo._usersMockList.Count;
+
+            var userGet = userController.Delete(1).Result;
+
+            var postCount = userMockRepo._usersMockList.Count;
+
+            Assert.AreEqual(preCount, postCount);
+
+            try
+            {
+                NotFoundResult res = (NotFoundResult)userGet;
+            }
+            catch
+            {
+                Assert.Fail();
+            }
+        }
+
+        [TestMethod]
+        public void DeleteInexistantUser()
+        {
+            var user = new User
+            {
+                Id = 1,
+                UserName = "username",
+                Email = "user.name@mail.com",
+                Password = "password",
+                Name = "User Name",
+                Address = "1 Address St.",
+                Gender = "man",
+                Note = 10
+            };
+
+            var userMockRepo = new UserMockRepo(new List<User> { user });
+            var articleMockRepo = new ArticleMockRepo();
+            var cartMockRepo = new CartMockRepo();
+            var userController = new UserController(_loggerMock.Object, articleMockRepo._articleRepo, userMockRepo._mockRepo, cartMockRepo._mockRepo, null);
+
+            var preCount = userMockRepo._usersMockList.Count;
+
+            var userGet = userController.Delete(2).Result;
+
+            var postCount = userMockRepo._usersMockList.Count;
+
+            Assert.AreEqual(preCount, postCount);
+
+            try
+            {
+                NotFoundResult res = (NotFoundResult)userGet;
+            }
+            catch
+            {
+                Assert.Fail();
+            }
+        }
+
+        [TestMethod]
+        public void DeleteUser()
+        {
+            var user = new User
+            {
+                Id = 1,
+                UserName = "username",
+                Email = "user.name@mail.com",
+                Password = "password",
+                Name = "User Name",
+                Address = "1 Address St.",
+                Gender = "man",
+                Note = 10
+            };
+
+            var userMockRepo = new UserMockRepo(new List<User> { user });
+            var articleMockRepo = new ArticleMockRepo();
+            var cartMockRepo = new CartMockRepo();
+            var userController = new UserController(_loggerMock.Object, articleMockRepo._articleRepo, userMockRepo._mockRepo, cartMockRepo._mockRepo, null);
+
+            var preCount = userMockRepo._usersMockList.Count;
+
+            var userGet = userController.Delete(1).Result;
+
+            var postCount = userMockRepo._usersMockList.Count;
+
+            Assert.AreEqual(preCount - 1, postCount);
+
+            try
+            {
+                OkObjectResult res = (OkObjectResult)userGet;
+            }
+            catch
+            {
+                Assert.Fail();
+            }
+        }
     }
 }
