@@ -2,4 +2,3 @@ appsettings.json
 appsettings.Development.json
 ArticleImages/
 FripShop.csproj.user
-DataAccess/EFModels/FripShopContext.cs

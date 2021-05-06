@@ -33,7 +33,6 @@ namespace FripShop.DataAccess.EFModels
         public DateTime CreatedAt { get; set; }
 
         public virtual User Seller { get; set; }
-        public virtual Rating Rating { get; set; }
         public virtual ICollection<Cart> Carts { get; set; }
         public virtual ICollection<Transaction> Transactions { get; set; }
     }

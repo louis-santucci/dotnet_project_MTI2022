@@ -17,7 +17,6 @@ namespace FripShop.DataAccess.EFModels
         {
             Articles = new HashSet<Article>();
             Carts = new HashSet<Cart>();
-            Ratings = new HashSet<Rating>();
             Transactions = new HashSet<Transaction>();
         }
 
@@ -32,7 +31,6 @@ namespace FripShop.DataAccess.EFModels
 
         public virtual ICollection<Article> Articles { get; set; }
         public virtual ICollection<Cart> Carts { get; set; }
-        public virtual ICollection<Rating> Ratings { get; set; }
         public virtual ICollection<Transaction> Transactions { get; set; }
     }
 }
