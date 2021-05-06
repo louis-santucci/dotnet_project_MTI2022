@@ -26,6 +26,12 @@ namespace FripShop.DataAccess
         protected ILogger _logger;
         protected IMapper _mapper;
 
+        /// <summary>
+        /// Generic Repository contructor
+        /// </summary>
+        /// <param name="context"></param>
+        /// <param name="logger"></param>
+        /// <param name="mapper"></param>
         public Repository(FripShopContext context, ILogger logger, IMapper mapper)
         {
             _mapper = mapper;
@@ -34,6 +40,11 @@ namespace FripShop.DataAccess
             _set = _context.Set<DbEntity>();
         }
 
+        /// <summary>
+        /// Generic Repository Get
+        /// </summary>
+        /// <param name="includeString"></param>
+        /// <returns></returns>
         public virtual async Task<IEnumerable<ModelEntity>> Get(string includeString = "")
         {
             try
@@ -57,6 +68,11 @@ namespace FripShop.DataAccess
             }
         }
 
+        /// <summary>
+        /// Generic Repository Insert
+        /// </summary>
+        /// <param name="entity"></param>
+        /// <returns></returns>
         public virtual async Task<ModelEntity> Insert(ModelEntity entity)
         {
             DbEntity dbEntity = _mapper.Map<DbEntity>(entity);
@@ -75,6 +91,11 @@ namespace FripShop.DataAccess
 
         }
 
+        /// <summary>
+        /// Generic Repository Update
+        /// </summary>
+        /// <param name="entity"></param>
+        /// <returns></returns>
         public virtual async Task<ModelEntity> Update(ModelEntity entity)
         {
             DbEntity dbEntity = _set.Find(entity.Id);
@@ -103,6 +124,11 @@ namespace FripShop.DataAccess
 
         }
 
+        /// <summary>
+        /// Generic Repository Delete
+        /// </summary>
+        /// <param name="idEntity"></param>
+        /// <returns></returns>
         public virtual async Task<bool> Delete(long idEntity)
         {
             DbEntity dbEntity = _set.Find(idEntity);
@@ -125,6 +151,11 @@ namespace FripShop.DataAccess
             }
         }
 
+        /// <summary>
+        /// Generic Repository Get by id
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         public async Task<ModelEntity> GetById(long id)
         {
             try
@@ -142,6 +173,10 @@ namespace FripShop.DataAccess
             return null;
         }
 
+        /// <summary>
+        /// Generic Repository Count
+        /// </summary>
+        /// <returns></returns>
         public Task<int> Count()
         {
             try
