@@ -595,6 +595,12 @@ namespace FripShop.Controllers
             return RedirectToAction("secondPageManager", new { CurrentarticleId = articleId, sellername = SellerName });
         }
 
+        /// <summary>
+        /// Show on a View which transaction have been noted
+        /// </summary>
+        /// <param name="CurrentarticleId"></param>
+        /// <param name="sellername"></param>
+        /// <returns>View with updated transactions note status</returns>
         public async Task<IActionResult> secondPageManager(long CurrentarticleId, string sellername)
         {
             var email = HttpContext.User.Identity.Name;

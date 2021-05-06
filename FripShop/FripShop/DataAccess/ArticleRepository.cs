@@ -27,7 +27,7 @@ namespace FripShop.DataAccess
         /// Get user from user id
         /// </summary>
         /// <param name="id"></param>
-        /// <returns></returns>
+        /// <returns>Concerned id</returns>
         public DTOUser GetUserFromId(long id)
         {
             try
@@ -41,6 +41,11 @@ namespace FripShop.DataAccess
             }
         }
 
+        /// <summary>
+        /// Gets an Article by the ArticleId
+        /// </summary>
+        /// <param name="articleId"></param>
+        /// <returns>Concerned Article </returns>
         public async Task<DTOArticle> GetArticleById(long articleId)
         {
             try
