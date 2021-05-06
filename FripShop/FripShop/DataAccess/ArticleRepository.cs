@@ -15,8 +15,19 @@ namespace FripShop.DataAccess
     /// </summary>
     public class ArticleRepository : Repository<Article, DTOArticle>, IArticleRepo
     {
+        /// <summary>
+        /// Repository constructor
+        /// </summary>
+        /// <param name="context"></param>
+        /// <param name="logger"></param>
+        /// <param name="mapper"></param>
         public ArticleRepository(FripShopContext context, ILogger<ArticleRepository> logger, IMapper mapper) : base(context, logger, mapper) {}
 
+        /// <summary>
+        /// Get user from user id
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         public DTOUser GetUserFromId(long id)
         {
             try
