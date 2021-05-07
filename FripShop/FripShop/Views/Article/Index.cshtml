@@ -45,7 +45,10 @@
         @while (j < 3 && i < articles.Count())
         {
             <div class="card mt-3 mx-2" style="max-width: 22.4rem;">
-                <img class="card-img-top" src="@articles[i].ImageSource" alt="Card image cap">
+                <div style="background: var(--secondary); text-align: center; color: white;">
+                    <img class="card-img-top" src="@articles[i].ImageSource" alt="Pas d'image">
+                </div>
+
                 <div class="card-body">
                     <h5 class="card-title">@articles[i].Name</h5>
                     <p class="card-text"><small>Marque : </small><small class="text-muted">@articles[i].Brand</small></p>
