@@ -391,25 +391,34 @@ namespace FripShop.Controllers
         }
 
         /// <summary>
-        /// API get user details
+        /// API get public users
         /// </summary>
         /// <param name="userId"></param>
         /// <returns></returns>
-        [HttpGet("/api/users/{userId}")]
-        [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Get(int userId)
+        [HttpGet("/api/users/")]
+        public async Task<ActionResult> GetPublicUsers(int userId)
         {
+            List<DTOUserPublic> publicUsers = new List<DTOUserPublic>();
             try
             {
-                var user = await _userRepo.GetById(userId);
-                if (user != null)
-                    return Ok(user);
+                var users = await _userRepo.Get();
+                if (users != null)
+                {
+                    foreach (var user in users)
+                    {
+                        publicUsers.Add(DtoUserToDtoUserPublic(user));
+                    }
+                }
+                return Ok(publicUsers);
             }
             catch (Exception ex)
             {
-                _logger.LogError("CONTROLLER USER -- Get() -- Error : ", ex);
+                _logger.LogError("CONTROLLER USER -- GetPublic() -- Error : ", ex);
             }
-            return NotFound();
+            return NotFound(new
+            {
+                error = "User not found"
+            });
         }
 
         /// <summary>
@@ -417,8 +426,8 @@ namespace FripShop.Controllers
         /// </summary>
         /// <param name="userId"></param>
         /// <returns></returns>
-        [HttpGet("/api/users/{userId}/public")]
-        public async Task<ActionResult> GetPublic(int userId)
+        [HttpGet("/api/users/{userId}")]
+        public async Task<ActionResult> GetPublicUser(int userId)
         {
             try
             {
@@ -430,67 +439,10 @@ namespace FripShop.Controllers
             {
                 _logger.LogError("CONTROLLER USER -- GetPublic() -- Error : ", ex);
             }
-            return NotFound();
-        }
-
-        /// <summary>
-        /// API Edit user
-        /// </summary>
-        /// <param name="userModel"></param>
-        /// <returns></returns>
-        [HttpPost("/api/users/editUser")]
-        [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Edit([FromBody] DTOUserEdition userModel)
-        {
-            try
+            return NotFound(new
             {
-                if (ModelState.IsValid)
-                {
-                    var currentUser = await _userRepo.GetById(userModel.Id);
-                    if (currentUser == null)
-                        return NotFound();
-                    if (currentUser.Id != userModel.Id)
-                        return BadRequest();
-                    var current = DtoUserEditionToDtoUser(userModel);
-                    if (_userRepo.GetUserByEmail(currentUser.Email) != null
-                        && _userRepo.GetUserByUserName(currentUser.UserName) != null)
-                    {
-                        var result = await _userRepo.Update(currentUser);
-                        if (result != null)
-                            return Ok(result);
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError("CONTROLLER USER -- Edit() -- Error : ", ex);
-                return BadRequest();
-            }
-
-            return BadRequest();
-        }
-
-        /// <summary>
-        /// API Delete user
-        /// </summary>
-        /// <param name="id"></param>
-        /// <returns></returns>
-        [HttpPost("/api/users/delete")]
-        [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Delete([FromBody] long id)
-        {
-            try
-            {
-                if (await _userRepo.Delete(id) == false)
-                    return NotFound();
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError("CONTROLLER USER -- Delete() -- Error : ", ex);
-                return BadRequest();
-            }
-
-            return Ok(id);
+                error = "User not found"
+            });
         }
 
         /// <summary>

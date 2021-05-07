@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.Extensions.Logging;
 using System.Collections.Generic;
 using System.IO;
+using Microsoft.AspNetCore.Routing;
 
 namespace FripShop.Controllers
 {
@@ -389,14 +390,22 @@ namespace FripShop.Controllers
                 foreach (var result in results)
                 {
                     var user = _articleRepo.GetUserFromId(result.Id);
-                    result.User = DtoUserToDtoUserPublic(user);
+                    if (user != null)
+                        result.User = DtoUserToDtoUserPublic(user);
+                    else
+                    {
+                        result.User = null;
+                    }
                 }
                 return Ok(results);
             }
             catch (Exception ex)
             {
                 _logger.LogError("CONTROLLER ARTICLE -- GetAll() -- Error on db : ", ex);
-                return BadRequest();
+                return BadRequest(new
+                {
+                    error = "Error while getting all users"
+                });
             }
         }
     
@@ -413,7 +422,7 @@ namespace FripShop.Controllers
             {
                 var article = articles.Single(c => c.Id == articleId);
                 var user = _articleRepo.GetUserFromId(article.Id);
-                article.User = DtoUserToDtoUserPublic(user);
+                article.User = (user == null) ? null : DtoUserToDtoUserPublic(user);
                 return Ok(article);
             }
 
@@ -431,7 +440,9 @@ namespace FripShop.Controllers
             var user = _articleRepo.GetUserFromId(articleId);
             if (user != null)
                 return Ok(user);
-            return NotFound();
+            return NotFound(new {
+                message = "User not found in the DB"
+            });
         }
 
         /// <summary>
