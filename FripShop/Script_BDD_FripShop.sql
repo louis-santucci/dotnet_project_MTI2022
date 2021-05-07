@@ -187,7 +187,7 @@ INSERT INTO [dbo].[Article]
            ,[condition]
            ,[createdAt])
      VALUES
-           ('.\ArticleImages\eqab4b0v.3d3.JPG'
+           ('.\ArticleImages\hautbleu.jpg'
 		   ,'1'
            ,'free'
            ,'Joli haut bleu'
@@ -199,7 +199,7 @@ INSERT INTO [dbo].[Article]
            ,'6'
            ,'2021-05-07T16:00:00'),
 
-		   ('.\ArticleImages\arc-en-ciel.jfif'
+		   ('.\ArticleImages\arcenciel.jpg'
 		   ,'1'
            ,'free'
            ,'Pantalon multicolore T36'
