@@ -40,7 +40,11 @@ namespace FripShop.DataAccess
                 return null;
             }
         }
-
+        /// <summary>
+        /// get a list of article according to the seller id
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns>a list of DTOArticle</returns>
         public async Task<IEnumerable<DTOArticle>> GetArticleBySellerId(long id)
         {
             try

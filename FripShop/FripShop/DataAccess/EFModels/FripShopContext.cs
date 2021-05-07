@@ -28,7 +28,7 @@ namespace FripShop.DataAccess.EFModels
             {
                 // ANTOINE : "Data Source=LAPTOP-BTRL9E5B;Initial Catalog=fripshop;Integrated Security=True"
                 // LOUIS : 
-                // LEO : 
+                // LEO : "Data Source=DESKTOP-H1KBACU;Initial Catalog=master;Trusted Connection=True"
                 // ROBIN : 
                 optionsBuilder.UseSqlServer("Data Source=DESKTOP-UUEFB51;Initial Catalog=FripShop;Integrated Security=True;Connect Timeout=60;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False");
             }
