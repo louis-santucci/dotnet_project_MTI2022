@@ -49,7 +49,7 @@ namespace FripShop.DataAccess
         {
             try
             {
-                var UserArticle = _context.Articles.Where(article => article.SellerId == id).ToList();
+                var UserArticle = _context.Articles.Where(article => article.SellerId == id && article.State.ToLower() == "free").ToList();
                 return _mapper.Map<IEnumerable<DTOArticle>>(UserArticle);
             }
             catch (Exception ex)
