@@ -30,7 +30,7 @@ namespace FripShop.DataAccess.EFModels
                 // LOUIS : 
                 // LEO : 
                 // ROBIN : 
-                optionsBuilder.UseSqlServer("Data Source=DESKTOP-UUEFB51;Initial Catalog=FripShop;Integrated Security=True;Connect Timeout=60;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False");
+                optionsBuilder.UseSqlServer("PLEASE PUT YOUR CONNECTION STRING");
             }
         }
 
