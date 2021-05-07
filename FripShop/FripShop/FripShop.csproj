@@ -7,16 +7,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="Views\NewFolder\**" />
-    <Compile Remove="wwwroot\ArticleImages\**" />
-    <Content Remove="Views\NewFolder\**" />
-    <Content Remove="wwwroot\ArticleImages\**" />
-    <EmbeddedResource Remove="Views\NewFolder\**" />
-    <EmbeddedResource Remove="wwwroot\ArticleImages\**" />
-    <None Remove="Views\NewFolder\**" />
-  </ItemGroup>
-
-  <ItemGroup>
     <PackageReference Include="AutoMapper" Version="10.1.1" />
     <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="8.1.1" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation" Version="3.1.14" />
