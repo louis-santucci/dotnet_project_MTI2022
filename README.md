@@ -1,1 +1,0 @@
-# dotnet_project_MTI2022
