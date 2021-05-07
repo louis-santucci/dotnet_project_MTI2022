@@ -234,23 +234,24 @@ namespace FripShop.Controllers
                     
                 }
 
-
-                MailMessage message = new MailMessage();
-                SmtpClient smtp = new SmtpClient();
-                message.From = new MailAddress("fripshop.dotnet@gmail.com");
-                message.To.Add(new MailAddress(email));
-                message.Subject = "Facture Fripshop";
-                message.IsBodyHtml = false;  
-                message.Body =build_string(list,user);
-                smtp.Port = 587;
-                smtp.Host = "smtp.gmail.com"; //for gmail host  
-                smtp.EnableSsl = true;
-                smtp.UseDefaultCredentials = false;
-                smtp.Credentials = new NetworkCredential("fripshop.dotnet@gmail.com", "fripshopdotnet");
-                smtp.DeliveryMethod = SmtpDeliveryMethod.Network;
-                smtp.Send(message);
-
-                var del = DeleteUserCart(user.Id);
+                if (cart.Count() != 0)
+                {
+                    MailMessage message = new MailMessage();
+                    SmtpClient smtp = new SmtpClient();
+                    message.From = new MailAddress("fripshop.dotnet@gmail.com");
+                    message.To.Add(new MailAddress(email));
+                    message.Subject = "Facture Fripshop";
+                    message.IsBodyHtml = false;
+                    message.Body = build_string(list, user);
+                    smtp.Port = 587;
+                    smtp.Host = "smtp.gmail.com"; //for gmail host  
+                    smtp.EnableSsl = true;
+                    smtp.UseDefaultCredentials = false;
+                    smtp.Credentials = new NetworkCredential("fripshop.dotnet@gmail.com", "fripshopdotnet");
+                    smtp.DeliveryMethod = SmtpDeliveryMethod.Network;
+                    smtp.Send(message);
+                    var del = DeleteUserCart(user.Id);
+                }
             }
             catch (Exception ex)
             {
