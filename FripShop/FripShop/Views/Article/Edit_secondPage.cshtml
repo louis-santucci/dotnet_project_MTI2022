@@ -1,0 +1,111 @@
+﻿<div style="padding-top:15px">
+    <h3>Article en cours de modification</h3>
+    <div class="card-columns">
+        @{
+            if (ViewData["ArticleToModify"] != null)
+            {
+                var item = ViewData["ArticleToModify"] as FripShop.DTO.DTOArticle;
+
+                <div class="card">
+                    <img class="card-img-top" src="{ @item.ImageSource }" alt="Card image cap">
+                    <div class="card-body">
+                        <h5 class="card-title">@item.Name</h5>
+                        <p class="card-text"><small>Marque : </small><small class="text-muted">@item.Brand</small></p>
+                        <p class="card-text"><small>Condition : </small><small class="text-muted">@item.Condition / 5</small></p>
+                        <p class="card-text">@item.Description</p>
+                    </div>
+                    <div class="card-footer text-center">
+                        <span class="text-success font-weight-bolder">@item.Price €</span>
+                    </div>
+                </div>
+
+                
+            }
+        }
+    </div>
+    <div>
+        <h3>Entrez les informations de l'article à modifier</h3>
+        <h3 style="color:red;">Attention ! L'image de l'article n'est pas modifiable</h3>
+        @using (Html.BeginForm("EditArticle", "Article", FormMethod.Post, new { enctype = "multipart/form-data" }))
+        {
+            @Html.AntiForgeryToken()
+    <div class="form-horizontal">
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+        <div class="form-group px-3 row">
+            <label class="control-label col-md-2">Nom de l'article</label>
+            <div class="col-md-10">
+                @Html.Editor("name", ViewData["name"])
+                @Html.ValidationMessage("name", new { @class = "text-danger" })
+                @Html.Hidden("id", ViewData["id"]);
+            </div>
+        </div>
+
+        <div class="form-group px-3 row">
+            <label class="control-label col-md-2">Sexe</label>
+            <div class="col-md-10">
+                @Html.RadioButton("sex", "man", (string)ViewData["sex"] == "man" ? new { @checked = "checked" } : null) @Html.Label("Homme")
+                @Html.RadioButton("sex", "woman", (string)ViewData["sex"] == "woman" ? new { @checked = "checked" } : null) @Html.Label("Femme")
+                @Html.RadioButton("sex", "unisex", (string)ViewData["sex"] == "unisexe" ? new { @checked = "checked" } : null) @Html.Label("Unisexe")
+            </div>
+        </div>
+
+        <div class="form-group px-3 row">
+            <label class="control-label col-2">Prix (en €)</label>
+            <div class="col-4">
+                @Html.Editor("price", ViewData["price"])
+                @Html.ValidationMessage("price", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group row px-3">
+            <label class="control-label col-md-2">Catégorie</label>
+            <div class="col-md-10">
+                @Html.RadioButton("category", "top", (string)ViewData["category"] == "top" ? new { @checked = "checked" } : null) @Html.Label("top")
+                @Html.RadioButton("category", "pants", (string)ViewData["category"] == "pants" ? new { @checked = "checked" } : null) @Html.Label("pants")
+                @Html.RadioButton("category", "shoes", (string)ViewData["category"] == "shoes" ? new { @checked = "checked" } : null) @Html.Label("shoes")
+                @Html.RadioButton("category", "accessories", (string)ViewData["category"] == "accessories" ? new { @checked = "checked" } : null) @Html.Label("accessories")
+            </div>
+        </div>
+
+        <div class="form-group row px-3">
+            <label class="control-label col-md-2">Condition</label>
+            <div class="col-md-10">
+                @Html.RadioButton("condition", 0, ViewData["condition"].ToString() == "0" ? new { @checked = "checked" } : null) @Html.Label("0")
+                @Html.RadioButton("condition", 1, ViewData["condition"].ToString() == "1" ? new { @checked = "checked" } : null) @Html.Label("1")
+                @Html.RadioButton("condition", 2, ViewData["condition"].ToString() == "2" ? new { @checked = "checked" } : null) @Html.Label("2")
+                @Html.RadioButton("condition", 3, ViewData["condition"].ToString() == "3" ? new { @checked = "checked" } : null) @Html.Label("3")
+                @Html.RadioButton("condition", 4, ViewData["condition"].ToString() == "4" ? new { @checked = "checked" } : null) @Html.Label("4")
+                @Html.RadioButton("condition", 5, ViewData["condition"].ToString() == "5" ? new { @checked = "checked" } : null) @Html.Label("5")
+                @Html.RadioButton("condition", 6, ViewData["condition"].ToString() == "6" ? new { @checked = "checked" } : null) @Html.Label("6")
+                @Html.RadioButton("condition", 7, ViewData["condition"].ToString() == "7" ? new { @checked = "checked" } : null) @Html.Label("7")
+                @Html.RadioButton("condition", 8, ViewData["condition"].ToString() == "8" ? new { @checked = "checked" } : null) @Html.Label("8")
+                @Html.RadioButton("condition", 9, ViewData["condition"].ToString() == "9" ? new { @checked = "checked" } : null) @Html.Label("9")
+                @Html.RadioButton("condition", 10, ViewData["condition"].ToString() == "10" ? new { @checked = "checked" } : null) @Html.Label("10")
+            </div>
+        </div>
+
+        <div class="form-group row px-3">
+            <label class="control-label col-md-2">Marque</label>
+            <div class="col-md-10">
+                @Html.Editor("brand", ViewData["brand"])
+                @Html.ValidationMessage("brand", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group row px-3">
+            <label class="control-label col-md-2">Description</label>
+            <div class="col-md-10">
+                @Html.Editor("description", ViewData["description"])
+                @Html.ValidationMessage("description", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="mx-3 mb-0">
+            <button type="submit" value="EditArticle" id="Submit" class="btn btn-success btn-block">Modifier</button>
+        </div>
+    </div>
+    }
+    </div>
+</div>

@@ -1,0 +1,39 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.31025.194
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FripShop", "FripShop\FripShop.csproj", "{598A5C53-05C2-4171-BD87-D5B8CF6D6241}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UnitTestFripShop", "UnitTestFripShop\UnitTestFripShop.csproj", "{D7326688-E637-4DAD-B18F-A4E4CE9F16A7}"
+EndProject
+Project("{00D1A9C2-B5F0-4AF3-8072-F6C62B433612}") = "FripShopDatabase", "FripShopDatabase\FripShopDatabase.sqlproj", "{968352B0-A6CD-451C-9473-063D50C17253}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{598A5C53-05C2-4171-BD87-D5B8CF6D6241}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{598A5C53-05C2-4171-BD87-D5B8CF6D6241}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{598A5C53-05C2-4171-BD87-D5B8CF6D6241}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{598A5C53-05C2-4171-BD87-D5B8CF6D6241}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D7326688-E637-4DAD-B18F-A4E4CE9F16A7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D7326688-E637-4DAD-B18F-A4E4CE9F16A7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D7326688-E637-4DAD-B18F-A4E4CE9F16A7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D7326688-E637-4DAD-B18F-A4E4CE9F16A7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{968352B0-A6CD-451C-9473-063D50C17253}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{968352B0-A6CD-451C-9473-063D50C17253}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{968352B0-A6CD-451C-9473-063D50C17253}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{968352B0-A6CD-451C-9473-063D50C17253}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{968352B0-A6CD-451C-9473-063D50C17253}.Release|Any CPU.Build.0 = Release|Any CPU
+		{968352B0-A6CD-451C-9473-063D50C17253}.Release|Any CPU.Deploy.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {D1C9EB70-FBDB-4D98-8D56-082D799F29EB}
+	EndGlobalSection
+EndGlobal

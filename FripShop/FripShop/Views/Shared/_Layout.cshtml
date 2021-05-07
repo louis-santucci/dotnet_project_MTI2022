@@ -1,0 +1,89 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - FripShop</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" />
+</head>
+<body class="bg-light">
+    <header>
+        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
+            <div class="container">
+                <a class="navbar-brand" href="/">FripShop</a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
+                        aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
+                    <ul class="navbar-nav flex-grow-1">
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="User" asp-action="Profile">Profile</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" href="/Article?gender=man&page=1">Homme</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" href="/Article?gender=woman&page=1">Femme</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" href="/Article?gender=child&page=1">Enfants</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Article" asp-action="CreateArticleView">Vendre</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Article" asp-action="EditArticleView">Edit</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Cart" asp-action="Index">Cart</a>
+                        </li>
+
+                    </ul>
+                </div>
+                <div class="nav-item" style="text-align: right">
+                    <ul class="navbar-nav flex-grow-1">
+                        
+                        
+
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="User" asp-action="RegisterPage" id="registerButton">Register</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="User" asp-action="LoginPage" id="loginButton">Login</a>
+                        </li>
+                        <li class="nav-item">
+                            @using (Html.BeginForm("Logout", "Home", FormMethod.Post))
+                            {
+                                <div class="form-group">
+                                    <div class="col-md-offset-2 col-md-10">
+                                        <input type="submit" value="Logout" id="logout_submit" class="btn btn-default" />
+                                    </div>
+                                </div>
+                            }
+                        </li>
+                    </ul>
+                </div>
+                
+            </div>
+        </nav>
+    </header>
+    <div class="container bg-white box-shadow border mb-3 px-0">
+        <main role="main" class="pb-3">
+            @RenderBody()
+        </main>
+    </div>
+
+    <footer class="border-top footer text-muted" style="bottom:auto">
+        <div class="container">
+            &copy; 2021 - FripShop - <a asp-area="" asp-controller="Home" asp-action="Privacy">Vie privée / CGU</a>
+        </div>
+    </footer>
+    <script  type="text/javascript" src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script  type="text/javascript" src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script  type="text/javascript" src="~/js/site.js" asp-append-version="true"></script>
+    <script  type="text/javascript" src="~/js/login_logout.js"></script>
+    @RenderSection("Scripts", required: false)
+</body>
+</html>
