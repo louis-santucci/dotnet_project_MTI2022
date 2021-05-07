@@ -287,7 +287,7 @@ namespace FripShop.Controllers
             var email = HttpContext.User.Identity.Name;
             var user = _userRepo.GetUserByEmail(email);
 
-            var userArticleList = await _articleRepo.GetById(user.Id);
+            var userArticleList = await _articleRepo.GetArticleBySellerId(user.Id);
 
             ViewData["UserArticleList"] = userArticleList;
         
