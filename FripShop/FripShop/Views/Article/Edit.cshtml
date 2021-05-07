@@ -9,11 +9,13 @@
                 foreach (var item in @ViewData["UserArticleList"] as IEnumerable<FripShop.DTO.DTOArticle>)
                 {
                 <div class="card">
-                    <img class="card-img-top" src="{ @item.ImageSource }" alt="Card image cap">
+                    <div style="background: var(--secondary); text-align: center; color: white;">
+                        <img class="card-img-top" src="{ @item.ImageSource }" alt="Pas d'image">
+                    </div>
                     <div class="card-body">
                         <h5 class="card-title">@item.Name</h5>
                         <p class="card-text"><small>Marque : </small><small class="text-muted">@item.Brand</small></p>
-                        <p class="card-text"><small>Condition : </small><small class="text-muted">@item.Condition / 5</small></p>
+                        <p class="card-text"><small>Condition : </small><small class="text-muted">@item.Condition / 10</small></p>
                         <p class="card-text">@item.Description</p>
                     </div>
                     <div class="card-footer text-center">
