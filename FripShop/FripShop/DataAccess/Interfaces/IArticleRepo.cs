@@ -16,5 +16,12 @@ namespace FripShop.DataAccess.Interfaces
         /// <param name="id">the ID of the wanted DTO user</param>
         /// <returns>The wanted DTO user with all its information</returns>
         public DTOUser GetUserFromId(long id);
+
+        /// <summary>
+        /// Get list of article by sellerID
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns>a list of DTOArticle</returns>
+        public Task<IEnumerable<DTOArticle>> GetArticleBySellerId(long id);
     }
 }
