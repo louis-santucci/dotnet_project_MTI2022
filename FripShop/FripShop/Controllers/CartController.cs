@@ -218,7 +218,7 @@ namespace FripShop.Controllers
 
                 foreach (var elem in cart)
                 {
-                    var curr= await _articleRepo.GetArticleById(elem.ArticleId);
+                    var curr= await _articleRepo.GetById(elem.ArticleId);
                     list.Add(curr);
                     if (curr != null)
                     {
